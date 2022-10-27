@@ -1,0 +1,25 @@
+.premium-row {
+  font-size: 18px;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.premium-row .fa-check {
+  color: #28a745;
+}
+
+.downloadBasicPremiumTable .fa-times {
+  color: #dc3545;
+  font-size: 18px;
+}
+
+.lift {
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.lift:focus,
+.lift:hover {
+  box-shadow: 0 1rem 2.5rem rgba(22, 28, 45, 0.1), 0 0.5rem 1rem -0.75rem rgba(22, 28, 45, 0.1) !important;
+  transform: translate3d(0, -3px, 0);
+}
+
