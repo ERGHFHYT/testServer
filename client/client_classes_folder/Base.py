@@ -34,7 +34,7 @@ class Base:
                                               corner_radius=0,
                                               bg_color=("gray70",
                                                         "gray25"), text=text,
-                                              text_font=(DEFAULT_FONT, text_size))
+                                              font=(DEFAULT_FONT, text_size))
         self.root.label.place(relx=x, rely=y, anchor=tkinter.CENTER)
         return self.root.label
 

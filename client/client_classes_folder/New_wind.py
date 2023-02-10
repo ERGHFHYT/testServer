@@ -36,7 +36,7 @@ class New_wind(Base):
         self.root.label_1.destroy()
         self.root.label_1 = customtkinter.CTkLabel(master=self.root.frame_right,
                                               text=name_for_the_test,
-                                              text_font=(DEFAULT_FONT,
+                                              font=(DEFAULT_FONT,
                                                          -25))
         self.root.label_1.place(relx=0.8, rely=0.03)
         for i in range(5):
@@ -87,7 +87,7 @@ class New_wind(Base):
         self.label_3.configure(text=EMPTY_SPACE)
 
     def update_single(self, the_execute):
-        if the_execute == CHEK_PASSWORD_FROM_TABLE:
+        if the_execute == CHECK_PASSWORD_FROM_TABLE:
             data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
             global_entry = str(self.label_3.text)
             print(global_entry)

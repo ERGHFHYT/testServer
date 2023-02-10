@@ -105,7 +105,7 @@ class Custom_window(Base):
             entrys.append(0)
             entrys[name] = self.root.my_entry_2 = customtkinter.CTkEntry(
                 master=self.root.frame_1, corner_radius=0, width=200,
-                placeholder_text=the_names_of_the_entrys[name], text_font=(
+                placeholder_text=the_names_of_the_entrys[name], font=(
                     "Halvetica", -20),
                 justify='right')
             self.root.my_entry_2.place(relx=0.5, rely=num, anchor=tkinter.CENTER)
@@ -144,7 +144,7 @@ class Custom_window(Base):
                                                            fg_color=self.color_object,
                                                            corner_radius=0,
                                                            text=name[0],
-                                                           text_font=("Halvetica", -16))
+                                                           font=("Halvetica", -16))
         self.root.frame_1.label_1.place(relx=0.5, rely=0.1, anchor=tkinter.CENTER)
 
     def clear_entrys(self):
@@ -176,7 +176,7 @@ class Custom_window(Base):
                                                   height=lis[i][2],
                                                   corner_radius=0, text=EMPTY_SPACE,
                                                                fg_color=self.color_object,
-                                                  text_font=("Halvetica", -16))
+                                                  font=("Halvetica", -16))
             self.root.frame_1.label_1.place(relx=lis[i][0], rely=lis[i][1],
                                             anchor=tkinter.CENTER)
 

@@ -81,7 +81,7 @@ def search():
                                           corner_radius=0,
                                           bg_color="#343638",
                                           text="שינוים",
-                                          text_font=(DEFAULT_FONT, -20))
+                                          font=(DEFAULT_FONT, -20))
     root.label_1.place(relx=0.53, rely=0.05, anchor=tkinter.CENTER)
     root.label_2 = customtkinter.CTkLabel(master=root.frame_1, width=75,
                                           height=40,
@@ -89,6 +89,6 @@ def search():
                                           corner_radius=0,
                                           bg_color="#343638",
                                           text="חיפוש",
-                                          text_font=(DEFAULT_FONT, -20))
+                                          font=(DEFAULT_FONT, -20))
     root.label_2.place(relx=0.53, rely=0.55, anchor=tkinter.CENTER)
     root.mainloop()

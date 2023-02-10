@@ -23,7 +23,7 @@ def entry_window():
     tool.window()
 
     # load image with PIL and convert to PhotoImage
-    image = Image.open(BACKGROUND_IMEGE).resize(SIZE_OF_BACKGROUND_IMAGE)
+    image = Image.open(BACKGROUND_IMAGE).resize(SIZE_OF_BACKGROUND_IMAGE)
     bg_image = ImageTk.PhotoImage(image)
 
     root.image_label = tkinter.Label(master=root, image=bg_image)
@@ -41,7 +41,7 @@ def entry_window():
                                           corner_radius=0,
                                           bg_color=BACKGROUND_COLOR,
                                           text="תתחבר",
-                                          text_font=(DEFAULT_FONT, -30))
+                                          font=(DEFAULT_FONT, -30))
     root.label_1.place(relx=MIDDLE, rely=0.3, anchor=tkinter.CENTER)
 
     root.entry_password = customtkinter.CTkEntry(master=root.frame,
@@ -57,7 +57,7 @@ def entry_window():
         root.entry_password.configure(fg_color=BACKGROUND_COLOR)
 
     def start_new():
-        message = [CHEK_PASSWORD_FROM_TABLE, root.entry_username.get(),
+        message = [CHECK_PASSWORD_FROM_TABLE, root.entry_username.get(),
                    root.entry_password.get()]
         password_response_form_the_table = tool.execution_server(message)
         if password_response_form_the_table == CORRECT_PASSWORD:

@@ -23,19 +23,19 @@ def main_window():
                                                width=180,
                                                corner_radius=0)
     root_2.frame_left.grid(row=0, column=0, sticky="nswe")
-    add_folder_image = ImageTk.PhotoImage(Image.open(ADD_FOLDER_IMEGE).resize((
+    add_folder_image = ImageTk.PhotoImage(Image.open(ADD_FOLDER_IMAGE).resize((
         ICON_IMAGE_SIZE, ICON_IMAGE_SIZE), Image.ANTIALIAS))
     add_mic_image = ImageTk. \
-        PhotoImage(Image.open(MICROPHONE_IMEGE).
+        PhotoImage(Image.open(MICROPHONE_IMAGE).
                    resize((ICON_IMAGE_SIZE, ICON_IMAGE_SIZE), Image.ANTIALIAS))
-    add_list_image = ImageTk.PhotoImage(Image.open(ADD_LIST_IMEGE).
+    add_list_image = ImageTk.PhotoImage(Image.open(ADD_LIST_IMAGE).
                                         resize(
         (ICON_IMAGE_SIZE, ICON_IMAGE_SIZE), Image.ANTIALIAS))
     teacher_image = ImageTk.PhotoImage(
-        Image.open(TEACHER_IMEGE).resize((ICON_IMAGE_SIZE, ICON_IMAGE_SIZE),
+        Image.open(TEACHER_IMAGE).resize((ICON_IMAGE_SIZE, ICON_IMAGE_SIZE),
                                          Image.ANTIALIAS))
     check_list_image = ImageTk.PhotoImage(
-        Image.open(CKENCK_IMEGE).resize(CKENCK_IMEGE_SIZE,
+        Image.open(CHECK_IMAGE).resize(CHECK_IMAGE_SIZE,
                                         Image.ANTIALIAS))
     root_2.frame_right = customtkinter.CTkFrame(master=root_2, height=550,
                                                 width=650)
@@ -74,11 +74,11 @@ def main_window():
 
     root_2.label_1 = customtkinter.CTkLabel(master=root_2.frame_left,
                                             text="סוג",
-                                            text_font=("Roboto Medium", -16))
+                                            font=("Roboto Medium", -16))
     root_2.label_1.grid(row=1, column=0, pady=10, padx=10)
     root_2.label_1 = customtkinter.CTkLabel(master=root_2.frame_right,
                                             text="מורה",
-                                            text_font=("Halvetica", -25))
+                                            font=("Halvetica", -25))
     root_2.label_1.place(relx=0.83, rely=0.03)
     num = 2
     buttons_names = ["מורים", "תלמידים", "מתרגלים", "סיסמה", "מחזור"]

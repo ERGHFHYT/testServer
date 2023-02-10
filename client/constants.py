@@ -4,10 +4,10 @@ HEIGHT = 600
 SIZE_OF_WINDOW = "900x600"
 SIZE_OF_BACKGROUND_IMAGE = (1400, 1000)
 ICON_IMAGE_SIZE = 20
-CKENCK_IMEGE_SIZE = (30, 25)
+CHECK_IMAGE_SIZE = (30, 25)
 
 # commends for the server
-CHEK_PASSWORD_FROM_TABLE = "chek_password_form_table"
+CHECK_PASSWORD_FROM_TABLE = "chek_password_form_table"
 GET_TABLE = "get_a_table"
 REMOVE_ITEM_FROM_TABLE = "remove_item"
 CIRCULATIONS_TABLE = "circulations_table"
@@ -30,22 +30,21 @@ BLUE = "blue"
 DARK_GRAY = "#2a2d2e"
 
 # image's
-BACKGROUND_IMEGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/" \
-                   "background image.webp"
+BACKGROUND_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\background image.webp"
 
-ADD_LIST_IMEGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/" \
-                 "add-list.png"
 
-ADD_USER_IMEGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/add-user.png"
-ADD_FOLDER_IMEGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/" \
+ADD_LIST_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\add-list.png"
+
+ADD_USER_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\add-user.png"
+ADD_FOLDER_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\" \
                    "add_folder.png"
-CKENCK_IMEGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/ckenck.png"
-HOME_IMEGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/home.png"
-MICROPHONE_IMEGE = "C:/Users/ינון/PycharmProjects/testServer/imege's" \
+CHECK_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\ckenck.png"
+HOME_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\home.png"
+MICROPHONE_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\" \
                    "/microphone" \
                    ".png"
-TEACHER_IMEGE = "C:/Users/ינון/PycharmProjects/testServer/imege's" \
-                "/teacher_image" \
+TEACHER_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\" \
+                "teacher_image" \
                 ".png"
 
 # receive from the server
@@ -56,7 +55,7 @@ USERNAME_ERROR_AND_PASSWORD_ERROR = "username_error_and_password_error"
 # Messages to the user
 WRONG_PASSWORD = "הסיסמה לא נכונה"
 WRONG_USERNAME = "שם המשתמש לא נכון"
-ALL_WRONG = "שם המשתמש וסיסמה לא נכונים"
+ALL_WRONG = "שם משתמש וסיסמה לא נכונים"
 EMPTY_SPACE = ""
 
 # show to the screen
