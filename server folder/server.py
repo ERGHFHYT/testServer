@@ -19,6 +19,7 @@ def remove_item(the_name_of_the_table, typed):
             mycursor.execute(sql)
             mydb.commit()
     for d in the_list_of_the_data:
+        print(d)
         add_item(the_name_of_the_table, d)
     return the_list_of_the_data
 
@@ -34,7 +35,6 @@ def pupils_in_teachers():
 
     mycursor.execute(sql)
     list_name = mycursor.fetchall()
-    print(list(list_name))
     return list(list_name)
 
 
@@ -76,7 +76,7 @@ def db(name):
     return my_final_result
 
 
-def check_which_item_this_is(item, the_name_of_the_table):
+def check_which_item_this_is(the_name_of_the_table, item):
     items = db(the_name_of_the_table)
     for item_of_table in items:
         if the_name_of_the_table != "circulations_table":
@@ -124,10 +124,15 @@ def get_max_column_of_the_table(the_name_of_the_table, column):
 
 
 def add_teacher_to_pupil(teacher, pupil):
-    sql = "UPDATE pupils_table SET teacher =" + teacher + "WHERE id = " + pupil[
-        1]
-    mycursor.execute(sql)
-    mydb.commit()
+    print(pupil)
+    print(teacher)
+    remove_item("pupils_table", str(pupil[1]))
+    pupil[3] = teacher[1]
+    print("------------")
+    print(pupil)
+    print("------------")
+
+    add_item("pupils_table", pupil)
 
 
 def add_item(the_name_of_the_table, items_to_add):
@@ -139,7 +144,7 @@ def add_item(the_name_of_the_table, items_to_add):
         sql = "INSERT INTO circulations_table (the_number_of_circulation,circulation) VALUES (%s,%s)"
     elif the_name_of_the_table == "pupils_table":
         sql = "INSERT INTO " + the_name_of_the_table + "(name,id," \
-                                                       "circulation)VALUES(%s,%s,%s)"
+                                                       "circulation,teacher)VALUES(%s,%s,%s,%s)"
 
     else:
         sql = "INSERT INTO " + the_name_of_the_table + "(name,id)VALUES(%s,%s)"

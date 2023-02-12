@@ -4,13 +4,9 @@ import customtkinter
 import client.client_classes_folder.Base
 from tkinter import ttk
 import tkinter.messagebox
+from client.new_window import main_window
 
-teachers_data = client.client_classes_folder.Base.Base.execution_server([
-    GET_TABLE, TEACHERS_TABLE])
-pupils_data = client.client_classes_folder.Base.Base.execution_server(
-    [GET_TABLE, PUPILS_TABLE])
-d = client.client_classes_folder.Base.Base.execution_server(
-    ["pupils_in_teachers"])
+
 
 
 def search():
@@ -19,27 +15,45 @@ def search():
         data = client.client_classes_folder.Base.Base.execution_server(
             ["pupils_in_teachers"])
         for d in data:
-            if d[3] in box_3.get():
+            if d[3] in box_teacher_2.get():
                 finel_list.append(d)
-        box_4["values"] = finel_list
+        box_pupils_2["values"] = finel_list
 
     def add_teacher_to_pupil():
-        data = client.client_classes_folder.Base.Base.execution_server(
+        the_teacher_to_add = client.client_classes_folder.Base.Base.execution_server(
             ["check_which_item_this_is",
-             "teachers_table", box_2.get()])
+             "teachers_table", box_teacher_1.get()])
+        the_pupil_to_add = client.client_classes_folder.Base.Base.execution_server(
+            ["check_which_item_this_is",
+             "pupils_table", box_pupils_1.get()])
+
         client.client_classes_folder.Base.Base.execution_server(
-            ["pupils_in_teachers", box_1.get(),
-             (TEACHERS_TABLE, data)])
+            ["add_teacher_to_pupil", the_teacher_to_add,
+             the_pupil_to_add])
 
     def remove_teacher_to_pupil():
+        the_pupil_to_remove = client.client_classes_folder.Base.Base.execution_server(
+            ["check_which_item_this_is",
+             "teachers_table", box_teacher_1.get()])
         client.client_classes_folder.Base.Base.execution_server(
-            ["pupils_in_teachers", box_1.get(), "ריק"])
+            ["add_teacher_to_pupil", the_pupil_to_remove, "ריק"])
 
     root = customtkinter.CTk()
     tool = client.client_classes_folder.Base.Base(root, "מסך חיפוש תלמידים "
                                                         "לפי מורים",
                                                   "Dark",
                                                   "blue", None, None)
+
+    def go_back():
+        root.destroy()
+        client.new_window.main_window()
+
+    teachers_data = client.client_classes_folder.Base.Base.execution_server([
+        GET_TABLE, TEACHERS_TABLE])
+    pupils_data = client.client_classes_folder.Base.Base.execution_server(
+        [GET_TABLE, PUPILS_TABLE])
+    d = client.client_classes_folder.Base.Base.execution_server(
+        ["pupils_in_teachers"])
     tool.window()
     root.frame_1 = customtkinter.CTkFrame(master=root,
                                           corner_radius=0,
@@ -49,46 +63,53 @@ def search():
     label_1 = customtkinter.CTkFrame(master=root.frame_1, height=550,
                                      width=650)
     label_1.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
-    box_1 = ttk.Combobox(root.frame_1, width=28, font=("Halvetica", 20),
+    box_teacher_1 = ttk.Combobox(root.frame_1, width=28, font=("Halvetica", 20),
                          values=teachers_data, justify='right')
-    box_1.place(relx=0.2, rely=0.1)
-    box_2 = ttk.Combobox(root.frame_1, width=28, font=("Halvetica", 20),
+    box_teacher_1.place(relx=0.2, rely=0.1)
+    box_pupils_1 = ttk.Combobox(root.frame_1, width=28, font=("Halvetica", 20),
                          values=pupils_data, justify='right')
-    box_2.place(relx=0.2, rely=0.2)
-    box_3 = ttk.Combobox(root.frame_1, width=28, font=("Halvetica", 20),
+    box_pupils_1.place(relx=0.2, rely=0.2)
+    box_teacher_2 = ttk.Combobox(root.frame_1, width=28, font=("Halvetica", 20),
                          values=teachers_data, justify='right')
-    box_3.place(relx=0.2, rely=0.6)
-    box_4 = ttk.Combobox(root, width=28, font=("Halvetica", 20),
+    box_teacher_2.place(relx=0.2, rely=0.6)
+    box_pupils_2 = ttk.Combobox(root, width=28, font=("Halvetica", 20),
                          values=d, justify='right')
-    box_4.place(relx=0.28, rely=0.7)
-    box_3.bind("<<ComboboxSelected>>", event)
+    box_pupils_2.place(relx=0.28, rely=0.7)
+    box_teacher_2.bind("<<ComboboxSelected>>", event)
     root.button_2 = customtkinter.CTkButton(master=root.frame_1, text="הוספה",
 
-                                            corner_radius=6,
+                                            corner_radius=0,
                                             command=add_teacher_to_pupil,
                                             width=150)
-    root.button_2.place(relx=0.7, rely=0.33, anchor=tkinter.CENTER)
+    root.button_2.place(relx=0.62, rely=0.33, anchor=tkinter.CENTER)
     root.button_3 = customtkinter.CTkButton(master=root.frame_1, text="מחיקה"
                                             ,
 
-                                            corner_radius=6,
+                                            corner_radius=0,
                                             command=remove_teacher_to_pupil,
                                             width=150)
-    root.button_3.place(relx=0.4, rely=0.33, anchor=tkinter.CENTER)
+    root.button_3.place(relx=0.32, rely=0.33, anchor=tkinter.CENTER)
     root.label_1 = customtkinter.CTkLabel(master=root.frame_1, width=75,
                                           height=40,
-                                          fg_color="#343638",
+                                          fg_color="#333333",
                                           corner_radius=0,
-                                          bg_color="#343638",
+                                          bg_color="#333333",
                                           text="שינוים",
                                           font=(DEFAULT_FONT, -20))
-    root.label_1.place(relx=0.53, rely=0.05, anchor=tkinter.CENTER)
+    root.label_1.place(relx=0.5, rely=0.05, anchor=tkinter.CENTER)
     root.label_2 = customtkinter.CTkLabel(master=root.frame_1, width=75,
                                           height=40,
-                                          fg_color="#343638",
+                                          fg_color="#333333",
                                           corner_radius=0,
-                                          bg_color="#343638",
+                                          bg_color="#333333",
                                           text="חיפוש",
                                           font=(DEFAULT_FONT, -20))
-    root.label_2.place(relx=0.53, rely=0.55, anchor=tkinter.CENTER)
+    root.label_2.place(relx=0.5, rely=0.55, anchor=tkinter.CENTER)
+    root.button_3 = customtkinter.CTkButton(master=root.frame_1,
+                                                 text="חזור",
+                                                 corner_radius=0,
+                                                 command=go_back,
+                                                 width=100)
+    root.button_3.place(relx=0.5, rely=0.85, anchor=tkinter.CENTER)
+
     root.mainloop()

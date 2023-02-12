@@ -37,7 +37,7 @@ def entry_window():
 
     root.label_1 = customtkinter.CTkLabel(master=root.frame, width=200,
                                           height=100,
-                                          fg_color=DARK_GRAY,
+                                          fg_color=BACKGROUND_COLOR,
                                           corner_radius=0,
                                           bg_color=BACKGROUND_COLOR,
                                           text="תתחבר",
@@ -81,7 +81,7 @@ def entry_window():
                                             width=200)
     root.button_2.place(relx=MIDDLE, rely=0.7, anchor=tkinter.CENTER)
     tool.the_location = root.frame
-    tool.label = tool.create_masages(300, 100, DARK_GRAY, None, MIDDLE, 0.9,
+    tool.label = tool.create_masages(300, 150, BACKGROUND_COLOR, None, MIDDLE, 0.9,
                                      -16)
     root.mainloop()
 

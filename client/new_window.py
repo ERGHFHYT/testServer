@@ -1,5 +1,6 @@
 import tkinter
 import customtkinter
+from customtkinter import CTkImage
 from PIL import Image, ImageTk  # <- import PIL for the images
 from tkinter import ttk
 import tkinter.messagebox
@@ -89,11 +90,11 @@ def main_window():
     for button in range(len(buttons_names)):
         list_of_buttons[button] = root_2.button_2 = customtkinter.CTkButton(
             master=root_2.frame_left, text=buttons_names[button],
-            fg_color=BLUE, command=buttons_commend[button])
+            fg_color="#2b2b2b", command=buttons_commend[button])
         root_2.button_2.grid(row=num, column=0, pady=10, padx=20)
         num += 1
 
-    list_of_buttons[0].configure(fg_color=BACKGROUND_COLOR)
+    list_of_buttons[0].configure(fg_color=DARK_GRAY)
     root_2.button_5 = customtkinter.CTkButton(master=root_2.frame_right,
                                               text="", image=add_mic_image,
                                               height=40,
@@ -122,18 +123,18 @@ def main_window():
                                     justify='right')
     box.place(relx=0.3, rely=0.1)
     tool.the_location = root_2.frame_right
-    tool.label = tool.create_masages(220, 100, "#2a2d2e", "", 0.25, 0.6,
+    tool.label = tool.create_masages(200, 120, "#2b2b2b", "", 0.25, 0.6,
                                      -16)
-    tool.label_2 = tool.create_masages(100, 100,
-                                       "#2a2d2e", "", 0.85, 0.35, -30)
-    tool.label_3 = tool.create_masages(100, 100,
-                                       "#2a2d2e", "", 0.6, 0.35, -30)
+    tool.label_2 = tool.create_masages(120, 120,
+                                       "#2b2b2b", "", 0.85, 0.35, -25)
+    tool.label_3 = tool.create_masages(120, 120,
+                                       "#2b2b2b", "", 0.65, 0.35, -25)
     tool.box = box
 
     def event(event):
         list_items = tool.execution_server(["check_which_item_this_is",
-                                            tool.box.get(),
-                                            tool.the_name_of_the_table])
+                                            tool.the_name_of_the_table, tool.box.get()
+                                            ])
         if tool.the_name_of_the_table == "password_table":
             item_string = " :שם משתמש" + "\n" + " :סיסמה"
             item_string_2 = list_items[0] + "\n" + list_items[1]

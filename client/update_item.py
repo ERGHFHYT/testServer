@@ -12,7 +12,7 @@ def update(data_entry, the_name_of_the_table):
                                      "System", "green", "password_table",
                                      "#1f6aa5", None, None, None, None)
         data_entry = tool.execution_server(["check_which_item_this_is",
-                                            data_entry, the_name_of_the_table])
+                                            the_name_of_the_table, data_entry])
         tool.start(["שם משתמש", "סיסמה"], data_entry)
         tool.big_title_to_add(120, 60)
     else:
@@ -21,7 +21,7 @@ def update(data_entry, the_name_of_the_table):
                                      "System",  "blue", the_name_of_the_table,
                              ("gray84", "gray25"), None, None, None, None)
         data_entry = tool.execution_server(["check_which_item_this_is",
-                                            data_entry, the_name_of_the_table])
+                                            the_name_of_the_table, data_entry])
         if the_name_of_the_table == "circulations_table":
             tool.start(["מחזור"], data_entry)
         else:

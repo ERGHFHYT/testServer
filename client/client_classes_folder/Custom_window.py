@@ -60,9 +60,9 @@ class Custom_window(Base):
                             if self.the_name_of_the_table == PUPILS_TABLE:
                                 data_entry = Base.execution_server(
                                     ["check_which_item_this_is",
-                                     str(self.box.get()),
-                                     CIRCULATIONS_TABLE])
+                                     CIRCULATIONS_TABLE, self.box.get()])
                                 e.append(str(data_entry[0]))
+                                e.append("ריק")
                             print(e)
                             data = ["add_item", self.the_name_of_the_table, e]
                             Base.execution_server(data)

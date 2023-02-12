@@ -24,7 +24,7 @@ MIDDLE = 0.5
 # COLORS
 RED = "#b20e1b"
 NUM_BLUE = "#1f6aa5"
-BACKGROUND_COLOR = ("gray84", "gray25")
+BACKGROUND_COLOR = "#2b2b2b"
 DARK = "Dark"
 BLUE = "blue"
 DARK_GRAY = "#2a2d2e"
