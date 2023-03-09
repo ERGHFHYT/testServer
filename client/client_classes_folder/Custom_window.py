@@ -45,7 +45,7 @@ class Custom_window(Base):
                     len(str(self.entrys[1].get())) == 10 \
                     or not self.entrys[0].get().isnumeric():
                 if self.the_name_of_the_table == CIRCULATIONS_TABLE or\
-                        self.entrys[ 1].get().isnumeric():
+                        self.entrys[1].get().isnumeric():
                     if self.the_name_of_the_table == CIRCULATIONS_TABLE or len(
                             str(self.entrys[1].get())) == 10:
                         if not self.entrys[0].get().isnumeric():
@@ -61,7 +61,7 @@ class Custom_window(Base):
                                 data_entry = Base.execution_server(
                                     ["check_which_item_this_is",
                                      CIRCULATIONS_TABLE, self.box.get()])
-                                e.append(str(data_entry[0]))
+                                e.append(str(data_entry[1]))
                                 e.append("ריק")
                             print(e)
                             data = ["add_item", self.the_name_of_the_table, e]

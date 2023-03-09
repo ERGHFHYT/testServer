@@ -127,13 +127,19 @@ def add_teacher_to_pupil(teacher, pupil):
     print(pupil)
     print(teacher)
     remove_item("pupils_table", str(pupil[1]))
-    pupil[3] = teacher[1]
-    print("------------")
-    print(pupil)
-    print("------------")
+    if teacher[1].isnumeric():
+        pupil[3] = teacher[1]
+    else:
+        pupil[3] = teacher[0]
 
     add_item("pupils_table", pupil)
-
+def change_the_order_by_language(items_to_add):
+    if not items_to_add:
+        return False
+    if not any(c.isalpha() for c in items_to_add[0]):
+        items_to_add.remove(items_to_add[0])
+        return True
+    return False or change_the_order_by_language(items_to_add)
 
 def add_item(the_name_of_the_table, items_to_add):
     i = []
