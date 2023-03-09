@@ -27,8 +27,8 @@ def remove_item(the_name_of_the_table, typed):
 def pupils_in_teachers():
     sql = "SELECT \
     teachers_table.id AS id_t, \
-    teachers_table.name AS name_t, \
     pupils_table.circulation AS circulation_p,\
+    pupils_table.id AS id_p, \
     pupils_table.name AS name_p \
     FROM pupils_table \
     INNER JOIN teachers_table ON pupils_table.teacher = teachers_table.id"
@@ -198,7 +198,7 @@ def add_item_for_the_remove_function(the_name_of_the_table, items_to_add):
 try:
     mydb = psycopg2.connect(conct)
     mycursor = mydb.cursor()
-    print("הסרבר רץ....")
+    print("The server is running.....")
     while True:
         # get the hostname
         host = "localhost"
