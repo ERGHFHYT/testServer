@@ -20,7 +20,7 @@ def remove_item(the_name_of_the_table, typed):
             mydb.commit()
     for d in the_list_of_the_data:
         print(d)
-        add_item(the_name_of_the_table, d)
+        add_item_for_the_remove_function(the_name_of_the_table, d)
     return the_list_of_the_data
 
 
@@ -128,20 +128,49 @@ def add_teacher_to_pupil(teacher, pupil):
     print(teacher)
     remove_item("pupils_table", str(pupil[1]))
     if teacher[1].isnumeric():
-        pupil[3] = teacher[1]
-    else:
         pupil[3] = teacher[0]
+    else:
+        pupil[3] = teacher[1]
 
     add_item("pupils_table", pupil)
-def change_the_order_by_language(items_to_add):
-    if not items_to_add:
-        return False
-    if not any(c.isalpha() for c in items_to_add[0]):
-        items_to_add.remove(items_to_add[0])
-        return True
-    return False or change_the_order_by_language(items_to_add)
+
+
+def there_is_an_english_character_in_the_list(items_to_add):
+    for string in items_to_add:
+        for s in string:
+            try:
+                s.encode(encoding='utf-8').decode('ascii')
+            except UnicodeDecodeError:
+                pass
+            else:
+                if not s.isnumeric():
+                    return True
+    return False
+
 
 def add_item(the_name_of_the_table, items_to_add):
+    if there_is_an_english_character_in_the_list(items_to_add):
+        items_to_add.reverse()
+    i = []
+    the_list_of_the_data = db(the_name_of_the_table)
+    if the_name_of_the_table == "password_table":
+        sql = "INSERT INTO password_table (username,password)VALUES(%s,%s)"
+    elif the_name_of_the_table == "circulations_table":
+        sql = "INSERT INTO circulations_table (the_number_of_circulation,circulation) VALUES (%s,%s)"
+    elif the_name_of_the_table == "pupils_table":
+        sql = "INSERT INTO " + the_name_of_the_table + "(name,id," \
+                                                       "circulation,teacher)VALUES(%s,%s,%s,%s)"
+
+    else:
+        sql = "INSERT INTO " + the_name_of_the_table + "(name,id)VALUES(%s,%s)"
+
+    for item in items_to_add:
+        i.append(str(item))
+    the_list_of_the_data.append(i)
+    mycursor.execute(sql, i)
+    mydb.commit()
+    return the_list_of_the_data
+def add_item_for_the_remove_function(the_name_of_the_table, items_to_add):
     i = []
     the_list_of_the_data = db(the_name_of_the_table)
     if the_name_of_the_table == "password_table":

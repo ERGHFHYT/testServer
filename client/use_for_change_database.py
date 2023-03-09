@@ -19,26 +19,25 @@
 # mycursor.execute(sql, val)
 #
 # mydb.commit()
-def isEnglish(string):
-    for s in string:
-        if s.isascii():
-            return True
-    return False
 
-
-def change_the_order_by_language(items_to_add):
-    if not items_to_add:
+def CheckID(ID):
+    if len(ID) != 9:
         return False
-    if isEnglish(items_to_add[0]):
-        items_to_add.remove(items_to_add[0])
+
+    try:
+        id = list(map(int, ID))
+    except:
+        return False
+
+    counter = 0
+
+    for i in range(9):
+        id[i] *= (i % 2) + 1
+        if id[i] > 9:
+            id[i] -= 9
+        counter += id[i]
+
+    if counter % 10 == 0:
         return True
-    items_to_add.remove(items_to_add[0])
-    return False or change_the_order_by_language(items_to_add)
-
-print(change_the_order_by_language(["46456346","fgdfgכעעג",]))
-
-
-
-
-
-
+    else:
+        return False

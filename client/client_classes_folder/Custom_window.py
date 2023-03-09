@@ -28,61 +28,93 @@ class Custom_window(Base):
                     label, the_location)
         tool.window()
 
+
+
+
     def add_item(self):
         d = True
         data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
         for i in data:
-            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                if i[0] == self.entrys[0].get():
-                    d = False
-            else:
+            if self.the_name_of_the_table == PUPILS_TABLE:
                 if i[1] == self.entrys[1].get():
                     d = False
-        print("נכנס להוספה")
-        if d:
-            if self.the_name_of_the_table == CIRCULATIONS_TABLE or \
-                    self.entrys[1].get().isnumeric() or \
-                    len(str(self.entrys[1].get())) == 10 \
-                    or not self.entrys[0].get().isnumeric():
-                if self.the_name_of_the_table == CIRCULATIONS_TABLE or\
-                        self.entrys[1].get().isnumeric():
-                    if self.the_name_of_the_table == CIRCULATIONS_TABLE or len(
-                            str(self.entrys[1].get())) == 10:
-                        if not self.entrys[0].get().isnumeric():
-                            e = []
-                            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                                max_column = Base.execution_server(
-                                    [GET_MAX, self.the_name_of_the_table, "the_number_of_circulation"])
-                                e.append(max_column)
-                            for entry in self.entrys:
-                                e.append(str(entry.get()))
-                                print(self.the_name_of_the_table)
-                            if self.the_name_of_the_table == PUPILS_TABLE:
-                                data_entry = Base.execution_server(
-                                    ["check_which_item_this_is",
-                                     CIRCULATIONS_TABLE, self.box.get()])
-                                e.append(str(data_entry[1]))
-                                e.append("ריק")
-                            print(e)
-                            data = ["add_item", self.the_name_of_the_table, e]
-                            Base.execution_server(data)
-                        else:
-                            self.label.configure(text="הכנסת תווים שהם לא מילים")
-                            self.entrys[0].configure(fg_color="#d35b58")
-                    else:
-                        self.entrys[1].configure(fg_color="#d35b58")
-                        self.label.configure(text="לא הכנסת עשר תווים במספר הטלפון")
-
-                else:
-                    self.label.configure(text="הכנסת קלט שהוא לא מספר")
-                    self.entrys[1].configure(fg_color="#d35b58")
             else:
-                self.label.configure(text="שני הנתונים לא נכונים")
-                self.entrys[1].configure(fg_color="#d35b58")
-                self.entrys[0].configure(fg_color="#d35b58")
+                print(self.entrys[0].get())
+                print(i[0])
+                if i[0] == self.entrys[1].get():
+                    d = False
+        print(d)
+        if d:
+            if self.the_name_of_the_table == CIRCULATIONS_TABLE or self.the_name_of_the_table == PASSWORD_TABLE:
+                max_column = Base.execution_server(
+                                        [GET_MAX, self.the_name_of_the_table, "the_number_of_circulation"])
+                self.entrys.insert(0, max_column)
+                data = ["add_item", self.the_name_of_the_table, [self.entrys[0].get(), self.entrys[1].get()]]
+                Base.execution_server(data)
+            else:
+                entry_to_add = []
+                for num in range(2):
+                    self.entrys[num].get()
+                    entry_to_add.append(self.entrys[num].get())
+                if CheckID(str(self.entrys[1].get())):
+                    if self.the_name_of_the_table == PUPILS_TABLE:
+                        data_entry = Base.execution_server(
+                       ["check_which_item_this_is",
+                                                  CIRCULATIONS_TABLE, self.box.get()])
+                        entry_to_add.append(data_entry[1])
+                        entry_to_add.append("ריק")
+                        print(entry_to_add)
+                        print(self.the_name_of_the_table)
+                    data = ["add_item", self.the_name_of_the_table, entry_to_add]
+                    Base.execution_server(data)
+                else:
+                    self.label.configure(text="הכנסת קלט שהוא לא תקין")
+                    self.entrys[1].configure(fg_color="#d35b58")
+
+            # if self.the_name_of_the_table == CIRCULATIONS_TABLE or \
+            #         self.entrys[1].get().isnumeric() or \
+            #         len(str(self.entrys[1].get())) == 10 \
+            #         or not self.entrys[0].get().isnumeric():
+            #     if self.the_name_of_the_table == CIRCULATIONS_TABLE or\
+            #             self.entrys[1].get().isnumeric():
+            #         if self.the_name_of_the_table == CIRCULATIONS_TABLE or len(
+            #                 str(self.entrys[1].get())) == 10:
+            #             if not self.entrys[0].get().isnumeric():
+            #                 e = []
+            #                 if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+            #                     max_column = Base.execution_server(
+            #                         [GET_MAX, self.the_name_of_the_table, "the_number_of_circulation"])
+            #                     e.append(max_column)
+            #                 for entry in self.entrys:
+            #                     e.append(str(entry.get()))
+            #                     print(self.the_name_of_the_table)
+            #                 if self.the_name_of_the_table == PUPILS_TABLE:
+            #                     data_entry = Base.execution_server(
+            #                         ["check_which_item_this_is",
+            #                          CIRCULATIONS_TABLE, self.box.get()])
+            #                     e.append(str(data_entry[1]))
+            #                     e.append("ריק")
+            #                 print(e)
+            #                 data = ["add_item", self.the_name_of_the_table, e]
+            #                 Base.execution_server(data)
+            #             else:
+            #                 self.label.configure(text="הכנסת תווים שהם לא מילים")
+            #                 self.entrys[0].configure(fg_color="#d35b58")
+            #         else:
+            #             self.entrys[1].configure(fg_color="#d35b58")
+            #             self.label.configure(text="לא הכנסת עשר תווים\n במספר הטלפון")
+            #
+            #     else:
+            #         self.label.configure(text="הכנסת קלט שהוא לא מספר")
+            #         self.entrys[1].configure(fg_color="#d35b58")
+            # else:
+            #     self.label.configure(text="שני הנתונים לא נכונים")
+            #     self.entrys[1].configure(fg_color="#d35b58")
+            #     self.entrys[0].configure(fg_color="#d35b58")
         else:
-            self.label.configure(text="הנתון שהכנסת כבר קיים")
+            self.label.configure(text="הנתונים שהכנסת כבר קיימים")
             self.entrys[0].configure(fg_color="#d35b58")
+            self.entrys[1].configure(fg_color="#d35b58")
         self.root.after(4000, self.clear_entrys)
         self.root.after(4000, self.clear_label)
 

@@ -142,11 +142,11 @@ def main_window():
             item_string = " :מחזור"
             item_string_2 = list_items[1]
         elif tool.the_name_of_the_table == "pupils_table":
-            item_string = " :שם" + "\n" + " :מספר טלפון" + "\n" + " :מחזור"
+            item_string = " :שם" + "\n" + " :תעודת זהות" + "\n" + " :מחזור"
             item_string_2 = list_items[0] + "\n" + list_items[1] + "\n" + \
                             list_items[2]
         else:
-            item_string = " :שם" + "\n" + " :מספר טלפון"
+            item_string = " :שם" + "\n" + " :תעודת זהות"
             item_string_2 = list_items[0] + "\n" + list_items[1]
 
         tool.label_2.configure(text=item_string)

@@ -29,7 +29,7 @@ def search():
             ["add_teacher_to_pupil", the_teacher_to_add,
              the_pupil_to_add])
 
-        search_box_teachers["values"] = client.client_classes_folder.Base.Base.execution_server(
+        search_box_pupils["values"] = client.client_classes_folder.Base.Base.execution_server(
             ["pupils_in_teachers"])
 
     def remove_teacher_to_pupil():
@@ -38,7 +38,7 @@ def search():
              "teachers_table", update_box_teachers.get()])
         client.client_classes_folder.Base.Base.execution_server(
             ["add_teacher_to_pupil", the_pupil_to_remove, "ריק"])
-        search_box_teachers["values"] = client.client_classes_folder.Base.Base.execution_server(
+        search_box_pupils["values"] = client.client_classes_folder.Base.Base.execution_server(
             ["pupils_in_teachers"])
 
     root = customtkinter.CTk()

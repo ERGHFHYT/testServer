@@ -25,7 +25,7 @@ def update(data_entry, the_name_of_the_table):
         if the_name_of_the_table == "circulations_table":
             tool.start(["מחזור"], data_entry)
         else:
-            tool.start(["שם", "מספר טלפון"], data_entry)
+            tool.start(["שם", "תעודת זהות"], data_entry)
         if the_name_of_the_table == "pupils_table":
             list_data = client.client_classes_folder.Custom_window.\
                 Custom_window.execution_server([GET_TABLE, "circulations_table"])
@@ -38,5 +38,5 @@ def update(data_entry, the_name_of_the_table):
         tool.big_title_to_add(100, 50)
         tool.add_colors()
     tool.the_location = root_2
-    tool.label = tool.create_masages(220, 80, "#343638", "", 0.5, 0.7, -16)
+    tool.label = tool.create_masages(200, 80, BACKGROUND_COLOR_OF_CUSTOM_WINDOWS, "", 0.5, 0.7, -16)
     root_2.mainloop()

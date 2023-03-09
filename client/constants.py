@@ -25,6 +25,7 @@ MIDDLE = 0.5
 RED = "#b20e1b"
 NUM_BLUE = "#1f6aa5"
 BACKGROUND_COLOR = "#2b2b2b"
+BACKGROUND_COLOR_OF_CUSTOM_WINDOWS = "#333333"
 DARK = "Dark"
 BLUE = "blue"
 DARK_GRAY = "#2a2d2e"
@@ -70,3 +71,26 @@ DEFAULT_FONT = "Halvetica"
 
 # Definitions of objects on the screen
 ENTRY_JUSTIFY = 'right'
+
+
+def CheckID(ID):
+    if len(ID) != 9:
+        return False
+
+    try:
+        id = list(map(int, ID))
+    except:
+        return False
+
+    counter = 0
+
+    for i in range(9):
+        id[i] *= (i % 2) + 1
+        if id[i] > 9:
+            id[i] -= 9
+        counter += id[i]
+
+    if counter % 10 == 0:
+        return True
+    else:
+        return False
