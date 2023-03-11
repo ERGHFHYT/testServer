@@ -66,13 +66,14 @@ def check_password():
     return False
 
 
-def db(name):
+def db(the_name_of_the_table):
     #  הפונקציה לוקחת את כל הנתונים מה database
-    mycursor.execute("SELECT * FROM " + name)
-    myresults = mycursor.fetchall()
+    mycursor.execute("SELECT * FROM " + the_name_of_the_table)
+    my_results = mycursor.fetchall()
     my_final_result = []
-    for result in myresults:
+    for result in my_results:
         my_final_result.append(list(result))
+
 
     return my_final_result
 

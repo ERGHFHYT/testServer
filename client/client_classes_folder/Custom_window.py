@@ -35,7 +35,10 @@ class Custom_window(Base):
         d = True
         data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
         for i in data:
-            if self.the_name_of_the_table == PUPILS_TABLE:
+            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                if i[0] == self.entrys[0].get():
+                    d = False
+            elif self.the_name_of_the_table == PUPILS_TABLE:
                 if i[1] == self.entrys[1].get():
                     d = False
             else:
@@ -45,11 +48,13 @@ class Custom_window(Base):
                     d = False
         print(d)
         if d:
-            if self.the_name_of_the_table == CIRCULATIONS_TABLE or self.the_name_of_the_table == PASSWORD_TABLE:
+            if self.the_name_of_the_table == PASSWORD_TABLE:
+                data = ["add_item", self.the_name_of_the_table, [self.entrys[0].get(), self.entrys[1].get()]]
+                Base.execution_server(data)
+            elif self.the_name_of_the_table == CIRCULATIONS_TABLE:
                 max_column = Base.execution_server(
                                         [GET_MAX, self.the_name_of_the_table, "the_number_of_circulation"])
-                self.entrys.insert(0, max_column)
-                data = ["add_item", self.the_name_of_the_table, [self.entrys[0].get(), self.entrys[1].get()]]
+                data = ["add_item", self.the_name_of_the_table, [max_column, self.entrys[0].get()]]
                 Base.execution_server(data)
             else:
                 entry_to_add = []

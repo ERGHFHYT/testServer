@@ -87,10 +87,10 @@ class New_wind(Base):
         self.label_3.configure(text=EMPTY_SPACE)
 
     def update_single(self, the_execute):
-        if the_execute == CHECK_PASSWORD_FROM_TABLE:
+        if the_execute == "chek":
             data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
-            global_entry = str(self.label_3.text)
-            print(global_entry)
+            global_entry = str(self.box.get())
+            print("the global_entry ", global_entry)
             if global_entry != EMPTY_SPACE:
                 for d in data:
                     if not self.the_name_of_the_table == CIRCULATIONS_TABLE:
