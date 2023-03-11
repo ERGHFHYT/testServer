@@ -128,9 +128,9 @@ def add_teacher_to_pupil(teacher, pupil):
     print(teacher)
     remove_item("pupils_table", str(pupil[1]))
     if teacher[1].isnumeric():
-        pupil[3] = teacher[0]
-    else:
         pupil[3] = teacher[1]
+    else:
+        pupil[3] = teacher[0]
 
     add_item("pupils_table", pupil)
 

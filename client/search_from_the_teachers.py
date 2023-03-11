@@ -11,9 +11,9 @@ def search():
     def event(event):
         finel_list = []
         for pupil in pupils_in_teachers_data:
-            print(pupil)
+            print(pupil[0])
             print(search_box_teachers.get())
-            if pupil[3] in search_box_teachers.get():
+            if pupil[0] in search_box_teachers.get():
                 finel_list.append(pupil)
         search_box_pupils["values"] = finel_list
 
@@ -35,9 +35,9 @@ def search():
     def remove_teacher_to_pupil():
         the_pupil_to_remove = client.client_classes_folder.Base.Base.execution_server(
             ["check_which_item_this_is",
-             "teachers_table", update_box_teachers.get()])
+             "pupils_table", update_box_pupils.get()])
         client.client_classes_folder.Base.Base.execution_server(
-            ["add_teacher_to_pupil", the_pupil_to_remove, "ריק"])
+            ["add_teacher_to_pupil", ["ריק", "ריק", "ריק", "ריק"], the_pupil_to_remove])
         search_box_pupils["values"] = client.client_classes_folder.Base.Base.execution_server(
             ["pupils_in_teachers"])
 
