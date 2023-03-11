@@ -10,9 +10,10 @@ from client.new_window import main_window
 def search():
     def event(event):
         finel_list = []
-        pupils_in_teachers_data = client.client_classes_folder.Base.Base.execution_server(
+        data = client.client_classes_folder.Base.Base.execution_server(
             ["pupils_in_teachers"])
-        for pupil in pupils_in_teachers_data:
+        print(data)
+        for pupil in data:
             print(pupil[0])
             print(search_box_teachers.get())
             if pupil[0] in search_box_teachers.get():
