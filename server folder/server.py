@@ -27,9 +27,9 @@ def remove_item(the_name_of_the_table, typed):
 def pupils_in_teachers():
     sql = "SELECT \
     teachers_table.id AS id_t, \
-    pupils_table.name AS name_p \
+    pupils_table.name AS name_p, \
     pupils_table.id AS id_p, \
-    pupils_table.circulation AS circulation_p,\
+    pupils_table.circulation AS circulation_p\
     FROM pupils_table \
     INNER JOIN teachers_table ON pupils_table.teacher = teachers_table.id"
 
