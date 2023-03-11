@@ -137,19 +137,6 @@ def add_teacher_to_pupil(teacher, pupil):
     add_item("pupils_table", pupil)
 
 
-def there_is_an_english_character_in_the_list(items_to_add):
-    for string in items_to_add:
-        for s in string:
-            try:
-                s.encode(encoding='utf-8').decode('ascii')
-            except UnicodeDecodeError:
-                pass
-            else:
-                if not s.isnumeric():
-                    return True
-    return False
-
-
 def add_item(the_name_of_the_table, items_to_add):
     i = []
     the_list_of_the_data = db(the_name_of_the_table)

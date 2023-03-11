@@ -31,22 +31,21 @@ BLUE = "blue"
 DARK_GRAY = "#2a2d2e"
 
 # image's
-BACKGROUND_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\background image.webp"
-
-
-ADD_LIST_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\add-list.png"
-
-ADD_USER_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\add-user.png"
-ADD_FOLDER_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\" \
-                   "add_folder.png"
-CHECK_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\ckenck.png"
-HOME_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\home.png"
-MICROPHONE_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\" \
+BACKGROUND_IMAGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/" \
+                   "background image.webp"
+TEACHER_IMAGE = "C:/Users/ינון/PycharmProjects/testServer/imege's" \
+                "/teacher_image.png"
+CHECK_IMAGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/ckenck.png"
+HOME_IMAGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/home.png"
+MICROPHONE_IMAGE = "C:/Users/ינון/PycharmProjects/testServer/imege's" \
                    "/microphone" \
                    ".png"
-TEACHER_IMAGE = "C:\\Users\\User\\PycharmProjects\\testServer\\imege's\\" \
-                "teacher_image" \
-                ".png"
+ADD_LIST_IMAGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/" \
+                 "add-list.png"
+
+ADD_USER_IMAGE = "C:/Users/ינון/PycharmProjects/testServer/imege's/add-user.png"
+ADD_FOLDER_IMAGE = "C:/Users/ינון/PycharmProjects/testServer/imege's" \
+                   "/add_folder.png" \
 
 # receive from the server
 CORRECT_PASSWORD = "True"
