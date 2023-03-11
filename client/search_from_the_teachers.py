@@ -10,6 +10,8 @@ from client.new_window import main_window
 def search():
     def event(event):
         finel_list = []
+        pupils_in_teachers_data = client.client_classes_folder.Base.Base.execution_server(
+            ["pupils_in_teachers"])
         for pupil in pupils_in_teachers_data:
             print(pupil[0])
             print(search_box_teachers.get())
@@ -31,6 +33,10 @@ def search():
 
         search_box_pupils["values"] = client.client_classes_folder.Base.Base.execution_server(
             ["pupils_in_teachers"])
+        update_box_pupils["values"] = client.client_classes_folder.Base.Base.execution_server(
+            [GET_TABLE, PUPILS_TABLE])
+        update_box_teachers.set(EMPTY_SPACE)
+        update_box_pupils.set(EMPTY_SPACE)
 
     def remove_teacher_to_pupil():
         the_pupil_to_remove = client.client_classes_folder.Base.Base.execution_server(
@@ -41,11 +47,18 @@ def search():
         search_box_pupils["values"] = client.client_classes_folder.Base.Base.execution_server(
             ["pupils_in_teachers"])
 
+        update_box_pupils["values"] = client.client_classes_folder.Base.Base.execution_server(
+            [GET_TABLE, PUPILS_TABLE])
+
+        update_box_teachers.set(EMPTY_SPACE)
+        update_box_pupils.set(EMPTY_SPACE)
+
     root = customtkinter.CTk()
     tool = client.client_classes_folder.Base.Base(root, "מסך חיפוש תלמידים "
                                                         "לפי מורים",
                                                   "Dark",
                                                   "blue", None, None)
+
 
     def go_back():
         root.destroy()
