@@ -20,18 +20,18 @@ def remove_item(the_name_of_the_table, typed):
             mydb.commit()
     for d in the_list_of_the_data:
         print(d)
-        add_item_for_the_remove_function(the_name_of_the_table, d)
+        add_item_for_internal_function(the_name_of_the_table, d)
     return the_list_of_the_data
 
 
 def pupils_in_teachers():
     sql = "SELECT \
-    teachers_table.id AS id_t, \
+    teachers_table.name AS id_t, \
     pupils_table.circulation AS circulation_p,\
     pupils_table.id AS id_p, \
     pupils_table.name AS name_p \
     FROM pupils_table \
-    INNER JOIN teachers_table ON pupils_table.teacher = teachers_table.id"
+    INNER JOIN teachers_table ON pupils_table.teacher = teachers_table.name"
 
     mycursor.execute(sql)
     list_name = mycursor.fetchall()
@@ -133,7 +133,7 @@ def add_teacher_to_pupil(teacher, pupil):
     else:
         pupil[3] = teacher[0]
 
-    add_item("pupils_table", pupil)
+    add_item_for_internal_function("pupils_table", pupil)
 
 
 def there_is_an_english_character_in_the_list(items_to_add):
@@ -173,7 +173,7 @@ def add_item(the_name_of_the_table, items_to_add):
     return the_list_of_the_data
 
 
-def add_item_for_the_remove_function(the_name_of_the_table, items_to_add):
+def add_item_for_internal_function(the_name_of_the_table, items_to_add):
     i = []
     the_list_of_the_data = db(the_name_of_the_table)
     if the_name_of_the_table == "password_table":
