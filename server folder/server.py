@@ -150,8 +150,6 @@ def there_is_an_english_character_in_the_list(items_to_add):
 
 
 def add_item(the_name_of_the_table, items_to_add):
-    # if there_is_an_english_character_in_the_list(items_to_add):
-    #     items_to_add.reverse()
     i = []
     the_list_of_the_data = db(the_name_of_the_table)
     if the_name_of_the_table == "password_table":
