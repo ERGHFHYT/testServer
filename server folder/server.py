@@ -26,12 +26,12 @@ def remove_item(the_name_of_the_table, typed):
 
 def pupils_in_teachers():
     sql = "SELECT \
-    teachers_table.name AS id_t, \
+    teachers_table.id AS id_t, \
     pupils_table.circulation AS circulation_p,\
     pupils_table.id AS id_p, \
     pupils_table.name AS name_p \
     FROM pupils_table \
-    INNER JOIN teachers_table ON pupils_table.name = teachers_table.name"
+    INNER JOIN teachers_table ON pupils_table.id = teachers_table.id"
 
     mycursor.execute(sql)
     list_name = mycursor.fetchall()
