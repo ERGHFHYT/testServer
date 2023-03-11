@@ -31,10 +31,11 @@ def pupils_in_teachers():
     pupils_table.id AS id_p, \
     pupils_table.name AS name_p \
     FROM pupils_table \
-    ON pupils_table.teacher = teachers_table.id"
+    INNER JOIN teachers_table ON pupils_table.teacher = teachers_table.name"
 
     mycursor.execute(sql)
     list_name = mycursor.fetchall()
+    print(list_name)
     return list(list_name)
 
 
