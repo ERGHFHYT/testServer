@@ -90,12 +90,12 @@ the_names_of_the_computers = \
     client.client_classes_folder.Base.Base.execution_server([GET_TABLE,
                                                             COMPUTER_NAMES_TABLE])
 the_name_of_this_computer = str(socket.gethostname())
-booli = False
+this_computer_is_in_the_system = False
 for name in the_names_of_the_computers:
     if name == the_name_of_this_computer:
-        booli = True
+        this_computer_is_in_the_system = True
 
-if booli:
+if this_computer_is_in_the_system:
     new_window.main_window()
 else:
     entry_window()

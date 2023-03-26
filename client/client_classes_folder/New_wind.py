@@ -2,7 +2,7 @@ from client.constants import *
 import customtkinter
 from client.client_classes_folder.Base import Base
 
-from tkinter import filedialog as fd
+from tkinter import filedialog as fd, ttk
 from openpyxl import load_workbook
 import pynput
 import speech_recognition
@@ -28,15 +28,16 @@ class New_wind(Base):
         self.the_location = None
 
     def change_the_screen_following_the_table(self, name_for_the_test,
-        the_number_of_the_button,the_name_of_the_table):
+                                              the_number_of_the_button,
+                                              the_name_of_the_table):
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
         self.box.set(EMPTY_SPACE)
         self.the_name_of_the_table = the_name_of_the_table
         self.root.label_1.destroy()
         self.root.label_1 = customtkinter.CTkLabel(master=self.root.frame_right,
-                                              text=name_for_the_test,
-                                              font=(DEFAULT_FONT,
+                                                   text=name_for_the_test,
+                                                   font=(DEFAULT_FONT,
                                                          -25))
         self.root.label_1.place(relx=0.8, rely=0.03)
         for i in range(5):
@@ -68,27 +69,37 @@ class New_wind(Base):
     def button_circulations(self):
         New_wind.change_the_screen_following_the_table(self, "מחזורים", 4,
                                                        "circulations_table")
+
     def button_password(self):
         New_wind.change_the_screen_following_the_table(self, "סיסמה", 3,
                                                        "password_table")
 
     def button_Practitioners(self):
         New_wind.change_the_screen_following_the_table(self, "מתרגלים", 2,
-                                               "practitioners_table")
+                                                       "practitioners_table")
 
     def remove_item(self):
         typed = self.box.get()
-        Base.execution_server([REMOVE_ITEM_FROM_TABLE, self.the_name_of_the_table,
-                               str(typed)])
-        self.box["values"] = tuple(Base.execution_server([GET_TABLE,
-                                                self.the_name_of_the_table]))
+        Base.execution_server(
+            [REMOVE_ITEM_FROM_TABLE, self.the_name_of_the_table,
+             str(typed)])
+        list_data = tuple(Base.execution_server([GET_TABLE,
+                                                 self.the_name_of_the_table]))
+        if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+            list_d = []
+            for l in list_data:
+                list_d.append(l[1])
+            self.box["values"] = tuple(list_d)
+        else:
+            self.box["values"] = list_data
         self.box.set(EMPTY_SPACE)
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
 
     def update_single(self, the_execute):
         if the_execute == "chek":
-            data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
+            data = Base.execution_server(
+                [GET_TABLE, self.the_name_of_the_table])
             global_entry = str(self.box.get())
             print("the global_entry ", global_entry)
             if global_entry != EMPTY_SPACE:
@@ -103,7 +114,7 @@ class New_wind(Base):
                             break
                 self.root.destroy()
                 update_item.update(global_entry,
-                                          self.the_name_of_the_table)
+                                   self.the_name_of_the_table)
             else:
                 self.label.configure(text="לא בחרת איזה נתונים לעדכן")
                 self.root.after(4000, self.clear_label)
@@ -115,7 +126,8 @@ class New_wind(Base):
 
     def catching_sound(self, typed):
         data = []
-        list_data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
+        list_data = Base.execution_server(
+            [GET_TABLE, self.the_name_of_the_table])
         for item in list_data:
             if typed.lower() in item:
                 data.append(item)
@@ -127,27 +139,31 @@ class New_wind(Base):
             initialdir='/',
         )
         try:
+            print("----------")
             wb = load_workbook(filename)
             ws = wb.active
             A = ws["A"]
+            print("A", A)
             if self.the_name_of_the_table in [PASSWORD_TABLE, PUPILS_TABLE,
-                                              TEACHERS_TABLE, PRACTITIONERS_TABLE]:
+                                              TEACHERS_TABLE,
+                                              PRACTITIONERS_TABLE]:
                 B = ws["B"]
             if self.the_name_of_the_table == PUPILS_TABLE:
                 C = ws["C"]
+                D = ws["D"]
             exel_list = []
-            for a in range(len(A)):
-                if A[a].value is None:
-                    A[a].value = "ריק"
+            for current_row in range(len(A)):
+                if A[current_row].value is None:
+                    A[current_row].value = "ריק"
                 if self.the_name_of_the_table == TEACHERS_TABLE or \
                         PUPILS_TABLE or PRACTITIONERS_TABLE or PASSWORD_TABLE:
-                    if B[a].value is None:
-                        B[a].value = "ריק"
+                    if B[current_row].value is None:
+                        B[current_row].value = "ריק"
                 if self.the_name_of_the_table == PUPILS_TABLE:
-                    if C[a].value is None:
-                        C[a].value = "ריק"
-
-
+                    if C[current_row].value is None:
+                        C[current_row].value = "ריק"
+                    if D[current_row].value is None:
+                        D[current_row].value = "ריק"
 
             def add_item(item_list):
                 for exel in exel_list:
@@ -160,12 +176,15 @@ class New_wind(Base):
                         item_list.append(exel)
                 return item_list
 
-            for i in range(len(A)):
-                if self.the_name_of_the_table == "password_table":
-                    l = [str(A[i].value), str(B[i].value)]
+            for current_row in range(len(A)):
+                if self.the_name_of_the_table == PUPILS_TABLE:
+                    row_to_add = [A[current_row].value,
+                                  str(B[current_row].value),
+                                  C[current_row].value, D[current_row].value]
                 else:
-                    l = [A[i].value, str(B[i].value), C[i].value]
-                exel_list.append(l)
+                    row_to_add = [str(A[current_row].value),
+                                  str(B[current_row].value)]
+                exel_list.append(row_to_add)
             data_to_add = ["add_exel", exel_list, self.the_name_of_the_table]
             teachers = Base.execution_server(data_to_add)
             teachers = add_item(teachers)
@@ -176,11 +195,8 @@ class New_wind(Base):
             self.label.configure(text="הקובץ שנתנת הוא לא קובץ אקסל")
         self.root.after(4000, self.clear_label)
 
-
     def clear_label(self):
         self.label.configure(text=EMPTY_SPACE)
-
-
 
     def voice(self):
         recognizer = speech_recognition.Recognizer()
@@ -193,9 +209,9 @@ class New_wind(Base):
                 audio = recognizer.listen(mic, phrase_time_limit=10)
                 if audio != '':
                     self.box.set(str(recognizer.recognize_google(audio,
-                                                             language="he")))
+                                                                 language="he")))
                     self.catching_sound(str(recognizer.recognize_google(audio,
-                                                           language="he")))
+                                                                        language="he")))
 
             except:
                 self.label = self.create_masages(220, 100, "#2a2d2e",
@@ -204,13 +220,23 @@ class New_wind(Base):
                 self.root.after(4000, self.clear_label)
         mouse_listener.stop()
 
+    def create_tree(self):
+        style = ttk.Style()
+        style.theme_use('default')
+        style.configure("Treeview", backrground="D3D3D3",
+                        forerground="black", rowheight=25,
+                        fieldbackrground="D3D3D3")
+        
+        tree = ttk.Treeview(self.root, column=("c1", "c2"), show='headings',
+                            height=6)
 
+        tree.place(
+            relx=0.5, rely=0.5)
 
-
-
-    def check(self,event):
+    def check(self, event):
         typed = self.box.get()
-        list_data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
+        list_data = Base.execution_server(
+            [GET_TABLE, self.the_name_of_the_table])
         if typed == '':
             data = list_data
         else:

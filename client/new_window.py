@@ -30,14 +30,14 @@ def main_window():
         PhotoImage(Image.open(MICROPHONE_IMAGE).
                    resize((ICON_IMAGE_SIZE, ICON_IMAGE_SIZE), Image.ANTIALIAS))
     add_list_image = ImageTk.PhotoImage(Image.open(ADD_LIST_IMAGE).
-                                        resize(
+    resize(
         (ICON_IMAGE_SIZE, ICON_IMAGE_SIZE), Image.ANTIALIAS))
     teacher_image = ImageTk.PhotoImage(
         Image.open(TEACHER_IMAGE).resize((ICON_IMAGE_SIZE, ICON_IMAGE_SIZE),
                                          Image.ANTIALIAS))
     check_list_image = ImageTk.PhotoImage(
         Image.open(CHECK_IMAGE).resize(CHECK_IMAGE_SIZE,
-                                        Image.ANTIALIAS))
+                                       Image.ANTIALIAS))
     root_2.frame_right = customtkinter.CTkFrame(master=root_2, height=550,
                                                 width=650)
     root_2.frame_right.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
@@ -96,11 +96,11 @@ def main_window():
 
     list_of_buttons[0].configure(fg_color=DARK_GRAY)
     root_2.button_5 = customtkinter.CTkButton(master=root_2.frame_right,
-                                              text="", image=add_mic_image,
+                                              text="תראה",
                                               height=40,
                                               width=40,
                                               corner_radius=15,
-                                              command=tool.voice)
+                                              command=tool.create_tree)
     root_2.button_5.place(relx=0.2, rely=0.1)
     root_2.button_9 = customtkinter.CTkButton(master=root_2.frame_right,
                                               height=40,
@@ -119,8 +119,8 @@ def main_window():
     button_2.place(relx=0.3, rely=0.85)
 
     box = ttk.Combobox(root_2.frame_right, width=28,
-                                    font=("Halvetica", 20), values=list_data,
-                                    justify='right')
+                       font=("Halvetica", 20), values=list_data,
+                       justify='right')
     box.place(relx=0.3, rely=0.1)
     tool.the_location = root_2.frame_right
     tool.label = tool.create_masages(200, 120, "#2b2b2b", "", 0.25, 0.6,
@@ -133,7 +133,8 @@ def main_window():
 
     def event(event):
         list_items = tool.execution_server(["check_which_item_this_is",
-                                            tool.the_name_of_the_table, tool.box.get()
+                                            tool.the_name_of_the_table,
+                                            tool.box.get()
                                             ])
         if tool.the_name_of_the_table == "password_table":
             item_string = " :שם משתמש" + "\n" + " :סיסמה"

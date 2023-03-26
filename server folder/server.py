@@ -13,7 +13,6 @@ def remove_item(the_name_of_the_table, typed):
     # בודק לפי מה שהמשתמש כתב מה הכי קרוב להיות מה שהוא רוצה למחוק
     for single_data_from_the_list in the_list_of_the_data:
         if single_data_from_the_list[1] in typed:
-            print(single_data_from_the_list[1])
             the_list_of_the_data.remove(single_data_from_the_list)
             sql = "DELETE FROM " + the_name_of_the_table
             mycursor.execute(sql)

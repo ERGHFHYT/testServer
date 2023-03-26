@@ -10,7 +10,8 @@ from client.constants import *
 class Custom_window(Base):
     def __init__(self, root, windows_name, appearance_mode,
                  default_color_theme, the_name_of_the_table, color_object,
-                 label, the_location, box, entrys):
+                 data_entry,
+                 label=None, the_location=None, box=None, entrys=None):
         super().__init__(root, windows_name, appearance_mode,
                          default_color_theme, label, the_location)
         self.root = root
@@ -23,15 +24,18 @@ class Custom_window(Base):
         self.box = box
         self.the_location = the_location
         self.entrys = entrys
+        self.data_entry = data_entry
 
         tool = Base(root, windows_name, appearance_mode, default_color_theme,
                     label, the_location)
         tool.window()
 
-
-
-
     def add_item(self):
+        print(self.data_entry)
+        if self.data_entry is not None:
+            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                   self.the_name_of_the_table, self.data_entry])
+
         d = True
         data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
         for i in data:
@@ -49,13 +53,18 @@ class Custom_window(Base):
         print(d)
         if d:
             if self.the_name_of_the_table == PASSWORD_TABLE:
-                data = ["add_item", self.the_name_of_the_table, [self.entrys[0].get(), self.entrys[1].get()]]
+                data = ["add_item", self.the_name_of_the_table,
+                        [self.entrys[0].get(), self.entrys[1].get()]]
                 Base.execution_server(data)
+                self.label.configure(text="!קלט הוכנס בהצלחה")
             elif self.the_name_of_the_table == CIRCULATIONS_TABLE:
                 max_column = Base.execution_server(
-                                        [GET_MAX, self.the_name_of_the_table, "the_number_of_circulation"])
-                data = ["add_item", self.the_name_of_the_table, [max_column, self.entrys[0].get()]]
+                    [GET_MAX, self.the_name_of_the_table,
+                     "the_number_of_circulation"])
+                data = ["add_item", self.the_name_of_the_table,
+                        [max_column, self.entrys[0].get()]]
                 Base.execution_server(data)
+                self.label.configure(text="!קלט הוכנס בהצלחה")
             else:
                 entry_to_add = []
                 for num in range(2):
@@ -64,58 +73,19 @@ class Custom_window(Base):
                 if CheckID(str(self.entrys[1].get())):
                     if self.the_name_of_the_table == PUPILS_TABLE:
                         data_entry = Base.execution_server(
-                       ["check_which_item_this_is",
-                                                  CIRCULATIONS_TABLE, self.box.get()])
+                            ["check_which_item_this_is",
+                             CIRCULATIONS_TABLE, self.box.get()])
                         entry_to_add.append(data_entry[1])
                         entry_to_add.append("ריק")
                         print(entry_to_add)
                         print(self.the_name_of_the_table)
-                    data = ["add_item", self.the_name_of_the_table, entry_to_add]
+                    data = ["add_item", self.the_name_of_the_table,
+                            entry_to_add]
                     Base.execution_server(data)
+                    self.label.configure(text="!קלט הוכנס בהצלחה")
                 else:
                     self.label.configure(text="הכנסת קלט שהוא לא תקין")
                     self.entrys[1].configure(fg_color="#d35b58")
-
-            # if self.the_name_of_the_table == CIRCULATIONS_TABLE or \
-            #         self.entrys[1].get().isnumeric() or \
-            #         len(str(self.entrys[1].get())) == 10 \
-            #         or not self.entrys[0].get().isnumeric():
-            #     if self.the_name_of_the_table == CIRCULATIONS_TABLE or\
-            #             self.entrys[1].get().isnumeric():
-            #         if self.the_name_of_the_table == CIRCULATIONS_TABLE or len(
-            #                 str(self.entrys[1].get())) == 10:
-            #             if not self.entrys[0].get().isnumeric():
-            #                 e = []
-            #                 if self.the_name_of_the_table == CIRCULATIONS_TABLE:
-            #                     max_column = Base.execution_server(
-            #                         [GET_MAX, self.the_name_of_the_table, "the_number_of_circulation"])
-            #                     e.append(max_column)
-            #                 for entry in self.entrys:
-            #                     e.append(str(entry.get()))
-            #                     print(self.the_name_of_the_table)
-            #                 if self.the_name_of_the_table == PUPILS_TABLE:
-            #                     data_entry = Base.execution_server(
-            #                         ["check_which_item_this_is",
-            #                          CIRCULATIONS_TABLE, self.box.get()])
-            #                     e.append(str(data_entry[1]))
-            #                     e.append("ריק")
-            #                 print(e)
-            #                 data = ["add_item", self.the_name_of_the_table, e]
-            #                 Base.execution_server(data)
-            #             else:
-            #                 self.label.configure(text="הכנסת תווים שהם לא מילים")
-            #                 self.entrys[0].configure(fg_color="#d35b58")
-            #         else:
-            #             self.entrys[1].configure(fg_color="#d35b58")
-            #             self.label.configure(text="לא הכנסת עשר תווים\n במספר הטלפון")
-            #
-            #     else:
-            #         self.label.configure(text="הכנסת קלט שהוא לא מספר")
-            #         self.entrys[1].configure(fg_color="#d35b58")
-            # else:
-            #     self.label.configure(text="שני הנתונים לא נכונים")
-            #     self.entrys[1].configure(fg_color="#d35b58")
-            #     self.entrys[0].configure(fg_color="#d35b58")
         else:
             self.label.configure(text="הנתונים שהכנסת כבר קיימים")
             self.entrys[0].configure(fg_color="#d35b58")
@@ -123,14 +93,14 @@ class Custom_window(Base):
         self.root.after(4000, self.clear_entrys)
         self.root.after(4000, self.clear_label)
 
-    def start(self, the_names_of_the_entrys, data_entry):
+    def start(self, the_names_of_the_entrys):
         def go_back():
             self.root.destroy()
             client.new_window.main_window()
 
         self.root.frame_1 = customtkinter.CTkFrame(master=self.root,
                                                    corner_radius=0,
-                                               height=550, width=650)
+                                                   height=550, width=650)
         self.root.frame_1.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
 
         label_1 = customtkinter.CTkFrame(master=self.root.frame_1, height=550,
@@ -145,56 +115,56 @@ class Custom_window(Base):
                 placeholder_text=the_names_of_the_entrys[name], font=(
                     "Halvetica", -20),
                 justify='right')
-            self.root.my_entry_2.place(relx=0.5, rely=num, anchor=tkinter.CENTER)
+            self.root.my_entry_2.place(relx=0.5, rely=num,
+                                       anchor=tkinter.CENTER)
             num += 0.15
         print(len(entrys))
         self.entrys = entrys
 
         self.root.button_2 = customtkinter.CTkButton(master=self.root.frame_1,
-                                                 text="עדכן",
-                                                corner_radius=0,
+                                                     text="עדכן",
+                                                     corner_radius=0,
                                                      command=
                                                      self.add_item,
                                                      width=200)
         self.root.button_2.place(relx=0.7, rely=0.85, anchor=tkinter.CENTER)
         self.root.button_3 = customtkinter.CTkButton(master=self.root.frame_1,
-                                                 text="חזור",
-                                                corner_radius=0,
+                                                     text="חזור",
+                                                     corner_radius=0,
                                                      command=go_back,
                                                      width=200)
         self.root.button_3.place(relx=0.3, rely=0.85, anchor=tkinter.CENTER)
         try:
-            if data_entry != EMPTY_SPACE:
+            if self.data_entry is not None:
                 num = 0
-                for data in data_entry:
+                for data in self.data_entry:
                     entrys[num].insert(0, str(data))
                     num += 1
         except Exception as e:
             print(e)
 
-
     def big_title_to_add(self, width, height):
         name = self.the_name_of_the_table.split("_")
-        self.root.frame_1.label_1 = customtkinter.CTkLabel(master=self.root.frame_1,
-                                                           width=width,
-                                                           height=height,
-                                                           fg_color=self.color_object,
-                                                           corner_radius=0,
-                                                           text=name[0],
-                                                           font=("Halvetica", -16))
-        self.root.frame_1.label_1.place(relx=0.5, rely=0.1, anchor=tkinter.CENTER)
+        self.root.frame_1.label_1 = customtkinter.CTkLabel(
+            master=self.root.frame_1,
+            width=width,
+            height=height,
+            fg_color=self.color_object,
+            corner_radius=0,
+            text=name[0],
+            font=("Halvetica", -16))
+        self.root.frame_1.label_1.place(relx=0.5, rely=0.1,
+                                        anchor=tkinter.CENTER)
 
     def clear_entrys(self):
         if self.the_name_of_the_table != CIRCULATIONS_TABLE:
             self.entrys[1].configure(fg_color="#343638")
         self.entrys[0].configure(fg_color="#343638")
 
-
-
-
-    def check(self,event):
+    def check(self, event):
         typed = self.box.get()
-        list_data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
+        list_data = Base.execution_server(
+            [GET_TABLE, self.the_name_of_the_table])
         if typed == '':
             data = list_data
         else:
@@ -204,16 +174,17 @@ class Custom_window(Base):
                     if typed.lower() in i.lower():
                         data.append(item)
         self.box["values"] = data
+
     def add_colors(self):
         lis = [[0, 0.03, 20, 1500], [0.05, 0.03, 1500, 20],
                [0.95, 0.03, 1500, 20]]
         for i in range(len(lis)):
-            self.root.frame_1.label_1 = customtkinter.CTkLabel(master=self.root.frame_1,
-                                                        width=lis[i][3],
-                                                  height=lis[i][2],
-                                                  corner_radius=0, text=EMPTY_SPACE,
-                                                               fg_color=self.color_object,
-                                                  font=("Halvetica", -16))
+            self.root.frame_1.label_1 = customtkinter.CTkLabel(
+                master=self.root.frame_1,
+                width=lis[i][3],
+                height=lis[i][2],
+                corner_radius=0, text=EMPTY_SPACE,
+                fg_color=self.color_object,
+                font=("Halvetica", -16))
             self.root.frame_1.label_1.place(relx=lis[i][0], rely=lis[i][1],
                                             anchor=tkinter.CENTER)
-
