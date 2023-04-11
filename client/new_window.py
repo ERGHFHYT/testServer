@@ -26,11 +26,7 @@ def main_window():
     root_2.frame_left.grid(row=0, column=0, sticky="nswe")
     add_folder_image = ImageTk.PhotoImage(Image.open(ADD_FOLDER_IMAGE).resize((
         ICON_IMAGE_SIZE, ICON_IMAGE_SIZE), Image.ANTIALIAS))
-    add_mic_image = ImageTk. \
-        PhotoImage(Image.open(MICROPHONE_IMAGE).
-                   resize((ICON_IMAGE_SIZE, ICON_IMAGE_SIZE), Image.ANTIALIAS))
-    add_list_image = ImageTk.PhotoImage(Image.open(ADD_LIST_IMAGE).
-    resize(
+    add_list_image = ImageTk.PhotoImage(Image.open(ADD_LIST_IMAGE).resize(
         (ICON_IMAGE_SIZE, ICON_IMAGE_SIZE), Image.ANTIALIAS))
     teacher_image = ImageTk.PhotoImage(
         Image.open(TEACHER_IMAGE).resize((ICON_IMAGE_SIZE, ICON_IMAGE_SIZE),
@@ -56,6 +52,31 @@ def main_window():
                                        command=tool.
                                        window_search_from_the_teachers)
     button_4.place(relx=0.3, rely=0.75)
+    style = ttk.Style()
+    style.theme_use('default')
+    style.configure("Treeview", backrground="D3D3D3",
+                    forerground="black", rowheight=25,
+                    fieldbackrground="D3D3D3")
+
+    tree = ttk.Treeview(root_2, show='headings',
+                        height=6)
+    tree['column'] = ("c1", "c2", "c3", "c4", "c5", "c6")
+    tree.column("# 1", anchor='n', width=120)
+    tree.heading("# 1", text="name")
+    tree.column("# 2", anchor='n', width=120)
+    tree.heading("# 2", text="last_name")
+    tree.column("# 3", anchor='n', width=120)
+    tree.heading("# 3", text="id")
+    tree.column("# 4", anchor='n', width=120)
+    tree.heading("# 4", text="phone_number")
+    tree.column("# 5", anchor='n', width=120)
+    tree.heading("# 5", text="")
+    tree.column("# 6", anchor='n', width=120)
+    tree.heading("# 6", text="")
+
+    tree.place(
+        relx=0.3, rely=0.4)
+    tool.tree = tree
     button_3 = customtkinter.CTkButton(master=root_2.frame_right,
                                        image=check_list_image, text="נתון שנה",
                                        width=150, height=40,
@@ -100,7 +121,7 @@ def main_window():
                                               height=40,
                                               width=40,
                                               corner_radius=15,
-                                              command=tool.create_tree)
+                                              command=tool.add_items(teachers))
     root_2.button_5.place(relx=0.2, rely=0.1)
     root_2.button_9 = customtkinter.CTkButton(master=root_2.frame_right,
                                               height=40,

@@ -36,10 +36,13 @@ s.theme_use('clam')
 def clear_all():
     for item in tree.get_children():
         tree.delete(item)
+def add():
+    tree.column("# 1", anchor=CENTER)
+    tree.heading("# 1", text="ff")
 
 
 # Add a Treeview widget
-tree = ttk.Treeview(win, column=("c1", "c2"), show='headings', height=6)
+tree = ttk.Treeview(win, column=("c1", "c2", "c3"), show='headings', height=6)
 tree.column("# 1", anchor=CENTER)
 tree.heading("# 1", text="ID")
 tree.column("# 2", anchor=CENTER)
@@ -53,9 +56,10 @@ tree.insert('', 'end', text="4", values=('4', 'Volkswagen'))
 tree.insert('', 'end', text="5", values=('5', 'Tata'))
 tree.insert('', 'end', text="6", values=('6', 'Renault'))
 
+
 tree.pack()
 
 # Create a Button for clearing the Treeview Item
 ttk.Button(win, text="Clear", command=clear_all).pack(pady=10)
-
+ttk.Button(win, text="add", command=add).pack(pady=5)
 win.mainloop()

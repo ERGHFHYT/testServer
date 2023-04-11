@@ -1,3 +1,5 @@
+import random
+
 from client.constants import *
 import customtkinter
 from client.client_classes_folder.Base import Base
@@ -26,6 +28,7 @@ class New_wind(Base):
         self.label_2 = None
         self.label_3 = None
         self.the_location = None
+        self.tree = None
 
     def change_the_screen_following_the_table(self, name_for_the_test,
                                               the_number_of_the_button,
@@ -71,6 +74,7 @@ class New_wind(Base):
                                                        "circulations_table")
 
     def button_password(self):
+
         New_wind.change_the_screen_following_the_table(self, "סיסמה", 3,
                                                        "password_table")
 
@@ -220,18 +224,15 @@ class New_wind(Base):
                 self.root.after(4000, self.clear_label)
         mouse_listener.stop()
 
-    def create_tree(self):
-        style = ttk.Style()
-        style.theme_use('default')
-        style.configure("Treeview", backrground="D3D3D3",
-                        forerground="black", rowheight=25,
-                        fieldbackrground="D3D3D3")
-        
-        tree = ttk.Treeview(self.root, column=("c1", "c2"), show='headings',
-                            height=6)
+    def clear_all(self):
+        for item in self.tree.get_children():
+            self.tree.delete(item)
 
-        tree.place(
-            relx=0.5, rely=0.5)
+    def add_items(self, list_of_items):
+        the_number_of_the_item = 0
+        for item in list_of_items:
+            self.tree.insert('', 'end', text=str(the_number_of_the_item), values=item)
+            the_number_of_the_item += 1
 
     def check(self, event):
         typed = self.box.get()
