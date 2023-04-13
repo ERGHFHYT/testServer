@@ -32,31 +32,31 @@ class Custom_window(Base):
 
     def add_item(self):
         print(self.data_entry)
-        if self.data_entry is not None:
-            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                   self.the_name_of_the_table, self.data_entry])
-
-        d = True
-        data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
-        for i in data:
-            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                if i[0] == self.entrys[0].get():
-                    d = False
-            elif self.the_name_of_the_table == PUPILS_TABLE:
-                if i[1] == self.entrys[1].get():
-                    d = False
-            else:
-                print(self.entrys[0].get())
-                print(i[0])
-                if i[0] == self.entrys[1].get():
-                    d = False
-        print(d)
-        if d:
+        no_duplicates = True
+        if self.data_entry == EMPTY_SPACE:
+            data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
+            for i in data:
+                if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                    if i[0] == self.entrys[0].get():
+                        no_duplicates = False
+                elif self.the_name_of_the_table == PUPILS_TABLE:
+                    if i[1] == self.entrys[2].get():
+                        no_duplicates = False
+                else:
+                    print(self.entrys[0].get())
+                    print(i[0])
+                    if i[0] == self.entrys[2].get():
+                        no_duplicates = False
+        print(no_duplicates)
+        if no_duplicates:
             if self.the_name_of_the_table == PASSWORD_TABLE:
                 data = ["add_item", self.the_name_of_the_table,
                         [self.entrys[0].get(), self.entrys[1].get()]]
                 Base.execution_server(data)
                 self.label.configure(text="!קלט הוכנס בהצלחה")
+                if self.data_entry != EMPTY_SPACE:
+                    Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                           self.the_name_of_the_table, self.data_entry])
             elif self.the_name_of_the_table == CIRCULATIONS_TABLE:
                 max_column = Base.execution_server(
                     [GET_MAX, self.the_name_of_the_table,
@@ -65,24 +65,36 @@ class Custom_window(Base):
                         [max_column, self.entrys[0].get()]]
                 Base.execution_server(data)
                 self.label.configure(text="!קלט הוכנס בהצלחה")
+                if self.data_entry != EMPTY_SPACE:
+                    Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                           self.the_name_of_the_table, self.data_entry])
             else:
                 entry_to_add = []
                 for num in range(2):
-                    self.entrys[num].get()
+                    print(self.entrys[num].get())
                     entry_to_add.append(self.entrys[num].get())
-                if CheckID(str(self.entrys[1].get())):
+                if CheckID(str(self.entrys[2].get())):
+                    entry_to_add.append(str(self.entrys[2].get()))
+                    entry_to_add.append(str(self.entrys[3].get()))
                     if self.the_name_of_the_table == PUPILS_TABLE:
                         data_entry = Base.execution_server(
                             ["check_which_item_this_is",
                              CIRCULATIONS_TABLE, self.box.get()])
-                        entry_to_add.append(data_entry[1])
-                        entry_to_add.append("ריק")
+                        entry_to_add.append(str(data_entry[1]))
+                        if self.data_entry == EMPTY_SPACE:
+                            entry_to_add.append("ריק")
+                        else:
+                            entry_to_add.append(str(self.data_entry[-1]))
                         print(entry_to_add)
                         print(self.the_name_of_the_table)
+                    print(entry_to_add)
                     data = ["add_item", self.the_name_of_the_table,
                             entry_to_add]
                     Base.execution_server(data)
                     self.label.configure(text="!קלט הוכנס בהצלחה")
+                    if self.data_entry != EMPTY_SPACE:
+                        Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                               self.the_name_of_the_table, self.data_entry])
                 else:
                     self.label.configure(text="הכנסת קלט שהוא לא תקין")
                     self.entrys[1].configure(fg_color="#d35b58")
@@ -107,7 +119,7 @@ class Custom_window(Base):
                                          width=650)
         label_1.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
         entrys = []
-        num = 0.3
+        num = 0.25
         for name in range(len(the_names_of_the_entrys)):
             entrys.append(0)
             entrys[name] = self.root.my_entry_2 = customtkinter.CTkEntry(
@@ -115,7 +127,7 @@ class Custom_window(Base):
                 placeholder_text=the_names_of_the_entrys[name], font=(
                     "Halvetica", -20),
                 justify='right')
-            self.root.my_entry_2.place(relx=0.5, rely=num,
+            self.root.my_entry_2.place(relx=0.75, rely=num,
                                        anchor=tkinter.CENTER)
             num += 0.15
         print(len(entrys))

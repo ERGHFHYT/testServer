@@ -152,31 +152,31 @@ def main_window():
                                        "#2b2b2b", "", 0.65, 0.35, -25)
     tool.box = box
 
-    def event(event):
-        list_items = tool.execution_server(["check_which_item_this_is",
-                                            tool.the_name_of_the_table,
-                                            tool.box.get()
-                                            ])
-        if tool.the_name_of_the_table == "password_table":
-            item_string = " :שם משתמש" + "\n" + " :סיסמה"
-            item_string_2 = list_items[0] + "\n" + list_items[1]
-        elif tool.the_name_of_the_table == "circulations_table":
-            item_string = " :מחזור"
-            item_string_2 = list_items[1]
-        elif tool.the_name_of_the_table == "pupils_table":
-            item_string = " :שם" + "\n" + " :תעודת זהות" + "\n" + " :מחזור"
-            item_string_2 = list_items[0] + "\n" + list_items[1] + "\n" + \
-                            list_items[2]
-        else:
-            item_string = " :שם" + "\n" + " :תעודת זהות"
-            item_string_2 = list_items[0] + "\n" + list_items[1]
-
-        tool.label_2.configure(text=item_string)
-        tool.label_3.configure(text=item_string_2)
+    # def event(event):
+    #     list_items = tool.execution_server(["check_which_item_this_is",
+    #                                         tool.the_name_of_the_table,
+    #                                         tool.box.get()
+    #                                         ])
+    #     if tool.the_name_of_the_table == "password_table":
+    #         item_string = " :שם משתמש" + "\n" + " :סיסמה"
+    #         item_string_2 = list_items[0] + "\n" + list_items[1]
+    #     elif tool.the_name_of_the_table == "circulations_table":
+    #         item_string = " :מחזור"
+    #         item_string_2 = list_items[1]
+    #     elif tool.the_name_of_the_table == "pupils_table":
+    #         item_string = " :שם" + "\n" + " :תעודת זהות" + "\n" + " :מחזור"
+    #         item_string_2 = list_items[0] + "\n" + list_items[1] + "\n" + \
+    #                         list_items[2]
+    #     else:
+    #         item_string = " :שם" + "\n" + " :תעודת זהות"
+    #         item_string_2 = list_items[0] + "\n" + list_items[1]
+    #
+    #     tool.label_2.configure(text=item_string)
+    #     tool.label_3.configure(text=item_string_2)
 
     tool.list_of_buttons = list_of_buttons
     root_2.option_add('*TCombobox*Listbox.font', 14)
     box.bind("<KeyRelease>", tool.check)
-    box.bind("<<ComboboxSelected>>", event)
+    # box.bind("<<ComboboxSelected>>", event)
     tool.button_teacher()
     root_2.mainloop()

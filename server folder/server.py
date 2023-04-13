@@ -144,11 +144,11 @@ def add_item(the_name_of_the_table, items_to_add):
     elif the_name_of_the_table == "circulations_table":
         sql = "INSERT INTO circulations_table (the_number_of_circulation,circulation) VALUES (%s,%s)"
     elif the_name_of_the_table == "pupils_table":
-        sql = "INSERT INTO " + the_name_of_the_table + "(name,id," \
-                                                       "circulation,teacher)VALUES(%s,%s,%s,%s)"
+        sql = "INSERT INTO " + the_name_of_the_table + "(name,last_name,id,phone_number," \
+                                                       "circulation,teacher)VALUES(%s,%s,%s,%s,%s,%s)"
 
     else:
-        sql = "INSERT INTO " + the_name_of_the_table + "(name,id)VALUES(%s,%s)"
+        sql = "INSERT INTO " + the_name_of_the_table + "(name,last_name,id,phone_number)VALUES(%s,%s,%s,%s)"
 
     for item in items_to_add:
         i.append(str(item))
