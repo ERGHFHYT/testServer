@@ -62,13 +62,13 @@ def main_window():
                         height=6)
     tree['column'] = ("c1", "c2", "c3", "c4", "c5", "c6")
     tree.column("# 1", anchor='n', width=120)
-    tree.heading("# 1", text="name")
+    tree.heading("# 1", text="שם")
     tree.column("# 2", anchor='n', width=120)
-    tree.heading("# 2", text="last_name")
+    tree.heading("# 2", text="שם משפחה")
     tree.column("# 3", anchor='n', width=120)
-    tree.heading("# 3", text="id")
+    tree.heading("# 3", text="תעודת זהות")
     tree.column("# 4", anchor='n', width=120)
-    tree.heading("# 4", text="phone_number")
+    tree.heading("# 4", text="מספר טלפון")
     tree.column("# 5", anchor='n', width=120)
     tree.heading("# 5", text="")
     tree.column("# 6", anchor='n', width=120)
@@ -121,7 +121,7 @@ def main_window():
                                               height=40,
                                               width=40,
                                               corner_radius=15,
-                                              command=tool.add_items(teachers))
+                                              command=tool.add_items_from_the_tree(teachers))
     root_2.button_5.place(relx=0.2, rely=0.1)
     root_2.button_9 = customtkinter.CTkButton(master=root_2.frame_right,
                                               height=40,
