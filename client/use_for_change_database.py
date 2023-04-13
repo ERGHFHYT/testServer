@@ -63,5 +63,8 @@
 # ttk.Button(win, text="Clear", command=clear_all).pack(pady=10)
 # ttk.Button(win, text="add", command=add).pack(pady=5)
 # win.mainloop()
-p = ['שאולשבילי', 'נדיר', '225434652', '08765121', 'ח', '5734685366']
+
+
+#for a futar program
+# self.donor_records.bind("<ButtonRelease-1>", self.donorinfo)
 

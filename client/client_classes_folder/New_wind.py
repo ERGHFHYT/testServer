@@ -1,4 +1,5 @@
 import random
+import tkinter
 
 from client.constants import *
 import customtkinter
@@ -35,7 +36,7 @@ class New_wind(Base):
                                               the_name_of_the_table):
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
-        self.box.set(EMPTY_SPACE)
+        self.box.delete(0, tkinter.END)
         self.the_name_of_the_table = the_name_of_the_table
         self.root.label_1.destroy()
         self.root.label_1 = customtkinter.CTkLabel(master=self.root.frame_right,
@@ -47,7 +48,7 @@ class New_wind(Base):
             if i == the_number_of_the_button:
                 self.list_of_buttons[i].configure(fg_color=BACKGROUND_COLOR)
             else:
-                self.list_of_buttons[i].configure(fg_color=RED)
+                self.list_of_buttons[i].configure(fg_color=NUM_BLUE)
         list_data = Base.execution_server([GET_TABLE, the_name_of_the_table])
         self.clear_all_form_the_tree()
         self.add_items_to_the_tree(list_data)

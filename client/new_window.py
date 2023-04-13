@@ -103,15 +103,15 @@ def main_window():
                                             font=("Halvetica", -25))
     root_2.label_1.place(relx=0.83, rely=0.03)
     num = 2
-    buttons_names = ["מורים", "תלמידים", "מתרגלים", "סיסמה", "מחזור"]
+    buttons_names = ["מורים", "תלמידים", "מתרגלים", "סיסמה", "מחזור", "מורים בתוך תלמידים"]
     buttons_commend = [tool.button_teacher, tool.button_pupils,
                        tool.button_Practitioners,
-                       tool.button_password, tool.button_circulations]
-    list_of_buttons = [0, 0, 0, 0, 0]
+                       tool.button_password, tool.button_circulations, tool.button_pupils]
+    list_of_buttons = [0, 0, 0, 0, 0, 0]
     for button in range(len(buttons_names)):
         list_of_buttons[button] = root_2.button_2 = customtkinter.CTkButton(
             master=root_2.frame_left, text=buttons_names[button],
-            fg_color="#2b2b2b", command=buttons_commend[button])
+             command=buttons_commend[button])
         root_2.button_2.grid(row=num, column=0, pady=10, padx=20)
         num += 1
 
@@ -139,10 +139,10 @@ def main_window():
                                        tool.update_single("add"))
     button_2.place(relx=0.3, rely=0.85)
 
-    box = ttk.Combobox(root_2.frame_right, width=28,
-                       font=("Halvetica", 20), values=list_data,
+    box = customtkinter.CTkEntry(root_2.frame_right, width=250,
+                       font=("Halvetica", 20),
                        justify='right')
-    box.place(relx=0.3, rely=0.1)
+    box.place(relx=0.5, rely=0.1)
     tool.the_location = root_2.frame_right
     tool.label = tool.create_masages(200, 120, "#2b2b2b", "", 0.25, 0.6,
                                      -16)
