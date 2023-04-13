@@ -50,18 +50,18 @@ class New_wind(Base):
                 self.list_of_buttons[i].configure(fg_color=RED)
         list_data = Base.execution_server([GET_TABLE, the_name_of_the_table])
         self.clear_all_form_the_tree()
-        self.add_items_from_the_tree(list_data)
+        self.add_items_to_the_tree(list_data)
         if the_name_of_the_table == CIRCULATIONS_TABLE:
             list_d = []
             for l in list_data:
                 list_d.append(l[1])
             self.box["values"] = tuple(list_d)
             self.clear_all_form_the_tree()
-            self.add_items_from_the_tree(list_d)
+            self.add_items_to_the_tree(list_d)
         else:
             self.box["values"] = tuple(list_data)
             self.clear_all_form_the_tree()
-            self.add_items_from_the_tree(list_data)
+            self.add_items_to_the_tree(list_data)
 
     def window_search_from_the_teachers(self):
         self.root.destroy()
@@ -149,19 +149,22 @@ class New_wind(Base):
                                                        "practitioners_table")
 
     def remove_item(self):
-        typed = self.box.get()
+        selected = self.tree.focus()
+        values = self.tree.item(selected, 'values')
+        print(values[2])
         Base.execution_server(
             [REMOVE_ITEM_FROM_TABLE, self.the_name_of_the_table,
-             str(typed)])
+             str(values[2])])
         list_data = tuple(Base.execution_server([GET_TABLE,
                                                  self.the_name_of_the_table]))
         if self.the_name_of_the_table == CIRCULATIONS_TABLE:
             list_d = []
             for l in list_data:
                 list_d.append(l[1])
-            self.box["values"] = tuple(list_d)
-        else:
-            self.box["values"] = list_data
+                list_data = list_d
+        self.box["values"] = tuple(list_data)
+        self.clear_all_form_the_tree()
+        self.add_items_to_the_tree(list_data)
         self.box.set(EMPTY_SPACE)
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
@@ -295,7 +298,7 @@ class New_wind(Base):
         for item in self.tree.get_children():
             self.tree.delete(item)
 
-    def add_items_from_the_tree(self, list_of_items):
+    def add_items_to_the_tree(self, list_of_items):
         the_number_of_the_item = 0
         for item in list_of_items:
             self.tree.insert('', 'end', text=str(the_number_of_the_item), values=item)
@@ -321,4 +324,4 @@ class New_wind(Base):
             print(data)
         self.box["values"] = data
         self.clear_all_form_the_tree()
-        self.add_items_from_the_tree(data)
+        self.add_items_to_the_tree(data)
