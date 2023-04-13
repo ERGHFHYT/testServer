@@ -6,9 +6,6 @@ import client.client_classes_folder.Base
 
 
 def update(data_entry, the_name_of_the_table):
-    data_entry = client.client_classes_folder.Base.Base.execution_server([
-        "check_which_item_this_is",
-        the_name_of_the_table, data_entry])
     if the_name_of_the_table == "password_table":
         root_2 = customtkinter.CTk()
         tool = client.client_classes_folder.Custom_window.Custom_window(root_2,

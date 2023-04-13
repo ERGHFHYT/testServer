@@ -56,17 +56,29 @@ class New_wind(Base):
             for l in list_data:
                 list_d.append(l[1])
             self.box["values"] = tuple(list_d)
+            self.clear_all_form_the_tree()
+            self.add_items_from_the_tree(list_d)
         else:
             self.box["values"] = tuple(list_data)
+            self.clear_all_form_the_tree()
+            self.add_items_from_the_tree(list_data)
 
     def window_search_from_the_teachers(self):
         self.root.destroy()
         search_from_the_teachers.search()
 
     def button_pupils(self):
-        self.tree.column("# 5", anchor='center')
+        self.tree.column("# 1", anchor='n', width=120)
+        self.tree.heading("# 1", text="שם")
+        self.tree.column("# 2", anchor='n', width=120)
+        self.tree.heading("# 2", text="שם משפחה")
+        self.tree.column("# 3", anchor='n', width=120)
+        self.tree.heading("# 3", text="תעודת זהות")
+        self.tree.column("# 4", anchor='n', width=120)
+        self.tree.heading("# 4", text="מספר טלפון")
+        self.tree.column("# 5", anchor='n', width=90)
         self.tree.heading("# 5", text="מחזור")
-        self.tree.column("# 6", anchor='center')
+        self.tree.column("# 6", anchor='n', width=140)
         self.tree.heading("# 6", text="תעודת זהות (מורה)")
         New_wind.change_the_screen_following_the_table(self, "תלמידים", 1,
                                                        PUPILS_TABLE)
@@ -80,9 +92,9 @@ class New_wind(Base):
         self.tree.heading("# 3", text="תעודת זהות")
         self.tree.column("# 4", anchor='n', width=120)
         self.tree.heading("# 4", text="מספר טלפון")
-        self.tree.column("# 5", anchor='n', width=120)
+        self.tree.column("# 5", anchor='n', width=90)
         self.tree.heading("# 5", text="")
-        self.tree.column("# 6", anchor='n', width=120)
+        self.tree.column("# 6", anchor='n', width=140)
         self.tree.heading("# 6", text="")
         New_wind.change_the_screen_following_the_table(self, "מורים", 0,
                                                        TEACHERS_TABLE)
@@ -90,15 +102,15 @@ class New_wind(Base):
     def button_circulations(self):
         self.tree.column("# 1", anchor='n', width=120)
         self.tree.heading("# 1", text="מחזור")
-        self.tree.column("# 2", anchor='n', width=0)
+        self.tree.column("# 2", anchor='n', width=120)
         self.tree.heading("# 2", text="")
-        self.tree.column("# 3", anchor='n', width=0)
+        self.tree.column("# 3", anchor='n', width=120)
         self.tree.heading("# 3", text="")
-        self.tree.column("# 4", anchor='n', width=0)
+        self.tree.column("# 4", anchor='n', width=120)
         self.tree.heading("# 4", text="")
-        self.tree.column("# 5", anchor='n', width=0)
+        self.tree.column("# 5", anchor='n', width=90)
         self.tree.heading("# 5", text="")
-        self.tree.column("# 6", anchor='n', width=0)
+        self.tree.column("# 6", anchor='n', width=140)
         self.tree.heading("# 6", text="")
         New_wind.change_the_screen_following_the_table(self, "מחזורים", 4,
                                                        "circulations_table")
@@ -129,9 +141,9 @@ class New_wind(Base):
         self.tree.heading("# 3", text="תעודת זהות")
         self.tree.column("# 4", anchor='n', width=120)
         self.tree.heading("# 4", text="מספר טלפון")
-        self.tree.column("# 5", anchor='n', width=120)
+        self.tree.column("# 5", anchor='n', width=90)
         self.tree.heading("# 5", text="")
-        self.tree.column("# 6", anchor='n', width=120)
+        self.tree.column("# 6", anchor='n', width=140)
         self.tree.heading("# 6", text="")
         New_wind.change_the_screen_following_the_table(self, "מתרגלים", 2,
                                                        "practitioners_table")
@@ -156,20 +168,21 @@ class New_wind(Base):
 
     def update_single(self, the_execute):
         if the_execute == "chek":
-            data = Base.execution_server(
-                [GET_TABLE, self.the_name_of_the_table])
-            global_entry = str(self.box.get())
+            # data = Base.execution_server(
+            #     [GET_TABLE, self.the_name_of_the_table])
+            selected = self.tree.focus()
+            global_entry = self.tree.item(selected, 'values')
             print("the global_entry ", global_entry)
             if global_entry != EMPTY_SPACE:
-                for d in data:
-                    if not self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                        if d[1] in global_entry:
-                            global_entry = d
-                            break
-                    else:
-                        if d[0] in global_entry:
-                            global_entry = d
-                            break
+                # for d in data:
+                #     if not self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                #         if d[1] in global_entry:
+                #             global_entry = d
+                #             break
+                #     else:
+                #         if d[0] in global_entry:
+                #             global_entry = d
+                #             break
                 self.root.destroy()
                 update_item.update(global_entry,
                                    self.the_name_of_the_table)
@@ -256,27 +269,27 @@ class New_wind(Base):
     def clear_label(self):
         self.label.configure(text=EMPTY_SPACE)
 
-    def voice(self):
-        recognizer = speech_recognition.Recognizer()
-        with speech_recognition.Microphone() as mic:
-            try:
-
-                recognizer.adjust_for_ambient_noise(mic, duration=0.5)
-                mouse_listener = pynput.mouse.Listener(suppress=True)
-                mouse_listener.start()
-                audio = recognizer.listen(mic, phrase_time_limit=10)
-                if audio != '':
-                    self.box.set(str(recognizer.recognize_google(audio,
-                                                                 language="he")))
-                    self.catching_sound(str(recognizer.recognize_google(audio,
-                                                                        language="he")))
-
-            except:
-                self.label = self.create_masages(220, 100, "#2a2d2e",
-                                                 "לא הצליח לזהות קול", 0.15,
-                                                 0.3, -16)
-                self.root.after(4000, self.clear_label)
-        mouse_listener.stop()
+    # def voice(self):
+    #     recognizer = speech_recognition.Recognizer()
+    #     with speech_recognition.Microphone() as mic:
+    #         try:
+    #
+    #             recognizer.adjust_for_ambient_noise(mic, duration=0.5)
+    #             mouse_listener = pynput.mouse.Listener(suppress=True)
+    #             mouse_listener.start()
+    #             audio = recognizer.listen(mic, phrase_time_limit=10)
+    #             if audio != '':
+    #                 self.box.set(str(recognizer.recognize_google(audio,
+    #                                                              language="he")))
+    #                 self.catching_sound(str(recognizer.recognize_google(audio,
+    #                                                                     language="he")))
+    #
+    #         except:
+    #             self.label = self.create_masages(220, 100, "#2a2d2e",
+    #                                              "לא הצליח לזהות קול", 0.15,
+    #                                              0.3, -16)
+    #             self.root.after(4000, self.clear_label)
+    #     mouse_listener.stop()
 
     def clear_all_form_the_tree(self):
         for item in self.tree.get_children():
@@ -300,4 +313,12 @@ class New_wind(Base):
                 for i in item:
                     if typed.lower() in i.lower():
                         data.append(item)
+        if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+            list_d = []
+            for l in data:
+                list_d.append(l[1])
+            data = list_d
+            print(data)
         self.box["values"] = data
+        self.clear_all_form_the_tree()
+        self.add_items_from_the_tree(data)

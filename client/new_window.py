@@ -69,7 +69,7 @@ def main_window():
     tree.heading("# 3", text="תעודת זהות")
     tree.column("# 4", anchor='n', width=120)
     tree.heading("# 4", text="מספר טלפון")
-    tree.column("# 5", anchor='n', width=120)
+    tree.column("# 5", anchor='n', width=90)
     tree.heading("# 5", text="")
     tree.column("# 6", anchor='n', width=120)
     tree.heading("# 6", text="")
@@ -116,13 +116,13 @@ def main_window():
         num += 1
 
     list_of_buttons[0].configure(fg_color=DARK_GRAY)
-    root_2.button_5 = customtkinter.CTkButton(master=root_2.frame_right,
-                                              text="תראה",
-                                              height=40,
-                                              width=40,
-                                              corner_radius=15,
-                                              command=tool.add_items_from_the_tree(teachers))
-    root_2.button_5.place(relx=0.2, rely=0.1)
+    # root_2.button_5 = customtkinter.CTkButton(master=root_2.frame_right,
+    #                                           text="תראה",
+    #                                           height=40,
+    #                                           width=40,
+    #                                           corner_radius=15,
+    #                                           command=tool.add_items_from_the_tree(teachers))
+    # root_2.button_5.place(relx=0.2, rely=0.1)
     root_2.button_9 = customtkinter.CTkButton(master=root_2.frame_right,
                                               height=40,
                                               width=110, fg_color="#D35B58",
