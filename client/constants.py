@@ -9,6 +9,7 @@ CHECK_IMAGE_SIZE = (30, 25)
 # commends for the server
 CHECK_PASSWORD_FROM_TABLE = "chek_password_form_table"
 GET_TABLE = "get_a_table"
+PUPILS_IN_TEACHERS = "pupils_in_teachers"
 REMOVE_ITEM_FROM_TABLE = "remove_item"
 CIRCULATIONS_TABLE = "circulations_table"
 COMPUTER_NAMES_TABLE = "computer_names_table"
@@ -31,21 +32,23 @@ BLUE = "blue"
 DARK_GRAY = "#2a2d2e"
 
 # image's
-BACKGROUND_IMAGE = "C:/Users/User/PycharmProjects/testServer/imege's/" \
+BACKGROUND_IMAGE = "C:/Users/elkan/Desktop/testServer/imege's/" \
                    "background image.webp"
-TEACHER_IMAGE = "C:/Users/User/PycharmProjects/testServer/imege's" \
-                "/teacher_image.png"
-CHECK_IMAGE = "C:/Users/User/PycharmProjects/testServer/imege's/ckenck.png"
-HOME_IMAGE = "C:/Users/User/PycharmProjects/testServer/imege's/home.png"
-MICROPHONE_IMAGE = "C:/Users/User/PycharmProjects/testServer/imege's" \
-                   "/microphone" \
+TEACHER_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\" \
+                "teacher_image.png"
+CHECK_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\ckenck.png"
+HOME_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\home.png"
+MICROPHONE_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\" \
+                   "microphone" \
                    ".png"
-ADD_LIST_IMAGE = "C:/Users/User/PycharmProjects/testServer/imege's/" \
+ADD_LIST_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\" \
                  "add-list.png"
 
-ADD_USER_IMAGE = "C:/Users/User/PycharmProjects/testServer/imege's/add-user.png"
-ADD_FOLDER_IMAGE = "C:/Users/User/PycharmProjects/testServer/imege's" \
-                   "/add_folder.png" \
+ADD_USER_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\" \
+                 "add-user.png"
+ADD_FOLDER_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\" \
+ \
+                   "add_folder.png" \
 
 # receive from the server
 CORRECT_PASSWORD = "True"

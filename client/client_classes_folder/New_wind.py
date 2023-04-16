@@ -8,7 +8,7 @@ from client.client_classes_folder.Base import Base
 from tkinter import filedialog as fd, ttk
 from openpyxl import load_workbook
 import pynput
-import speech_recognition
+# import speech_recognition
 from client import search_from_the_teachers, update_item
 
 
@@ -37,19 +37,25 @@ class New_wind(Base):
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
         self.box.delete(0, tkinter.END)
-        self.the_name_of_the_table = the_name_of_the_table
+        if the_name_of_the_table == PUPILS_IN_TEACHERS:
+            self.the_name_of_the_table = PUPILS_TABLE
+        else:
+            self.the_name_of_the_table = the_name_of_the_table
         self.root.label_1.destroy()
         self.root.label_1 = customtkinter.CTkLabel(master=self.root.frame_right,
                                                    text=name_for_the_test,
                                                    font=(DEFAULT_FONT,
                                                          -25))
-        self.root.label_1.place(relx=0.8, rely=0.03)
-        for i in range(5):
-            if i == the_number_of_the_button:
-                self.list_of_buttons[i].configure(fg_color=BACKGROUND_COLOR)
+        self.root.label_1.place(relx=0.7, rely=0.03)
+        for number in range(6):
+            if number == the_number_of_the_button:
+                self.list_of_buttons[number].configure(fg_color=BACKGROUND_COLOR)
             else:
-                self.list_of_buttons[i].configure(fg_color=NUM_BLUE)
-        list_data = Base.execution_server([GET_TABLE, the_name_of_the_table])
+                self.list_of_buttons[number].configure(fg_color=NUM_BLUE)
+        if the_name_of_the_table == PUPILS_IN_TEACHERS:
+            list_data = Base.execution_server([PUPILS_IN_TEACHERS])
+        else:
+            list_data = Base.execution_server([GET_TABLE, the_name_of_the_table])
         self.clear_all_form_the_tree()
         self.add_items_to_the_tree(list_data)
         if the_name_of_the_table == CIRCULATIONS_TABLE:
@@ -83,6 +89,22 @@ class New_wind(Base):
         self.tree.heading("# 6", text="תעודת זהות (מורה)")
         New_wind.change_the_screen_following_the_table(self, "תלמידים", 1,
                                                        PUPILS_TABLE)
+
+    def button_pupils_in_teachers(self):
+        self.tree.column("# 1", anchor='n', width=120)
+        self.tree.heading("# 1", text="שם")
+        self.tree.column("# 2", anchor='n', width=120)
+        self.tree.heading("# 2", text="שם משפחה")
+        self.tree.column("# 3", anchor='n', width=120)
+        self.tree.heading("# 3", text="תעודת זהות")
+        self.tree.column("# 4", anchor='n', width=120)
+        self.tree.heading("# 4", text="מספר טלפון")
+        self.tree.column("# 5", anchor='n', width=90)
+        self.tree.heading("# 5", text="מחזור")
+        self.tree.column("# 6", anchor='n', width=140)
+        self.tree.heading("# 6", text="תעודת זהות (מורה)")
+        New_wind.change_the_screen_following_the_table(self, "תלמידים לפי מורים", 5,
+                                                       PUPILS_IN_TEACHERS)
 
     def button_teacher(self):
         self.tree.column("# 1", anchor='n', width=120)

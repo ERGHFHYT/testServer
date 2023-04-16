@@ -19,7 +19,6 @@ def main_window():
 
     teachers = client.client_classes_folder.New_wind.New_wind.execution_server([
         GET_TABLE, TEACHERS_TABLE])
-    list_data = [tuple(sub) for sub in teachers]
     root_2.frame_left = customtkinter.CTkFrame(master=root_2,
                                                width=180,
                                                corner_radius=0)
@@ -44,14 +43,14 @@ def main_window():
                                        compound="right",
                                        command=tool.excel)
     button_1.place(relx=0.05, rely=0.75)
-    button_4 = customtkinter.CTkButton(master=root_2.frame_right,
-                                       image=teacher_image,
-                                       text="מורים בעזרת חיפוש",
-                                       width=150, height=40,
-                                       compound="right",
-                                       command=tool.
-                                       window_search_from_the_teachers)
-    button_4.place(relx=0.3, rely=0.75)
+    # button_4 = customtkinter.CTkButton(master=root_2.frame_right,
+    #                                    image=teacher_image,
+    #                                    text="מורים בעזרת חיפוש",
+    #                                    width=150, height=40,
+    #                                    compound="right",
+    #                                    command=tool.
+    #                                    window_search_from_the_teachers)
+    # button_4.place(relx=0.3, rely=0.75)
     style = ttk.Style()
     style.theme_use('default')
     style.configure("Treeview", backrground="D3D3D3",
@@ -101,12 +100,12 @@ def main_window():
     root_2.label_1 = customtkinter.CTkLabel(master=root_2.frame_right,
                                             text="מורה",
                                             font=("Halvetica", -25))
-    root_2.label_1.place(relx=0.83, rely=0.03)
+    root_2.label_1.place(relx=0.7, rely=0.03)
     num = 2
     buttons_names = ["מורים", "תלמידים", "מתרגלים", "סיסמה", "מחזור", "מורים בתוך תלמידים"]
     buttons_commend = [tool.button_teacher, tool.button_pupils,
                        tool.button_Practitioners,
-                       tool.button_password, tool.button_circulations, tool.button_pupils]
+                       tool.button_password, tool.button_circulations, tool.button_pupils_in_teachers]
     list_of_buttons = [0, 0, 0, 0, 0, 0]
     for button in range(len(buttons_names)):
         list_of_buttons[button] = root_2.button_2 = customtkinter.CTkButton(
