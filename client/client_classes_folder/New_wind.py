@@ -1,4 +1,5 @@
 import random
+import threading
 import tkinter
 
 from client.constants import *
@@ -8,7 +9,7 @@ from client.client_classes_folder.Base import Base
 from tkinter import filedialog as fd, ttk
 from openpyxl import load_workbook
 import pynput
-# import speech_recognition
+import speech_recognition
 from client import search_from_the_teachers, update_item
 
 
@@ -295,27 +296,30 @@ class New_wind(Base):
     def clear_label(self):
         self.label.configure(text=EMPTY_SPACE)
 
-    # def voice(self):
-    #     recognizer = speech_recognition.Recognizer()
-    #     with speech_recognition.Microphone() as mic:
-    #         try:
-    #
-    #             recognizer.adjust_for_ambient_noise(mic, duration=0.5)
-    #             mouse_listener = pynput.mouse.Listener(suppress=True)
-    #             mouse_listener.start()
-    #             audio = recognizer.listen(mic, phrase_time_limit=10)
-    #             if audio != '':
-    #                 self.box.set(str(recognizer.recognize_google(audio,
-    #                                                              language="he")))
-    #                 self.catching_sound(str(recognizer.recognize_google(audio,
-    #                                                                     language="he")))
-    #
-    #         except:
-    #             self.label = self.create_masages(220, 100, "#2a2d2e",
-    #                                              "לא הצליח לזהות קול", 0.15,
-    #                                              0.3, -16)
-    #             self.root.after(4000, self.clear_label)
-    #     mouse_listener.stop()
+    def voice(self):
+        recognizer = speech_recognition.Recognizer()
+        with speech_recognition.Microphone() as mic:
+            try:
+
+                recognizer.adjust_for_ambient_noise(mic, duration=0.5)
+                mouse_listener = pynput.mouse.Listener(suppress=True)
+                mouse_listener.start()
+                audio = recognizer.listen(mic, phrase_time_limit=10)
+                if audio != '':
+                    self.box.insert(0, str(recognizer.recognize_google(audio,
+                                                                       language="he")))
+                    self.catching_sound(str(recognizer.recognize_google(audio,
+                                                                        language="he")))
+
+            except:
+                self.label = self.create_masages(220, 100, "#2a2d2e",
+                                                 "לא הצליח לזהות קול", 0.15,
+                                                 0.3, -16)
+                self.root.after(4000, self.clear_label)
+        mouse_listener.stop()
+
+    def mic(self):
+        x = threading.Thread(target=self.voice, args=())
 
     def clear_all_form_the_tree(self):
         for item in self.tree.get_children():
