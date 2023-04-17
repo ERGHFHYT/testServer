@@ -190,7 +190,6 @@ class New_wind(Base):
         self.box["values"] = tuple(list_data)
         self.clear_all_form_the_tree()
         self.add_items_to_the_tree(list_data)
-        self.box.set(EMPTY_SPACE)
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
 

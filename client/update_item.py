@@ -47,7 +47,7 @@ def update(data_entry, the_name_of_the_table):
             box = ttk.Combobox(root_2, width=12,
                                font=("Halvetica", 20),
                                values=list_data, justify='right')
-            box.place(relx=0.2, rely=0.25)
+            box.place(relx=0.3, rely=0.52)
             box.bind("<KeyRelease>", tool.check)
             print("data entry", len(data_entry))
             if data_entry != EMPTY_SPACE:

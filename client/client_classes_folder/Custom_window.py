@@ -73,31 +73,47 @@ class Custom_window(Base):
                 for num in range(2):
                     print(self.entrys[num].get())
                     entry_to_add.append(self.entrys[num].get())
-                if CheckID(str(self.entrys[2].get())):
-                    entry_to_add.append(str(self.entrys[2].get()))
-                    entry_to_add.append(str(self.entrys[3].get()))
-                    if self.the_name_of_the_table == PUPILS_TABLE:
-                        data_entry = Base.execution_server(
-                            ["check_which_item_this_is",
-                             CIRCULATIONS_TABLE, self.box.get()])
+                if self.the_name_of_the_table == PUPILS_TABLE:
+                    data_entry = Base.execution_server(
+                        ["check_which_item_this_is",
+                         CIRCULATIONS_TABLE, self.box.get()])
+                    if CheckID(str(self.entrys[2].get())) and CheckID(str(self.entrys[4].get())) \
+                            and data_entry is not None:
+                        entry_to_add.append(str(self.entrys[2].get()))
+                        entry_to_add.append(str(self.entrys[3].get()))
                         entry_to_add.append(str(data_entry[1]))
-                        print(entry_to_add)
-                        print(self.the_name_of_the_table)
-                    print(entry_to_add)
-                    data = ["add_item", self.the_name_of_the_table,
-                            entry_to_add]
-                    Base.execution_server(data)
-                    self.label.configure(text="!קלט הוכנס בהצלחה")
-                    if self.data_entry != EMPTY_SPACE:
-                        Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                               self.the_name_of_the_table, self.data_entry])
+                        entry_to_add.append(str(self.entrys[4].get()))
+                        data = ["add_item", self.the_name_of_the_table,
+                                entry_to_add]
+                        Base.execution_server(data)
+                        self.label.configure(text="!קלט הוכנס בהצלחה")
+                        if self.data_entry != EMPTY_SPACE:
+                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                   self.the_name_of_the_table, self.data_entry])
+                    else:
+                        self.label.configure(text="הכנסת קלט שהוא לא תקין")
+                        self.entrys[2].configure(fg_color="#d35b58")
+                        self.entrys[4].configure(fg_color="#d35b58")
                 else:
-                    self.label.configure(text="הכנסת קלט שהוא לא תקין")
-                    self.entrys[1].configure(fg_color="#d35b58")
+                    if CheckID(str(self.entrys[2].get())):
+                        entry_to_add.append(str(self.entrys[2].get()))
+                        entry_to_add.append(str(self.entrys[4].get()))
+                        data = ["add_item", self.the_name_of_the_table,
+                                entry_to_add]
+                        Base.execution_server(data)
+                        self.label.configure(text="!קלט הוכנס בהצלחה")
+                        if self.data_entry != EMPTY_SPACE:
+                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                   self.the_name_of_the_table, self.data_entry])
+                    else:
+                        self.label.configure(text="הכנסת קלט שהוא לא תקין")
+                        self.entrys[2].configure(fg_color="#d35b58")
+                        self.entrys[4].configure(fg_color="#d35b58")
+
         else:
             self.label.configure(text="הנתונים שהכנסת כבר קיימים")
-            self.entrys[0].configure(fg_color="#d35b58")
-            self.entrys[1].configure(fg_color="#d35b58")
+            self.entrys[2].configure(fg_color="#d35b58")
+            self.entrys[4].configure(fg_color="#d35b58")
         self.root.after(4000, self.clear_entrys)
         self.root.after(4000, self.clear_label)
 
@@ -172,9 +188,10 @@ class Custom_window(Base):
                                         anchor=tkinter.CENTER)
 
     def clear_entrys(self):
+        print("fake you bich")
         if self.the_name_of_the_table != CIRCULATIONS_TABLE:
-            self.entrys[1].configure(fg_color="#343638")
-        self.entrys[0].configure(fg_color="#343638")
+            self.entrys[2].configure(fg_color="#343638")
+            self.entrys[4].configure(fg_color="#343638")
 
     def check(self, event):
         typed = self.box.get()
