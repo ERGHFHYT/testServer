@@ -120,7 +120,7 @@ def main_window():
                                               height=40,
                                               width=40,
                                               corner_radius=15,
-                                              command=tool.voice)
+                                              command=tool.mic)
     root_2.button_5.place(relx=0.2, rely=0.1)
     root_2.button_9 = customtkinter.CTkButton(master=root_2.frame_right,
                                               height=40,

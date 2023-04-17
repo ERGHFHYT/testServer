@@ -229,7 +229,8 @@ class New_wind(Base):
         for item in list_data:
             if typed.lower() in item:
                 data.append(item)
-        self.box["values"] = data
+        self.clear_all_form_the_tree()
+        self.add_items_to_the_tree(data)
 
     def excel(self):
         filename = fd.askopenfilename(
@@ -302,8 +303,8 @@ class New_wind(Base):
             try:
 
                 recognizer.adjust_for_ambient_noise(mic, duration=0.5)
-                mouse_listener = pynput.mouse.Listener(suppress=True)
-                mouse_listener.start()
+                #mouse_listener = pynput.mouse.Listener(suppress=True)
+                #mouse_listener.start()
                 audio = recognizer.listen(mic, phrase_time_limit=10)
                 if audio != '':
                     self.box.insert(0, str(recognizer.recognize_google(audio,
@@ -316,10 +317,11 @@ class New_wind(Base):
                                                  "לא הצליח לזהות קול", 0.15,
                                                  0.3, -16)
                 self.root.after(4000, self.clear_label)
-        mouse_listener.stop()
+        #mouse_listener.stop()
 
     def mic(self):
         x = threading.Thread(target=self.voice, args=())
+        x.start()
 
     def clear_all_form_the_tree(self):
         for item in self.tree.get_children():
