@@ -8,15 +8,14 @@ conct = "postgresql://gorgi:jZ2m-q_ieFujsuFc1trhpQ@free-tier13.aws-eu-central-1.
 import psycopg2
 mydb = psycopg2.connect(conct)
 mycursor = mydb.cursor()
-#
 # #
-# sql = "DROP TABLE password_table"
-# mycursor.execute(sql)
-# mycursor.execute("CREATE TABLE save_table (is_admin "
-#                 "VARCHAR(100))")
-sql = "INSERT INTO save_table (is_admin) VALUES (%s)"
-val = ('yes',)
+# # #
+# # sql = "DROP TABLE password_table"
+# # mycursor.execute(sql)
+# # mycursor.execute("CREATE TABLE save_table (is_admin "
+# #                 "VARCHAR(100))")
+sql = "INSERT INTO circulations_table (the_number_of_circulation,circulation) VALUES (%s,%s)"
+val = ("1", "כ")
 mycursor.execute(sql, val)
-#
+# #
 mydb.commit()
-

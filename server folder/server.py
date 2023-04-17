@@ -1,3 +1,5 @@
+import threading
+
 from server_constants import *
 import json
 import socket
@@ -12,7 +14,7 @@ def remove_item(the_name_of_the_table, typed):
     the_list_of_the_data = db(the_name_of_the_table)
     # בודק לפי מה שהמשתמש כתב מה הכי קרוב להיות מה שהוא רוצה למחוק
     for single_data in the_list_of_the_data:
-        if the_name_of_the_table == CIRCULATIONS_TABLE and the_name_of_the_table == PASSWORD_TABLE:
+        if the_name_of_the_table == CIRCULATIONS_TABLE or the_name_of_the_table == PASSWORD_TABLE:
             single = single_data[1]
         else:
             single = single_data[2]
@@ -21,9 +23,10 @@ def remove_item(the_name_of_the_table, typed):
             sql = "DELETE FROM " + the_name_of_the_table
             mycursor.execute(sql)
             mydb.commit()
-    print(the_list_of_the_data)
-    for d in the_list_of_the_data:
-        add_item(the_name_of_the_table, d)
+    data = [tuple(x) for x in the_list_of_the_data]
+    add_items(the_name_of_the_table, data)
+    # for d in the_list_of_the_data:
+    #     add_item(the_name_of_the_table, d)
     return the_list_of_the_data
 
 
@@ -161,8 +164,19 @@ def add_item(the_name_of_the_table, items_to_add):
     mydb.commit()
     return the_list_of_the_data
 
+def add_items(the_name_of_the_table, items_to_add):
+    if the_name_of_the_table == PASSWORD_TABLE:
+        sql = "INSERT INTO password_table (username,password)VALUES(%s,%s)"
+    elif the_name_of_the_table == CIRCULATIONS_TABLE:
+        sql = "INSERT INTO circulations_table (the_number_of_circulation,circulation) VALUES (%s,%s)"
+    elif the_name_of_the_table == PUPILS_TABLE:
+        sql = "INSERT INTO " + the_name_of_the_table + "(name,last_name,id,phone_number," \
+                                                       "circulation,teacher)VALUES(%s,%s,%s,%s,%s,%s)"
 
-
+    else:
+        sql = "INSERT INTO " + the_name_of_the_table + "(name,last_name,id,phone_number)VALUES(%s,%s,%s,%s)"
+    mycursor.executemany(sql, items_to_add)
+    mydb.commit()
 
 
 # server_program
@@ -221,6 +235,8 @@ try:
                 d = json.dumps(d)
                 l_bytes = d.encode('utf-8')
                 conn.send(l_bytes)
+
+
 except Exception as e:
     print(e)
     print(traceback.format_exc())
