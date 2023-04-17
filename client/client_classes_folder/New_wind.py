@@ -31,6 +31,7 @@ class New_wind(Base):
         self.label_3 = None
         self.the_location = None
         self.tree = None
+        self.mic_button = None
 
     def change_the_screen_following_the_table(self, name_for_the_test,
                                               the_number_of_the_button,
@@ -298,6 +299,7 @@ class New_wind(Base):
         self.label.configure(text=EMPTY_SPACE)
 
     def voice(self):
+        self.mic_button.configure(fg_color=BACKGROUND_COLOR)
         recognizer = speech_recognition.Recognizer()
         with speech_recognition.Microphone() as mic:
             try:
@@ -309,12 +311,14 @@ class New_wind(Base):
                 if audio != '':
                     self.box.insert(0, str(recognizer.recognize_google(audio,
                                                                        language="he")))
+                    self.mic_button.configure(fg_color=NUM_BLUE)
                     self.catching_sound(str(recognizer.recognize_google(audio,
                                                                         language="he")))
 
             except:
-                self.label = self.create_masages(220, 100, "#2a2d2e",
-                                                 "לא הצליח לזהות קול", 0.15,
+                self.mic_button.configure(fg_color=NUM_BLUE)
+                self.label = self.create_masages(200, 130, BACKGROUND_COLOR,
+                                                 "לא זיהה קול", 0.25,
                                                  0.3, -16)
                 self.root.after(4000, self.clear_label)
         #mouse_listener.stop()

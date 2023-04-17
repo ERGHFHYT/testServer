@@ -30,6 +30,9 @@ def update(data_entry, the_name_of_the_table):
                                                                         data_entry)
         if the_name_of_the_table == CIRCULATIONS_TABLE:
             tool.start(["מחזור"])
+        elif the_name_of_the_table == PUPILS_TABLE:
+            tool.start(["שם", "שם משפחה", "תעודת זהות", "מספר טלפון", "תעודת זהות מורה"])
+
         else:
             tool.start(["שם", "שם משפחה", "תעודת זהות", "מספר טלפון"])
         if the_name_of_the_table == PUPILS_TABLE:

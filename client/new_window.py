@@ -33,6 +33,9 @@ def main_window():
     check_list_image = ImageTk.PhotoImage(
         Image.open(CHECK_IMAGE).resize(CHECK_IMAGE_SIZE,
                                        Image.ANTIALIAS))
+    mic_image = ImageTk.PhotoImage(
+        Image.open(MICROPHONE_IMAGE).resize(CHECK_IMAGE_SIZE,
+                                       Image.ANTIALIAS))
     root_2.frame_right = customtkinter.CTkFrame(master=root_2, height=550,
                                                 width=650)
     root_2.frame_right.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
@@ -116,12 +119,13 @@ def main_window():
 
     list_of_buttons[0].configure(fg_color=DARK_GRAY)
     root_2.button_5 = customtkinter.CTkButton(master=root_2.frame_right,
-                                              text="",
+                                              text="", image=mic_image,
                                               height=40,
                                               width=40,
                                               corner_radius=15,
                                               command=tool.mic)
     root_2.button_5.place(relx=0.2, rely=0.1)
+    tool.mic_button = root_2.button_5
     root_2.button_9 = customtkinter.CTkButton(master=root_2.frame_right,
                                               height=40,
                                               width=110, fg_color="#D35B58",

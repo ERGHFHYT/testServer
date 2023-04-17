@@ -81,10 +81,6 @@ class Custom_window(Base):
                             ["check_which_item_this_is",
                              CIRCULATIONS_TABLE, self.box.get()])
                         entry_to_add.append(str(data_entry[1]))
-                        if self.data_entry == EMPTY_SPACE:
-                            entry_to_add.append("ריק")
-                        else:
-                            entry_to_add.append(str(self.data_entry[-1]))
                         print(entry_to_add)
                         print(self.the_name_of_the_table)
                     print(entry_to_add)
@@ -119,17 +115,21 @@ class Custom_window(Base):
                                          width=650)
         label_1.place(relx=0.5, rely=0.5, anchor=tkinter.CENTER)
         entrys = []
-        num = 0.25
+        relx = 0.25
+        rely = 0.75
         for name in range(len(the_names_of_the_entrys)):
+            if name == 3:
+                relx = 0.25
+                rely = 0.35
             entrys.append(0)
             entrys[name] = self.root.my_entry_2 = customtkinter.CTkEntry(
                 master=self.root.frame_1, corner_radius=0, width=200,
                 placeholder_text=the_names_of_the_entrys[name], font=(
                     "Halvetica", -20),
                 justify='right')
-            self.root.my_entry_2.place(relx=0.75, rely=num,
+            self.root.my_entry_2.place(relx=rely, rely=relx,
                                        anchor=tkinter.CENTER)
-            num += 0.15
+            relx += 0.15
         print(len(entrys))
         self.entrys = entrys
 
@@ -150,7 +150,10 @@ class Custom_window(Base):
             if self.data_entry is not None:
                 num = 0
                 for data in self.data_entry:
-                    entrys[num].insert(0, str(data))
+                    if num == 4:
+                        entrys[num].insert(0, self.data_entry[-1])
+                    else:
+                        entrys[num].insert(0, self.data_entry[num])
                     num += 1
         except Exception as e:
             print(e)

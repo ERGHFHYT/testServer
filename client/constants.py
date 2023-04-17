@@ -38,9 +38,7 @@ TEACHER_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\" \
                 "teacher_image.png"
 CHECK_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\ckenck.png"
 HOME_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\home.png"
-MICROPHONE_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\" \
-                   "microphone" \
-                   ".png"
+MICROPHONE_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\microphone.png"
 ADD_LIST_IMAGE = "C:\\Users\\elkan\\Desktop\\testServer\\imege's\\" \
                  "add-list.png"
 
