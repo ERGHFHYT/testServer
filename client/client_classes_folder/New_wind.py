@@ -175,21 +175,32 @@ class New_wind(Base):
 
     def remove_item(self):
         selected = self.tree.focus()
-        values = self.tree.item(selected, 'values')
-        print(values[2])
-        Base.execution_server(
-            [REMOVE_ITEM_FROM_TABLE, self.the_name_of_the_table,
-             str(values[2])])
-        list_data = tuple(Base.execution_server([GET_TABLE,
-                                                 self.the_name_of_the_table]))
-        if self.the_name_of_the_table == CIRCULATIONS_TABLE:
-            list_d = []
-            for l in list_data:
-                list_d.append(l[1])
-                list_data = list_d
-        self.box["values"] = tuple(list_data)
-        self.clear_all_form_the_tree()
-        self.add_items_to_the_tree(list_data)
+        if str(self.tree.focus()) != "":
+            values = self.tree.item(selected, 'values')
+            print(values)
+            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                value = values[0]
+            elif self.the_name_of_the_table == PUPILS_TABLE:
+                value = values[1]
+            else:
+                value = values[2]
+            print(value)
+            Base.execution_server(
+                [REMOVE_ITEM_FROM_TABLE, self.the_name_of_the_table,
+                 str(value)])
+            list_data = tuple(Base.execution_server([GET_TABLE,
+                                                     self.the_name_of_the_table]))
+            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                list_d = []
+                for l in list_data:
+                    list_d.append(l[1])
+                    list_data = list_d
+            self.box["values"] = tuple(list_data)
+            self.clear_all_form_the_tree()
+            self.add_items_to_the_tree(list_data)
+        else:
+            self.label.configure(text="לא בחרת נתון")
+            self.root.after(4000, self.clear_label)
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
 

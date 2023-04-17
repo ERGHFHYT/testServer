@@ -10,13 +10,13 @@ mydb = psycopg2.connect(conct)
 mycursor = mydb.cursor()
 #
 # #
-sql = "DROP TABLE password_table"
-mycursor.execute(sql)
-# #mycursor.execute("CREATE TABLE teachers_table (name "
-#   #               "VARCHAR(100), id VARCHAR(10))")
-# sql = "INSERT INTO pupils_table (name,id,circulation,teacher) VALUES (%s,%s,%s,%s)"
-# val = ("dftrhr", "225434652", "a", "08765121")
-# mycursor.execute(sql, val)
+# sql = "DROP TABLE password_table"
+# mycursor.execute(sql)
+# mycursor.execute("CREATE TABLE save_table (is_admin "
+#                 "VARCHAR(100))")
+sql = "INSERT INTO save_table (is_admin) VALUES (%s)"
+val = ('yes',)
+mycursor.execute(sql, val)
 #
 mydb.commit()
 

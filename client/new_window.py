@@ -17,8 +17,6 @@ def main_window():
     root_2.grid_columnconfigure(1, weight=1)
     root_2.grid_rowconfigure(0, weight=1)
 
-    teachers = client.client_classes_folder.New_wind.New_wind.execution_server([
-        GET_TABLE, TEACHERS_TABLE])
     root_2.frame_left = customtkinter.CTkFrame(master=root_2,
                                                width=180,
                                                corner_radius=0)
@@ -147,7 +145,7 @@ def main_window():
                        justify='right')
     box.place(relx=0.5, rely=0.1)
     tool.the_location = root_2.frame_right
-    tool.label = tool.create_masages(200, 120, "#2b2b2b", "", 0.25, 0.6,
+    tool.label = tool.create_masages(200, 120, "#2b2b2b", "", 0.65, 0.7,
                                      -16)
     tool.label_2 = tool.create_masages(120, 120,
                                        "#2b2b2b", "", 0.85, 0.35, -25)

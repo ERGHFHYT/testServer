@@ -11,12 +11,17 @@ conct = STRING_CONNECSHN
 def remove_item(the_name_of_the_table, typed):
     the_list_of_the_data = db(the_name_of_the_table)
     # בודק לפי מה שהמשתמש כתב מה הכי קרוב להיות מה שהוא רוצה למחוק
-    for single_data_from_the_list in the_list_of_the_data:
-        if single_data_from_the_list[2] in typed:
-            the_list_of_the_data.remove(single_data_from_the_list)
+    for single_data in the_list_of_the_data:
+        if the_name_of_the_table == CIRCULATIONS_TABLE and the_name_of_the_table == PASSWORD_TABLE:
+            single = single_data[1]
+        else:
+            single = single_data[2]
+        if single in typed:
+            the_list_of_the_data.remove(single_data)
             sql = "DELETE FROM " + the_name_of_the_table
             mycursor.execute(sql)
             mydb.commit()
+    print(the_list_of_the_data)
     for d in the_list_of_the_data:
         add_item(the_name_of_the_table, d)
     return the_list_of_the_data

@@ -55,12 +55,16 @@ def entry_window():
     def clear_entry():
         root.entry_username.configure(fg_color=BACKGROUND_COLOR)
         root.entry_password.configure(fg_color=BACKGROUND_COLOR)
+    def which_password_is_it(password):
+        tool.execution_server(
+            [REMOVE_ITEM_FROM_TABLE, password])
 
     def start_new():
         message = [CHECK_PASSWORD_FROM_TABLE, root.entry_username.get(),
                    root.entry_password.get()]
         password_response_form_the_table = tool.execution_server(message)
         if password_response_form_the_table == CORRECT_PASSWORD:
+            # permission = which_password_is_it(root.entry_password.get())
             root.destroy()
             new_window.main_window()
         elif password_response_form_the_table == \
