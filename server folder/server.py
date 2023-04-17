@@ -18,7 +18,6 @@ def remove_item(the_name_of_the_table, typed):
             mycursor.execute(sql)
             mydb.commit()
     for d in the_list_of_the_data:
-        print(d)
         add_item(the_name_of_the_table, d)
     return the_list_of_the_data
 
