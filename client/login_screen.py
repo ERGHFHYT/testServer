@@ -55,9 +55,9 @@ def entry_window():
     def clear_entry():
         root.entry_username.configure(fg_color=BACKGROUND_COLOR)
         root.entry_password.configure(fg_color=BACKGROUND_COLOR)
-    def which_password_is_it(password):
-        tool.execution_server(
-            [REMOVE_ITEM_FROM_TABLE, password])
+    # def which_password_is_it(password):
+    #     tool.execution_server(
+    #         [REMOVE_ITEM_FROM_TABLE, password])
 
     def start_new():
         message = [CHECK_PASSWORD_FROM_TABLE, root.entry_username.get(),
@@ -65,6 +65,9 @@ def entry_window():
         password_response_form_the_table = tool.execution_server(message)
         if password_response_form_the_table == CORRECT_PASSWORD:
             # permission = which_password_is_it(root.entry_password.get())
+            data_entry = tool.execution_server(
+                ["check_which_item_this_is", PASSWORD_TABLE, root.entry_password.get()])
+            tool.execution_server(["update_admin", data_entry[2]])
             root.destroy()
             new_window.main_window()
         elif password_response_form_the_table == \

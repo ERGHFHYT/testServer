@@ -67,6 +67,14 @@ class New_wind(Base):
             self.box["values"] = tuple(list_d)
             self.clear_all_form_the_tree()
             self.add_items_to_the_tree(list_d)
+        elif the_name_of_the_table == PASSWORD_TABLE:
+            for d in list_data:
+                if d[2] == "yes":
+                    list_data.remove(d)
+                d.remove(d[2])
+            self.box["values"] = tuple(list_data)
+            self.clear_all_form_the_tree()
+            self.add_items_to_the_tree(list_data)
         else:
             self.box["values"] = tuple(list_data)
             self.clear_all_form_the_tree()
@@ -180,7 +188,7 @@ class New_wind(Base):
             print(values)
             if self.the_name_of_the_table == CIRCULATIONS_TABLE:
                 value = values[0]
-            elif self.the_name_of_the_table == PUPILS_TABLE:
+            elif self.the_name_of_the_table == PASSWORD_TABLE:
                 value = values[1]
             else:
                 value = values[2]

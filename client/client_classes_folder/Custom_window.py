@@ -39,12 +39,10 @@ class Custom_window(Base):
                 if self.the_name_of_the_table == CIRCULATIONS_TABLE:
                     if i[0] == self.entrys[0].get():
                         no_duplicates = False
-                elif self.the_name_of_the_table == PUPILS_TABLE:
-                    if i[1] == self.entrys[2].get():
+                elif self.the_name_of_the_table == PASSWORD_TABLE:
+                    if i[1] == self.entrys[1].get():
                         no_duplicates = False
                 else:
-                    print(self.entrys[0].get())
-                    print(i[0])
                     if i[0] == self.entrys[2].get():
                         no_duplicates = False
         print(no_duplicates)

@@ -11,18 +11,21 @@ conct = STRING_CONNECSHN
 
 
 def remove_item(the_name_of_the_table, typed):
+    print("typed", typed)
     the_list_of_the_data = db(the_name_of_the_table)
     # בודק לפי מה שהמשתמש כתב מה הכי קרוב להיות מה שהוא רוצה למחוק
     for single_data in the_list_of_the_data:
         if the_name_of_the_table == CIRCULATIONS_TABLE or the_name_of_the_table == PASSWORD_TABLE:
             single = single_data[1]
+            print(single)
         else:
             single = single_data[2]
-        if single in typed:
+
+        if single == typed:
             the_list_of_the_data.remove(single_data)
-            sql = "DELETE FROM " + the_name_of_the_table
-            mycursor.execute(sql)
-            mydb.commit()
+    sql = "DELETE FROM " + the_name_of_the_table
+    mycursor.execute(sql)
+    mydb.commit()
     data = [tuple(x) for x in the_list_of_the_data]
     add_items(the_name_of_the_table, data)
     # for d in the_list_of_the_data:
@@ -72,6 +75,15 @@ def check_password():
     return False
 
 
+def update_admin(is_admin):
+    sql = "DELETE FROM save_table"
+    mycursor.execute(sql)
+    mydb.commit()
+    sql = "INSERT INTO save_table (is_admin) VALUES (%s)"
+    mycursor.execute(sql, (is_admin,))
+    mydb.commit()
+
+
 def db(the_name_of_the_table):
     #  הפונקציה לוקחת את כל הנתונים מה database
     mycursor.execute("SELECT * FROM " + the_name_of_the_table)
@@ -79,8 +91,6 @@ def db(the_name_of_the_table):
     my_final_result = []
     for result in my_results:
         my_final_result.append(list(result))
-
-
     return my_final_result
 
 
@@ -88,10 +98,10 @@ def check_which_item_this_is(the_name_of_the_table, item):
     items = db(the_name_of_the_table)
     for item_of_table in items:
         if the_name_of_the_table != "circulations_table":
-            if item_of_table[1] in item:
+            if item_of_table[1] == item:
                 return item_of_table
         else:
-            if item_of_table[1] in item:
+            if item_of_table[1] == item:
                 return item_of_table
     return None
 
@@ -147,7 +157,8 @@ def add_item(the_name_of_the_table, items_to_add):
     i = []
     the_list_of_the_data = db(the_name_of_the_table)
     if the_name_of_the_table == "password_table":
-        sql = "INSERT INTO password_table (username,password)VALUES(%s,%s)"
+        sql = "INSERT INTO password_table (username,password,is_admin)VALUES(%s,%s,%s)"
+        items_to_add.append("no")
     elif the_name_of_the_table == "circulations_table":
         sql = "INSERT INTO circulations_table (the_number_of_circulation,circulation) VALUES (%s,%s)"
     elif the_name_of_the_table == "pupils_table":
@@ -164,9 +175,10 @@ def add_item(the_name_of_the_table, items_to_add):
     mydb.commit()
     return the_list_of_the_data
 
+
 def add_items(the_name_of_the_table, items_to_add):
     if the_name_of_the_table == PASSWORD_TABLE:
-        sql = "INSERT INTO password_table (username,password)VALUES(%s,%s)"
+        sql = "INSERT INTO password_table (username,password,is_admin)VALUES(%s,%s,%s)"
     elif the_name_of_the_table == CIRCULATIONS_TABLE:
         sql = "INSERT INTO circulations_table (the_number_of_circulation,circulation) VALUES (%s,%s)"
     elif the_name_of_the_table == PUPILS_TABLE:
@@ -212,6 +224,8 @@ try:
 
             if the_name_of_the_function_to_execute == "chek_password_form_table":
                 d = check_password()
+            elif the_name_of_the_function_to_execute == "update_admin":
+                d = update_admin(data[1])
             elif the_name_of_the_function_to_execute == "get_a_table":
                 d = db(data[1])
             elif the_name_of_the_function_to_execute == "add_exel":

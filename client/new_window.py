@@ -108,6 +108,16 @@ def main_window():
                        tool.button_Practitioners,
                        tool.button_password, tool.button_circulations, tool.button_pupils_in_teachers]
     list_of_buttons = [0, 0, 0, 0, 0, 0]
+    is_admin = tool.execution_server(
+        [GET_TABLE, SAVE_TABLE])
+    print(is_admin[0][0])
+    if is_admin[0][0] == "no":
+        print("scip scip")
+        buttons_names.remove("סיסמה")
+        buttons_commend.remove(buttons_commend[3])
+        list_of_buttons = [0, 0, 0, 0, 0]
+
+
     for button in range(len(buttons_names)):
         list_of_buttons[button] = root_2.button_2 = customtkinter.CTkButton(
             master=root_2.frame_left, text=buttons_names[button],
