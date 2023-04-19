@@ -110,7 +110,7 @@ def main_window():
     list_of_buttons = [0, 0, 0, 0, 0, 0]
     is_admin = tool.execution_server(
         [GET_TABLE, SAVE_TABLE])
-    print(is_admin[0][0])
+    print(is_admin[0][0] == "no")
     if is_admin[0][0] == "no":
         print("scip scip")
         buttons_names.remove("סיסמה")
