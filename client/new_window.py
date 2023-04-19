@@ -33,7 +33,7 @@ def main_window():
                                        Image.ANTIALIAS))
     mic_image = ImageTk.PhotoImage(
         Image.open(MICROPHONE_IMAGE).resize(CHECK_IMAGE_SIZE,
-                                       Image.ANTIALIAS))
+                                            Image.ANTIALIAS))
     root_2.frame_right = customtkinter.CTkFrame(master=root_2, height=550,
                                                 width=650)
     root_2.frame_right.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
@@ -103,25 +103,26 @@ def main_window():
                                             font=("Halvetica", -25))
     root_2.label_1.place(relx=0.7, rely=0.03)
     num = 2
-    buttons_names = ["מורים", "תלמידים", "מתרגלים", "סיסמה", "מחזור", "מורים בתוך תלמידים"]
-    buttons_commend = [tool.button_teacher, tool.button_pupils,
-                       tool.button_Practitioners,
-                       tool.button_password, tool.button_circulations, tool.button_pupils_in_teachers]
-    list_of_buttons = [0, 0, 0, 0, 0, 0]
     is_admin = tool.execution_server(
         [GET_TABLE, SAVE_TABLE])
     print(is_admin[0][0] == "no")
     if is_admin[0][0] == "no":
-        print("scip scip")
-        buttons_names.remove("סיסמה")
-        buttons_commend.remove(buttons_commend[3])
+        buttons_names = ["מורים", "תלמידים", "מתרגלים", "מחזור", "מורים בתוך תלמידים"]
+        buttons_commend = [tool.button_teacher, tool.button_pupils,
+                           tool.button_Practitioners,
+                           tool.button_circulations, tool.button_pupils_in_teachers]
         list_of_buttons = [0, 0, 0, 0, 0]
-
+    else:
+        buttons_names = ["מורים", "תלמידים", "מתרגלים", "מחזור", "מורים בתוך תלמידים","סיסמה"]
+        buttons_commend = [tool.button_teacher, tool.button_pupils,
+                           tool.button_Practitioners,
+                            tool.button_circulations, tool.button_pupils_in_teachers, tool.button_password]
+        list_of_buttons = [0, 0, 0, 0, 0, 0]
 
     for button in range(len(buttons_names)):
         list_of_buttons[button] = root_2.button_2 = customtkinter.CTkButton(
             master=root_2.frame_left, text=buttons_names[button],
-             command=buttons_commend[button])
+            command=buttons_commend[button])
         root_2.button_2.grid(row=num, column=0, pady=10, padx=20)
         num += 1
 
@@ -151,8 +152,8 @@ def main_window():
     button_2.place(relx=0.3, rely=0.85)
 
     box = customtkinter.CTkEntry(root_2.frame_right, width=250,
-                       font=("Halvetica", 20),
-                       justify='right')
+                                 font=("Halvetica", 20),
+                                 justify='right')
     box.place(relx=0.5, rely=0.1)
     tool.the_location = root_2.frame_right
     tool.label = tool.create_masages(200, 120, "#2b2b2b", "", 0.65, 0.7,

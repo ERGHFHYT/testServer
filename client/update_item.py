@@ -43,20 +43,32 @@ def update(data_entry, the_name_of_the_table):
             for l in list_data:
                 list_d.append(l[1])
                 list_data = list_d
-
+            label_1 = customtkinter.CTkLabel(root_2,
+                                             text="מחזור", fg_color=("gray84", "gray25"),
+                                             font=("Halvetica", -20))
+            label_1.place(relx=0.36, rely=0.48)
             box = ttk.Combobox(root_2, width=12,
                                font=("Halvetica", 20),
                                values=list_data, justify='right')
-            box.place(relx=0.3, rely=0.52)
-            box.bind("<KeyRelease>", tool.check)
+            box.place(relx=0.3, rely=0.55)
+            box.bind("<KeyRelease>", tool.check_for_update_puples)
             print("data entry", len(data_entry))
             if data_entry != EMPTY_SPACE:
                 box.set(data_entry[4])
             tool.box = box
-        tool.big_title_to_add(100, 50)
+        if the_name_of_the_table == CIRCULATIONS_TABLE:
+            tool.big_title_to_add(100, 50, "מחזור")
+        elif the_name_of_the_table == PUPILS_TABLE:
+            tool.big_title_to_add(100, 50, "תלמיד")
+        elif the_name_of_the_table == PASSWORD_TABLE:
+            tool.big_title_to_add(100, 50, "סיסמה")
+        elif the_name_of_the_table == PRACTITIONERS_TABLE:
+            tool.big_title_to_add(100, 50, "מתרגל")
+        else:
+            tool.big_title_to_add(100, 50, "מורה")
         tool.add_colors()
     tool.the_location = root_2
     tool.label = tool.create_masages(200, 80,
                                      BACKGROUND_COLOR_OF_CUSTOM_WINDOWS, "",
-                                     0.3, 0.7, -16)
+                                     0.5, 0.7, -16)
     root_2.mainloop()

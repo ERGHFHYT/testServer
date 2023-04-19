@@ -49,7 +49,13 @@ class New_wind(Base):
                                                    font=(DEFAULT_FONT,
                                                          -25))
         self.root.label_1.place(relx=0.7, rely=0.03)
-        for number in range(6):
+        is_admin = Base.execution_server(
+            [GET_TABLE, SAVE_TABLE])
+        if is_admin[0][0] == "yes":
+            number_of_buttons = 6
+        else:
+            number_of_buttons = 5
+        for number in range(number_of_buttons):
             if number == the_number_of_the_button:
                 self.list_of_buttons[number].configure(fg_color=BACKGROUND_COLOR)
             else:
@@ -71,6 +77,7 @@ class New_wind(Base):
             for d in list_data:
                 if d[2] == "yes":
                     list_data.remove(d)
+            for d in list_data:
                 d.remove(d[2])
             self.box["values"] = tuple(list_data)
             self.clear_all_form_the_tree()
@@ -113,7 +120,7 @@ class New_wind(Base):
         self.tree.heading("# 5", text="מחזור")
         self.tree.column("# 6", anchor='n', width=140)
         self.tree.heading("# 6", text="תעודת זהות (מורה)")
-        New_wind.change_the_screen_following_the_table(self, "תלמידים לפי מורים", 5,
+        New_wind.change_the_screen_following_the_table(self, "תלמידים לפי מורים", 4,
                                                        PUPILS_IN_TEACHERS)
 
     def button_teacher(self):
@@ -145,7 +152,7 @@ class New_wind(Base):
         self.tree.heading("# 5", text="")
         self.tree.column("# 6", anchor='n', width=140)
         self.tree.heading("# 6", text="")
-        New_wind.change_the_screen_following_the_table(self, "מחזורים", 4,
+        New_wind.change_the_screen_following_the_table(self, "מחזורים", 3,
                                                        "circulations_table")
 
     def button_password(self):
@@ -162,7 +169,7 @@ class New_wind(Base):
         self.tree.column("# 6", anchor='center')
         self.tree.heading("# 6", text="")
 
-        New_wind.change_the_screen_following_the_table(self, "סיסמה", 3,
+        New_wind.change_the_screen_following_the_table(self, "סיסמה", 5,
                                                        "password_table")
 
     def button_Practitioners(self):
@@ -203,6 +210,12 @@ class New_wind(Base):
                 for l in list_data:
                     list_d.append(l[1])
                     list_data = list_d
+            elif self.the_name_of_the_table == PASSWORD_TABLE:
+                for d in list_data:
+                    if d[2] == "yes":
+                        list_data.remove(d)
+                for d in list_data:
+                    d.remove(d[2])
             self.box["values"] = tuple(list_data)
             self.clear_all_form_the_tree()
             self.add_items_to_the_tree(list_data)
@@ -372,7 +385,12 @@ class New_wind(Base):
             for l in data:
                 list_d.append(l[1])
             data = list_d
-            print(data)
+        elif self.the_name_of_the_table == PASSWORD_TABLE:
+            for d in data:
+                if d[2] == "yes":
+                    data.remove(d)
+            for d in data:
+                d.remove(d[2])
         self.box["values"] = data
         self.clear_all_form_the_tree()
         self.add_items_to_the_tree(data)

@@ -30,8 +30,14 @@ class Custom_window(Base):
                     label, the_location)
         tool.window()
 
+    def teacher_is_exists(self, teacher_id):
+        teachers = Base.execution_server([GET_TABLE, TEACHERS_TABLE])
+        for t in teachers:
+            if t[2] == teacher_id:
+                return True
+        return False
+
     def add_item(self):
-        print(self.data_entry)
         no_duplicates = True
         if self.data_entry == EMPTY_SPACE:
             data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
@@ -43,7 +49,7 @@ class Custom_window(Base):
                     if i[1] == self.entrys[1].get():
                         no_duplicates = False
                 else:
-                    if i[0] == self.entrys[2].get():
+                    if i[2] == self.entrys[2].get():
                         no_duplicates = False
         print(no_duplicates)
         if no_duplicates:
@@ -75,31 +81,46 @@ class Custom_window(Base):
                     data_entry = Base.execution_server(
                         ["check_which_item_this_is",
                          CIRCULATIONS_TABLE, self.box.get()])
-                    if CheckID(str(self.entrys[2].get())) and CheckID(str(self.entrys[4].get())) \
-                            and data_entry is not None:
-                        entry_to_add.append(str(self.entrys[2].get()))
-                        entry_to_add.append(str(self.entrys[3].get()))
-                        entry_to_add.append(str(data_entry[1]))
-                        entry_to_add.append(str(self.entrys[4].get()))
-                        data = ["add_item", self.the_name_of_the_table,
-                                entry_to_add]
-                        Base.execution_server(data)
-                        self.label.configure(text="!קלט הוכנס בהצלחה")
-                        if self.data_entry != EMPTY_SPACE:
-                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                   self.the_name_of_the_table, self.data_entry])
+                    if CheckID(str(self.entrys[2].get())) and CheckID(str(self.entrys[4].get())):
+                        if self.teacher_is_exists(str(self.entrys[4].get())):
+                            if data_entry is not None:
+                                if str(self.entrys[3].get()).isnumeric():
+                                    entry_to_add.append(str(self.entrys[2].get()))
+                                    entry_to_add.append(str(self.entrys[3].get()))
+                                    entry_to_add.append(str(data_entry[1]))
+                                    entry_to_add.append(str(self.entrys[4].get()))
+                                    data = ["add_item", self.the_name_of_the_table,
+                                            entry_to_add]
+                                    Base.execution_server(data)
+                                    self.label.configure(text="!קלט הוכנס בהצלחה")
+                                    if self.data_entry != EMPTY_SPACE:
+                                        Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                               self.the_name_of_the_table, self.data_entry])
+                                else:
+                                    self.label.configure(text="חייב להכניס מספרים לתיבה זו")
+                                    self.entrys[3].configure(fg_color="#d35b58")
+                            else:
+                                self.label.configure(text="חייב להכניס מחזור קיים")
+                        else:
+                            self.label.configure(text="לא הכנסת תעודת זהות קיימת של מורה")
+                            self.entrys[4].configure(fg_color="#d35b58")
+
                     else:
                         self.label.configure(text="הכנסת קלט שהוא לא תקין")
                         self.entrys[2].configure(fg_color="#d35b58")
                         self.entrys[4].configure(fg_color="#d35b58")
                 else:
                     if CheckID(str(self.entrys[2].get())):
-                        entry_to_add.append(str(self.entrys[2].get()))
-                        entry_to_add.append(str(self.entrys[4].get()))
-                        data = ["add_item", self.the_name_of_the_table,
-                                entry_to_add]
-                        Base.execution_server(data)
-                        self.label.configure(text="!קלט הוכנס בהצלחה")
+                        if str(self.entrys[3].get()).isnumeric():
+                            entry_to_add.append(str(self.entrys[2].get()))
+                            entry_to_add.append(str(self.entrys[3].get()))
+                            data = ["add_item", self.the_name_of_the_table,
+                                    entry_to_add]
+                            Base.execution_server(data)
+                            self.label.configure(text="!קלט הוכנס בהצלחה")
+                        else:
+                            self.label.configure(text="חייב להכניס מספרים לתיבה זו")
+                            self.entrys[3].configure(fg_color="#d35b58")
                         if self.data_entry != EMPTY_SPACE:
                             Base.execution_server([REMOVE_ITEM_FROM_TABLE,
                                                    self.the_name_of_the_table, self.data_entry])
@@ -110,8 +131,12 @@ class Custom_window(Base):
 
         else:
             self.label.configure(text="הנתונים שהכנסת כבר קיימים")
-            self.entrys[2].configure(fg_color="#d35b58")
-            self.entrys[4].configure(fg_color="#d35b58")
+            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                self.entrys[0].configure(fg_color="#d35b58")
+            elif self.the_name_of_the_table == PASSWORD_TABLE:
+                self.entrys[1].configure(fg_color="#d35b58")
+            else:
+                self.entrys[2].configure(fg_color="#d35b58")
         self.root.after(4000, self.clear_entrys)
         self.root.after(4000, self.clear_label)
 
@@ -172,29 +197,42 @@ class Custom_window(Base):
         except Exception as e:
             print(e)
 
-    def big_title_to_add(self, width, height):
-        name = self.the_name_of_the_table.split("_")
+    def big_title_to_add(self, width, height, name):
         self.root.frame_1.label_1 = customtkinter.CTkLabel(
             master=self.root.frame_1,
             width=width,
             height=height,
             fg_color=self.color_object,
             corner_radius=0,
-            text=name[0],
+            text=name,
             font=("Halvetica", -16))
         self.root.frame_1.label_1.place(relx=0.5, rely=0.1,
                                         anchor=tkinter.CENTER)
 
     def clear_entrys(self):
         print("fake you bich")
-        if self.the_name_of_the_table != CIRCULATIONS_TABLE:
+        if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+            self.entrys[0].configure(fg_color="#343638")
+        elif self.the_name_of_the_table == PASSWORD_TABLE:
+            self.entrys[1].configure(fg_color="#343638")
+        elif self.the_name_of_the_table == PUPILS_TABLE:
             self.entrys[2].configure(fg_color="#343638")
             self.entrys[4].configure(fg_color="#343638")
+        else:
+            self.entrys[2].configure(fg_color="#343638")
 
     def check(self, event):
-        typed = self.box.get()
         list_data = Base.execution_server(
             [GET_TABLE, self.the_name_of_the_table])
+        self.do_the_check(list_data, self.the_name_of_the_table)
+
+    def check_for_update_puples(self, event):
+        list_data = Base.execution_server(
+            [GET_TABLE, CIRCULATIONS_TABLE])
+        self.do_the_check(list_data, CIRCULATIONS_TABLE)
+
+    def do_the_check(self, list_data, the_name_of_the_table):
+        typed = self.box.get()
         if typed == '':
             data = list_data
         else:
@@ -203,6 +241,18 @@ class Custom_window(Base):
                 for i in item:
                     if typed.lower() in i.lower():
                         data.append(item)
+        if the_name_of_the_table == CIRCULATIONS_TABLE:
+            print("good")
+            list_d = []
+            for l in data:
+                list_d.append(l[1])
+            data = list_d
+        elif the_name_of_the_table == PASSWORD_TABLE:
+            for d in data:
+                if d[2] == "yes":
+                    data.remove(d)
+            for d in data:
+                d.remove(d[2])
         self.box["values"] = data
 
     def add_colors(self):
