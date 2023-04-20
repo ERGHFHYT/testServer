@@ -96,8 +96,9 @@ class Custom_window(Base):
                         data_entry = Base.execution_server(
                             ["check_which_item_this_is",
                              CIRCULATIONS_TABLE, self.box.get()])
-                        if CheckID(str(self.entrys[2].get())) and CheckID(str(self.entrys[4].get())):
-                            if self.teacher_is_exists(str(self.entrys[4].get())):
+                        if CheckID(str(self.entrys[2].get())) and CheckID(str(self.entrys[4].get())) or \
+                                CheckID(str(self.entrys[2].get())) and str(self.entrys[4].get()) == "":
+                            if self.teacher_is_exists(str(self.entrys[4].get())) or str(self.entrys[4].get()) == "":
                                 if data_entry is not None:
                                     if str(self.entrys[3].get()).isnumeric():
                                         if self.data_entry != EMPTY_SPACE:
@@ -106,7 +107,10 @@ class Custom_window(Base):
                                         entry_to_add.append(str(self.entrys[2].get()))
                                         entry_to_add.append(str(self.entrys[3].get()))
                                         entry_to_add.append(str(data_entry[1]))
-                                        entry_to_add.append(str(self.entrys[4].get()))
+                                        if str(self.entrys[4].get()) == "":
+                                            entry_to_add.append("ריק")
+                                        else:
+                                            entry_to_add.append(str(self.entrys[4].get()))
                                         data = ["add_item", self.the_name_of_the_table,
                                                 entry_to_add]
                                         Base.execution_server(data)
