@@ -43,7 +43,7 @@ class Custom_window(Base):
             data = Base.execution_server([GET_TABLE, self.the_name_of_the_table])
             for i in data:
                 if self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                    if i[0] == self.entrys[0].get():
+                    if i[1] == self.entrys[0].get():
                         no_duplicates = False
                 elif self.the_name_of_the_table == PASSWORD_TABLE:
                     if i[1] == self.entrys[1].get():
@@ -56,15 +56,14 @@ class Custom_window(Base):
             if self.the_name_of_the_table == PASSWORD_TABLE:
                 if str(self.entrys[0].get()) != "" and str(self.entrys[1].get()) != "":
                     if str(self.entrys[1].get()).isnumeric():
+                        if self.data_entry != EMPTY_SPACE:
+                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                   self.the_name_of_the_table, self.data_entry[1]])
                         data = ["add_item", self.the_name_of_the_table,
                                 [self.entrys[0].get(), self.entrys[1].get()]]
                         Base.execution_server(data)
                         self.label.configure(text="!קלט הוכנס בהצלחה")
                         print("data_entry", self.data_entry)
-                        if self.data_entry != EMPTY_SPACE:
-                            print("gigi")
-                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                   self.the_name_of_the_table, self.data_entry[]])
                     else:
                         self.label.configure(text="חייב להכניס לפה רק מספרים")
                         self.entrys[1].configure(fg_color="#d35b58")
@@ -72,6 +71,9 @@ class Custom_window(Base):
                     self.label.configure(text="לא כתבת את כל הנתונים המוצרכים")
             elif self.the_name_of_the_table == CIRCULATIONS_TABLE:
                 if str(self.entrys[0].get()) != "":
+                    if self.data_entry != EMPTY_SPACE:
+                        Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                               self.the_name_of_the_table, self.data_entry[0]])
                     max_column = Base.execution_server(
                         [GET_MAX, self.the_name_of_the_table,
                          "the_number_of_circulation"])
@@ -79,9 +81,6 @@ class Custom_window(Base):
                             [max_column, self.entrys[0].get()]]
                     Base.execution_server(data)
                     self.label.configure(text="!קלט הוכנס בהצלחה")
-                    if self.data_entry != EMPTY_SPACE:
-                        Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                               self.the_name_of_the_table, self.data_entry])
                 else:
                     self.label.configure(text="לא כתבת את הנתון המוצרך")
             else:
@@ -101,6 +100,9 @@ class Custom_window(Base):
                             if self.teacher_is_exists(str(self.entrys[4].get())):
                                 if data_entry is not None:
                                     if str(self.entrys[3].get()).isnumeric():
+                                        if self.data_entry != EMPTY_SPACE:
+                                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                                   self.the_name_of_the_table, self.data_entry[2]])
                                         entry_to_add.append(str(self.entrys[2].get()))
                                         entry_to_add.append(str(self.entrys[3].get()))
                                         entry_to_add.append(str(data_entry[1]))
@@ -109,9 +111,6 @@ class Custom_window(Base):
                                                 entry_to_add]
                                         Base.execution_server(data)
                                         self.label.configure(text="!קלט הוכנס בהצלחה")
-                                        if self.data_entry != EMPTY_SPACE:
-                                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                                   self.the_name_of_the_table, self.data_entry])
                                     else:
                                         self.label.configure(text="חייב להכניס מספרים לתיבה זו")
                                         self.entrys[3].configure(fg_color="#d35b58")
@@ -134,6 +133,9 @@ class Custom_window(Base):
                         self.box.get() != ""):
                         if CheckID(str(self.entrys[2].get())):
                             if str(self.entrys[3].get()).isnumeric():
+                                if self.data_entry != EMPTY_SPACE:
+                                    Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                           self.the_name_of_the_table, self.data_entry[2]])
                                 entry_to_add.append(str(self.entrys[2].get()))
                                 entry_to_add.append(str(self.entrys[3].get()))
                                 data = ["add_item", self.the_name_of_the_table,
@@ -143,9 +145,6 @@ class Custom_window(Base):
                             else:
                                 self.label.configure(text="חייב להכניס מספרים לתיבה זו")
                                 self.entrys[3].configure(fg_color="#d35b58")
-                            if self.data_entry != EMPTY_SPACE:
-                                Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                       self.the_name_of_the_table, self.data_entry])
                         else:
                             self.label.configure(text="הכנסת קלט שהוא לא תקין")
                             self.entrys[2].configure(fg_color="#d35b58")
