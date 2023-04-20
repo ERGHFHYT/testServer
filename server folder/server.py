@@ -17,6 +17,7 @@ def remove_item(the_name_of_the_table, typed):
     for single_data in the_list_of_the_data:
         if the_name_of_the_table == CIRCULATIONS_TABLE or the_name_of_the_table == PASSWORD_TABLE:
             single = single_data[1]
+            typed = typed[1]
             print(single)
         else:
             single = single_data[2]
@@ -27,6 +28,7 @@ def remove_item(the_name_of_the_table, typed):
     mycursor.execute(sql)
     mydb.commit()
     data = [tuple(x) for x in the_list_of_the_data]
+    print(data)
     add_items(the_name_of_the_table, data)
     # for d in the_list_of_the_data:
     #     add_item(the_name_of_the_table, d)

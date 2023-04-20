@@ -201,8 +201,8 @@ class New_wind(Base):
                 Base.execution_server(
                     [REMOVE_ITEM_FROM_TABLE, self.the_name_of_the_table,
                      str(value)])
-                list_data = tuple(Base.execution_server([GET_TABLE,
-                                                         self.the_name_of_the_table]))
+                list_data = Base.execution_server([GET_TABLE,
+                                                         self.the_name_of_the_table])
                 if self.the_name_of_the_table == CIRCULATIONS_TABLE:
                     list_d = []
                     for l in list_data:

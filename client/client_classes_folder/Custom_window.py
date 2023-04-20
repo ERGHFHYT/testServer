@@ -60,9 +60,11 @@ class Custom_window(Base):
                                 [self.entrys[0].get(), self.entrys[1].get()]]
                         Base.execution_server(data)
                         self.label.configure(text="!קלט הוכנס בהצלחה")
+                        print("data_entry", self.data_entry)
                         if self.data_entry != EMPTY_SPACE:
+                            print("gigi")
                             Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                   self.the_name_of_the_table, self.data_entry])
+                                                   self.the_name_of_the_table, self.data_entry[]])
                     else:
                         self.label.configure(text="חייב להכניס לפה רק מספרים")
                         self.entrys[1].configure(fg_color="#d35b58")
@@ -88,56 +90,68 @@ class Custom_window(Base):
                     print(self.entrys[num].get())
                     entry_to_add.append(self.entrys[num].get())
                 if self.the_name_of_the_table == PUPILS_TABLE:
-                    data_entry = Base.execution_server(
-                        ["check_which_item_this_is",
-                         CIRCULATIONS_TABLE, self.box.get()])
-                    if CheckID(str(self.entrys[2].get())) and CheckID(str(self.entrys[4].get())):
-                        if self.teacher_is_exists(str(self.entrys[4].get())):
-                            if data_entry is not None:
-                                if str(self.entrys[3].get()).isnumeric():
-                                    entry_to_add.append(str(self.entrys[2].get()))
-                                    entry_to_add.append(str(self.entrys[3].get()))
-                                    entry_to_add.append(str(data_entry[1]))
-                                    entry_to_add.append(str(self.entrys[4].get()))
-                                    data = ["add_item", self.the_name_of_the_table,
-                                            entry_to_add]
-                                    Base.execution_server(data)
-                                    self.label.configure(text="!קלט הוכנס בהצלחה")
-                                    if self.data_entry != EMPTY_SPACE:
-                                        Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                               self.the_name_of_the_table, self.data_entry])
+                    if str(self.entrys[0].get()) != "" and str(self.entrys[1].get()) != "" and str(
+                            self.entrys[2].get()) != "" \
+                            and str(self.entrys[3].get()) != "" and str(self.entrys[4].get()) != "" and str(
+                        self.box.get() != ""):
+                        data_entry = Base.execution_server(
+                            ["check_which_item_this_is",
+                             CIRCULATIONS_TABLE, self.box.get()])
+                        if CheckID(str(self.entrys[2].get())) and CheckID(str(self.entrys[4].get())):
+                            if self.teacher_is_exists(str(self.entrys[4].get())):
+                                if data_entry is not None:
+                                    if str(self.entrys[3].get()).isnumeric():
+                                        entry_to_add.append(str(self.entrys[2].get()))
+                                        entry_to_add.append(str(self.entrys[3].get()))
+                                        entry_to_add.append(str(data_entry[1]))
+                                        entry_to_add.append(str(self.entrys[4].get()))
+                                        data = ["add_item", self.the_name_of_the_table,
+                                                entry_to_add]
+                                        Base.execution_server(data)
+                                        self.label.configure(text="!קלט הוכנס בהצלחה")
+                                        if self.data_entry != EMPTY_SPACE:
+                                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                                   self.the_name_of_the_table, self.data_entry])
+                                    else:
+                                        self.label.configure(text="חייב להכניס מספרים לתיבה זו")
+                                        self.entrys[3].configure(fg_color="#d35b58")
                                 else:
-                                    self.label.configure(text="חייב להכניס מספרים לתיבה זו")
-                                    self.entrys[3].configure(fg_color="#d35b58")
+                                    self.label.configure(text="חייב להכניס מחזור קיים")
                             else:
-                                self.label.configure(text="חייב להכניס מחזור קיים")
-                        else:
-                            self.label.configure(text="לא הכנסת תעודת זהות קיימת של מורה")
-                            self.entrys[4].configure(fg_color="#d35b58")
+                                self.label.configure(text="לא הכנסת תעודת זהות קיימת של מורה")
+                                self.entrys[4].configure(fg_color="#d35b58")
 
-                    else:
-                        self.label.configure(text="הכנסת קלט שהוא לא תקין")
-                        self.entrys[2].configure(fg_color="#d35b58")
-                        self.entrys[4].configure(fg_color="#d35b58")
-                else:
-                    if CheckID(str(self.entrys[2].get())):
-                        if str(self.entrys[3].get()).isnumeric():
-                            entry_to_add.append(str(self.entrys[2].get()))
-                            entry_to_add.append(str(self.entrys[3].get()))
-                            data = ["add_item", self.the_name_of_the_table,
-                                    entry_to_add]
-                            Base.execution_server(data)
-                            self.label.configure(text="!קלט הוכנס בהצלחה")
                         else:
-                            self.label.configure(text="חייב להכניס מספרים לתיבה זו")
-                            self.entrys[3].configure(fg_color="#d35b58")
-                        if self.data_entry != EMPTY_SPACE:
-                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                   self.the_name_of_the_table, self.data_entry])
+                            self.label.configure(text="הכנסת קלט שהוא לא תקין")
+                            self.entrys[2].configure(fg_color="#d35b58")
+                            self.entrys[4].configure(fg_color="#d35b58")
                     else:
-                        self.label.configure(text="הכנסת קלט שהוא לא תקין")
-                        self.entrys[2].configure(fg_color="#d35b58")
-                        self.entrys[4].configure(fg_color="#d35b58")
+                        self.label.configure(text="לא כתבת את כל הנתונים המוצרכים")
+                else:
+                    if str(self.entrys[0].get()) != "" and str(self.entrys[1].get()) != "" and str(
+                            self.entrys[2].get()) != "" \
+                            and str(self.entrys[3].get()) != "" and str(self.entrys[4].get()) != "" and str(
+                        self.box.get() != ""):
+                        if CheckID(str(self.entrys[2].get())):
+                            if str(self.entrys[3].get()).isnumeric():
+                                entry_to_add.append(str(self.entrys[2].get()))
+                                entry_to_add.append(str(self.entrys[3].get()))
+                                data = ["add_item", self.the_name_of_the_table,
+                                        entry_to_add]
+                                Base.execution_server(data)
+                                self.label.configure(text="!קלט הוכנס בהצלחה")
+                            else:
+                                self.label.configure(text="חייב להכניס מספרים לתיבה זו")
+                                self.entrys[3].configure(fg_color="#d35b58")
+                            if self.data_entry != EMPTY_SPACE:
+                                Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                       self.the_name_of_the_table, self.data_entry])
+                        else:
+                            self.label.configure(text="הכנסת קלט שהוא לא תקין")
+                            self.entrys[2].configure(fg_color="#d35b58")
+                            self.entrys[4].configure(fg_color="#d35b58")
+                    else:
+                        self.label.configure(text="לא כתבת את כל הנתונים המוצרכים")
 
         else:
             self.label.configure(text="הנתונים שהכנסת כבר קיימים")
