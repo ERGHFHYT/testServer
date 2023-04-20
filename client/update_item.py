@@ -16,7 +16,7 @@ def update(data_entry, the_name_of_the_table):
                                                                         "#1f6aa5",
                                                                         data_entry)
         tool.start(["שם משתמש", "סיסמה"])
-        tool.big_title_to_add(120, 60)
+        tool.big_title_to_add(120, 60, "סיסמה")
     else:
         root_2 = customtkinter.CTk()
         tool = client.client_classes_folder.Custom_window.Custom_window(root_2,

@@ -39,10 +39,7 @@ class New_wind(Base):
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
         self.box.delete(0, tkinter.END)
-        if the_name_of_the_table == PUPILS_IN_TEACHERS:
-            self.the_name_of_the_table = PUPILS_TABLE
-        else:
-            self.the_name_of_the_table = the_name_of_the_table
+        self.the_name_of_the_table = the_name_of_the_table
         self.root.label_1.destroy()
         self.root.label_1 = customtkinter.CTkLabel(master=self.root.frame_right,
                                                    text=name_for_the_test,
@@ -111,13 +108,13 @@ class New_wind(Base):
         self.tree.column("# 1", anchor='n', width=120)
         self.tree.heading("# 1", text="שם")
         self.tree.column("# 2", anchor='n', width=120)
-        self.tree.heading("# 2", text="שם משפחה")
+        self.tree.heading("# 2", text="מספר טלפון")
         self.tree.column("# 3", anchor='n', width=120)
         self.tree.heading("# 3", text="תעודת זהות")
         self.tree.column("# 4", anchor='n', width=120)
-        self.tree.heading("# 4", text="מספר טלפון")
+        self.tree.heading("# 4", text="שם (מורה)")
         self.tree.column("# 5", anchor='n', width=90)
-        self.tree.heading("# 5", text="מחזור")
+        self.tree.heading("# 5", text="מספר טלפון (מורה)")
         self.tree.column("# 6", anchor='n', width=140)
         self.tree.heading("# 6", text="תעודת זהות (מורה)")
         New_wind.change_the_screen_following_the_table(self, "תלמידים לפי מורים", 4,
@@ -189,70 +186,79 @@ class New_wind(Base):
                                                        "practitioners_table")
 
     def remove_item(self):
-        selected = self.tree.focus()
-        if str(self.tree.focus()) != "":
-            values = self.tree.item(selected, 'values')
-            print(values)
-            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                value = values[0]
-            elif self.the_name_of_the_table == PASSWORD_TABLE:
-                value = values[1]
+        if self.the_name_of_the_table != PUPILS_IN_TEACHERS:
+            selected = self.tree.focus()
+            if str(self.tree.focus()) != "":
+                values = self.tree.item(selected, 'values')
+                print(values)
+                if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                    value = values[0]
+                elif self.the_name_of_the_table == PASSWORD_TABLE:
+                    value = values[1]
+                else:
+                    value = values[2]
+                print(value)
+                Base.execution_server(
+                    [REMOVE_ITEM_FROM_TABLE, self.the_name_of_the_table,
+                     str(value)])
+                list_data = tuple(Base.execution_server([GET_TABLE,
+                                                         self.the_name_of_the_table]))
+                if self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                    list_d = []
+                    for l in list_data:
+                        list_d.append(l[1])
+                        list_data = list_d
+                elif self.the_name_of_the_table == PASSWORD_TABLE:
+                    for d in list_data:
+                        if d[2] == "yes":
+                            list_data.remove(d)
+                    for d in list_data:
+                        d.remove(d[2])
+                self.box["values"] = tuple(list_data)
+                self.clear_all_form_the_tree()
+                self.add_items_to_the_tree(list_data)
             else:
-                value = values[2]
-            print(value)
-            Base.execution_server(
-                [REMOVE_ITEM_FROM_TABLE, self.the_name_of_the_table,
-                 str(value)])
-            list_data = tuple(Base.execution_server([GET_TABLE,
-                                                     self.the_name_of_the_table]))
-            if self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                list_d = []
-                for l in list_data:
-                    list_d.append(l[1])
-                    list_data = list_d
-            elif self.the_name_of_the_table == PASSWORD_TABLE:
-                for d in list_data:
-                    if d[2] == "yes":
-                        list_data.remove(d)
-                for d in list_data:
-                    d.remove(d[2])
-            self.box["values"] = tuple(list_data)
-            self.clear_all_form_the_tree()
-            self.add_items_to_the_tree(list_data)
+                self.label.configure(text="לא בחרת נתון")
         else:
-            self.label.configure(text="לא בחרת נתון")
-            self.root.after(4000, self.clear_label)
+            self.label.configure(text="אי אפשר למחוק נתון מטבלה זו")
+        self.root.after(4000, self.clear_label)
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
 
     def update_single(self, the_execute):
-        if the_execute == "chek":
-            # data = Base.execution_server(
-            #     [GET_TABLE, self.the_name_of_the_table])
-            selected = self.tree.focus()
-            global_entry = self.tree.item(selected, 'values')
-            print("the global_entry ", global_entry)
-            if global_entry != EMPTY_SPACE:
-                # for d in data:
-                #     if not self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                #         if d[1] in global_entry:
-                #             global_entry = d
-                #             break
-                #     else:
-                #         if d[0] in global_entry:
-                #             global_entry = d
-                #             break
-                self.root.destroy()
-                update_item.update(global_entry,
-                                   self.the_name_of_the_table)
-            else:
-                self.label.configure(text="לא בחרת איזה נתונים לעדכן")
-                self.root.after(4000, self.clear_label)
+        if self.the_name_of_the_table != PUPILS_IN_TEACHERS:
+            if the_execute == "chek":
+                # data = Base.execution_server(
+                #     [GET_TABLE, self.the_name_of_the_table])
+                selected = self.tree.focus()
+                global_entry = self.tree.item(selected, 'values')
+                print("the global_entry ", global_entry)
+                if global_entry != EMPTY_SPACE:
+                    # for d in data:
+                    #     if not self.the_name_of_the_table == CIRCULATIONS_TABLE:
+                    #         if d[1] in global_entry:
+                    #             global_entry = d
+                    #             break
+                    #     else:
+                    #         if d[0] in global_entry:
+                    #             global_entry = d
+                    #             break
+                    self.root.destroy()
+                    update_item.update(global_entry,
+                                       self.the_name_of_the_table)
+                else:
+                    self.label.configure(text="לא בחרת איזה נתונים לעדכן")
+                    self.root.after(4000, self.clear_label)
 
+            else:
+                global_entry = EMPTY_SPACE
+                self.root.destroy()
+                update_item.update(global_entry, self.the_name_of_the_table)
         else:
-            global_entry = EMPTY_SPACE
-            self.root.destroy()
-            update_item.update(global_entry, self.the_name_of_the_table)
+            self.label.configure(text="אי אפשר להוסיף נתון מטבלה זו")
+        self.root.after(4000, self.clear_label)
+        self.label_2.configure(text=EMPTY_SPACE)
+        self.label_3.configure(text=EMPTY_SPACE)
 
     def catching_sound(self, typed):
         data = []
@@ -336,8 +342,8 @@ class New_wind(Base):
             try:
 
                 recognizer.adjust_for_ambient_noise(mic, duration=0.5)
-                #mouse_listener = pynput.mouse.Listener(suppress=True)
-                #mouse_listener.start()
+                # mouse_listener = pynput.mouse.Listener(suppress=True)
+                # mouse_listener.start()
                 audio = recognizer.listen(mic, phrase_time_limit=10)
                 if audio != '':
                     self.box.insert(0, str(recognizer.recognize_google(audio,
@@ -352,7 +358,7 @@ class New_wind(Base):
                                                  "לא זיהה קול", 0.25,
                                                  0.3, -16)
                 self.root.after(4000, self.clear_label)
-        #mouse_listener.stop()
+        # mouse_listener.stop()
 
     def mic(self):
         x = threading.Thread(target=self.voice, args=())
@@ -370,8 +376,11 @@ class New_wind(Base):
 
     def check(self, event):
         typed = self.box.get()
-        list_data = Base.execution_server(
-            [GET_TABLE, self.the_name_of_the_table])
+        if self.the_name_of_the_table == PUPILS_IN_TEACHERS:
+            list_data = Base.execution_server([PUPILS_IN_TEACHERS])
+        else:
+            list_data = Base.execution_server(
+                [GET_TABLE, self.the_name_of_the_table])
         if typed == '':
             data = list_data
         else:

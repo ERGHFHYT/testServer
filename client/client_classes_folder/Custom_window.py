@@ -54,24 +54,34 @@ class Custom_window(Base):
         print(no_duplicates)
         if no_duplicates:
             if self.the_name_of_the_table == PASSWORD_TABLE:
-                data = ["add_item", self.the_name_of_the_table,
-                        [self.entrys[0].get(), self.entrys[1].get()]]
-                Base.execution_server(data)
-                self.label.configure(text="!קלט הוכנס בהצלחה")
-                if self.data_entry != EMPTY_SPACE:
-                    Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                           self.the_name_of_the_table, self.data_entry])
+                if str(self.entrys[0].get()) != "" and str(self.entrys[1].get()) != "":
+                    if str(self.entrys[1].get()).isnumeric():
+                        data = ["add_item", self.the_name_of_the_table,
+                                [self.entrys[0].get(), self.entrys[1].get()]]
+                        Base.execution_server(data)
+                        self.label.configure(text="!קלט הוכנס בהצלחה")
+                        if self.data_entry != EMPTY_SPACE:
+                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                   self.the_name_of_the_table, self.data_entry])
+                    else:
+                        self.label.configure(text="חייב להכניס לפה רק מספרים")
+                        self.entrys[1].configure(fg_color="#d35b58")
+                else:
+                    self.label.configure(text="לא כתבת את כל הנתונים המוצרכים")
             elif self.the_name_of_the_table == CIRCULATIONS_TABLE:
-                max_column = Base.execution_server(
-                    [GET_MAX, self.the_name_of_the_table,
-                     "the_number_of_circulation"])
-                data = ["add_item", self.the_name_of_the_table,
-                        [max_column, self.entrys[0].get()]]
-                Base.execution_server(data)
-                self.label.configure(text="!קלט הוכנס בהצלחה")
-                if self.data_entry != EMPTY_SPACE:
-                    Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                           self.the_name_of_the_table, self.data_entry])
+                if str(self.entrys[0].get()) != "":
+                    max_column = Base.execution_server(
+                        [GET_MAX, self.the_name_of_the_table,
+                         "the_number_of_circulation"])
+                    data = ["add_item", self.the_name_of_the_table,
+                            [max_column, self.entrys[0].get()]]
+                    Base.execution_server(data)
+                    self.label.configure(text="!קלט הוכנס בהצלחה")
+                    if self.data_entry != EMPTY_SPACE:
+                        Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                               self.the_name_of_the_table, self.data_entry])
+                else:
+                    self.label.configure(text="לא כתבת את הנתון המוצרך")
             else:
                 entry_to_add = []
                 for num in range(2):
