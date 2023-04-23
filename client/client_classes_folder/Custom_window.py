@@ -91,7 +91,7 @@ class Custom_window(Base):
                 if self.the_name_of_the_table == PUPILS_TABLE:
                     if str(self.entrys[0].get()) != "" and str(self.entrys[1].get()) != "" and str(
                             self.entrys[2].get()) != "" \
-                            and str(self.entrys[3].get()) != "" and str(self.entrys[4].get()) != "" and str(
+                            and str(self.entrys[3].get()) != "" and str(
                         self.box.get() != ""):
                         data_entry = Base.execution_server(
                             ["check_which_item_this_is",
@@ -133,8 +133,7 @@ class Custom_window(Base):
                 else:
                     if str(self.entrys[0].get()) != "" and str(self.entrys[1].get()) != "" and str(
                             self.entrys[2].get()) != "" \
-                            and str(self.entrys[3].get()) != "" and str(self.entrys[4].get()) != "" and str(
-                        self.box.get() != ""):
+                            and str(self.entrys[3].get()) != "":
                         if CheckID(str(self.entrys[2].get())):
                             if str(self.entrys[3].get()).isnumeric():
                                 if self.data_entry != EMPTY_SPACE:

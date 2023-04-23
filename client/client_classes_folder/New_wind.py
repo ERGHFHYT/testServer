@@ -337,27 +337,35 @@ class New_wind(Base):
 
     def voice(self):
         self.mic_button.configure(fg_color=BACKGROUND_COLOR)
-        recognizer = speech_recognition.Recognizer()
-        with speech_recognition.Microphone() as mic:
-            try:
+        try:
+            recognizer = speech_recognition.Recognizer()
+            with speech_recognition.Microphone() as mic:
+                try:
 
-                recognizer.adjust_for_ambient_noise(mic, duration=0.5)
-                # mouse_listener = pynput.mouse.Listener(suppress=True)
-                # mouse_listener.start()
-                audio = recognizer.listen(mic, phrase_time_limit=10)
-                if audio != '':
-                    self.box.insert(0, str(recognizer.recognize_google(audio,
-                                                                       language="he")))
+                    recognizer.adjust_for_ambient_noise(mic, duration=0.5)
+                    # mouse_listener = pynput.mouse.Listener(suppress=True)
+                    # mouse_listener.start()
+                    audio = recognizer.listen(mic, phrase_time_limit=10)
+                    if audio != '':
+                        self.box.insert(0, str(recognizer.recognize_google(audio,
+                                                                           language="he")))
+                        self.mic_button.configure(fg_color=NUM_BLUE)
+                        self.catching_sound(str(recognizer.recognize_google(audio,
+                                                                            language="he")))
+
+                except:
                     self.mic_button.configure(fg_color=NUM_BLUE)
-                    self.catching_sound(str(recognizer.recognize_google(audio,
-                                                                        language="he")))
+                    self.label = self.create_masages(200, 130, BACKGROUND_COLOR,
+                                                     "לא זיהה קול", 0.25,
+                                                     0.3, -16)
+                    self.root.after(4000, self.clear_label)
+        except:
+            self.mic_button.configure(fg_color=NUM_BLUE)
+            self.label = self.create_masages(200, 130, BACKGROUND_COLOR,
+                                             "אין דריבר זמין לשמע", 0.25,
+                                             0.3, -16)
+            self.root.after(4000, self.clear_label)
 
-            except:
-                self.mic_button.configure(fg_color=NUM_BLUE)
-                self.label = self.create_masages(200, 130, BACKGROUND_COLOR,
-                                                 "לא זיהה קול", 0.25,
-                                                 0.3, -16)
-                self.root.after(4000, self.clear_label)
         # mouse_listener.stop()
 
     def mic(self):
