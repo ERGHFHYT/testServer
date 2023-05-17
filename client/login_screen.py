@@ -70,8 +70,7 @@ def entry_window():
             tool.execution_server(["update_admin", data_entry[2]])
             root.destroy()
             new_window.main_window()
-        elif password_response_form_the_table == \
-                USERNAME_ERROR_AND_PASSWORD_ERROR:
+        else:
             tool.change_the_text(ALL_WRONG)
             root.entry_username.configure(fg_color=RED)
             root.entry_password.configure(fg_color=RED)

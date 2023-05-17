@@ -137,11 +137,10 @@ def check_items_from_exel(exel_list, the_name_of_the_table):
     return item_list
 
 
-def get_max_column_of_the_table(the_name_of_the_table, column):
-    query2 = "SELECT MAX(" + column + ") FROM " + the_name_of_the_table
-    mycursor.execute(query2)
-    highest = mycursor.fetchall()
-    return str(int(highest[0][0]) + 1)
+def get_max_column_of_the_table(the_name_of_the_table):
+    highest = db(the_name_of_the_table)
+    print(int(highest[-1][0]) + 1)
+    return int(highest[-1][0]) + 1
 
 
 def add_teacher_to_pupil(teacher, pupil):
@@ -174,6 +173,7 @@ def add_item(the_name_of_the_table, items_to_add):
     for item in items_to_add:
         i.append(str(item))
     the_list_of_the_data.append(i)
+    print(i)
     mycursor.execute(sql, i)
     mydb.commit()
     return the_list_of_the_data
@@ -245,7 +245,7 @@ try:
                 d = check_which_item_this_is(data[1], data[2])
             elif the_name_of_the_function_to_execute == \
                     "get_max_column_of_the_table":
-                d = get_max_column_of_the_table(data[1], data[2])
+                d = get_max_column_of_the_table(data[1])
             else:
                 d = ""
             if d != "":

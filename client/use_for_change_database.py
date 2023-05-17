@@ -9,15 +9,25 @@ import psycopg2
 
 mydb = psycopg2.connect(conct)
 mycursor = mydb.cursor()
+
+mycursor.execute("SELECT * FROM save_table;")
+
+myresult = mycursor.fetchall()
+print("  ")
+for x in myresult:
+   print("                                   ", x)
 # #
 # # #
 # # sql = "DROP TABLE password_table"
 # # mycursor.execute(sql)
 # # mycursor.execute("CREATE TABLE save_table (is_admin "
 # #                 "VARCHAR(100))")
-sql = "INSERT INTO save_table (is_admin) VALUES (%s)"
-mycursor.execute(sql, ("yes",))
-mydb.commit()
+# sql = "DELETE FROM password_table"
+# mycursor.execute(sql)
+# mydb.commit()
+# sql = "INSERT INTO password_table (username,password,is_admin)VALUES(%s,%s,%s)"
+# mycursor.execute(sql, ("ינון", "1234567890", "yes"))
+# mydb.commit()
 
 # #
 # sql = "DELETE FROM password_table"

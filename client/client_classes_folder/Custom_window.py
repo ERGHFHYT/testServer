@@ -98,32 +98,35 @@ class Custom_window(Base):
                              CIRCULATIONS_TABLE, self.box.get()])
                         if CheckID(str(self.entrys[2].get())) and CheckID(str(self.entrys[4].get())) or \
                                 CheckID(str(self.entrys[2].get())) and str(self.entrys[4].get()) == "":
-                            if self.teacher_is_exists(str(self.entrys[4].get())) or str(self.entrys[4].get()) == "":
-                                if data_entry is not None:
-                                    if str(self.entrys[3].get()).isnumeric():
-                                        if self.data_entry != EMPTY_SPACE:
-                                            Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                                   self.the_name_of_the_table, self.data_entry[2]])
-                                        entry_to_add.append(str(self.entrys[2].get()))
-                                        entry_to_add.append(str(self.entrys[3].get()))
-                                        entry_to_add.append(str(data_entry[1]))
-                                        if str(self.entrys[4].get()) == "":
-                                            entry_to_add.append("ריק")
+                            if not len(str(self.entrys[3].get())) > 10:
+                                if self.teacher_is_exists(str(self.entrys[4].get())) or str(self.entrys[4].get()) == "":
+                                    if data_entry is not None:
+                                        if str(self.entrys[3].get()).isnumeric():
+                                            if self.data_entry != EMPTY_SPACE:
+                                                Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                                       self.the_name_of_the_table, self.data_entry[2]])
+                                            entry_to_add.append(str(self.entrys[2].get()))
+                                            entry_to_add.append(str(self.entrys[3].get()))
+                                            entry_to_add.append(str(data_entry[1]))
+                                            if str(self.entrys[4].get()) == "":
+                                                entry_to_add.append("ריק")
+                                            else:
+                                                entry_to_add.append(str(self.entrys[4].get()))
+                                            data = ["add_item", self.the_name_of_the_table,
+                                                    entry_to_add]
+                                            Base.execution_server(data)
+                                            self.label.configure(text="!קלט הוכנס בהצלחה")
                                         else:
-                                            entry_to_add.append(str(self.entrys[4].get()))
-                                        data = ["add_item", self.the_name_of_the_table,
-                                                entry_to_add]
-                                        Base.execution_server(data)
-                                        self.label.configure(text="!קלט הוכנס בהצלחה")
+                                            self.label.configure(text="חייב להכניס מספרים לתיבה זו")
+                                            self.entrys[3].configure(fg_color="#d35b58")
                                     else:
-                                        self.label.configure(text="חייב להכניס מספרים לתיבה זו")
-                                        self.entrys[3].configure(fg_color="#d35b58")
+                                        self.label.configure(text="חייב להכניס מחזור קיים")
                                 else:
-                                    self.label.configure(text="חייב להכניס מחזור קיים")
+                                    self.label.configure(text="לא הכנסת תעודת זהות קיימת של מורה")
+                                    self.entrys[4].configure(fg_color="#d35b58")
                             else:
-                                self.label.configure(text="לא הכנסת תעודת זהות קיימת של מורה")
-                                self.entrys[4].configure(fg_color="#d35b58")
-
+                                self.label.configure(text="הכנסת קלט לא הגיוני")
+                                self.entrys[3].configure(fg_color="#d35b58")
                         else:
                             self.label.configure(text="הכנסת קלט שהוא לא תקין")
                             self.entrys[2].configure(fg_color="#d35b58")
@@ -136,15 +139,19 @@ class Custom_window(Base):
                             and str(self.entrys[3].get()) != "":
                         if CheckID(str(self.entrys[2].get())):
                             if str(self.entrys[3].get()).isnumeric():
-                                if self.data_entry != EMPTY_SPACE:
-                                    Base.execution_server([REMOVE_ITEM_FROM_TABLE,
-                                                           self.the_name_of_the_table, self.data_entry[2]])
-                                entry_to_add.append(str(self.entrys[2].get()))
-                                entry_to_add.append(str(self.entrys[3].get()))
-                                data = ["add_item", self.the_name_of_the_table,
-                                        entry_to_add]
-                                Base.execution_server(data)
-                                self.label.configure(text="!קלט הוכנס בהצלחה")
+                                if not len(str(self.entrys[3].get())) > 10:
+                                    if self.data_entry != EMPTY_SPACE:
+                                        Base.execution_server([REMOVE_ITEM_FROM_TABLE,
+                                                               self.the_name_of_the_table, self.data_entry[2]])
+                                    entry_to_add.append(str(self.entrys[2].get()))
+                                    entry_to_add.append(str(self.entrys[3].get()))
+                                    data = ["add_item", self.the_name_of_the_table,
+                                            entry_to_add]
+                                    Base.execution_server(data)
+                                    self.label.configure(text="!קלט הוכנס בהצלחה")
+                                else:
+                                    self.label.configure(text="הכנסת קלט לא הגיוני")
+                                    self.entrys[3].configure(fg_color="#d35b58")
                             else:
                                 self.label.configure(text="חייב להכניס מספרים לתיבה זו")
                                 self.entrys[3].configure(fg_color="#d35b58")
