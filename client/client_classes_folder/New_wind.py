@@ -345,7 +345,8 @@ class New_wind(Base):
                     recognizer.adjust_for_ambient_noise(mic, duration=0.5)
                     # mouse_listener = pynput.mouse.Listener(suppress=True)
                     # mouse_listener.start()
-                    audio = recognizer.listen(mic, phrase_time_limit=10)
+                    audio = recognizer.listen(mic, phrase_time_limit=5)
+                    print("the mic is in proses!")
                     if audio != '':
                         self.box.insert(0, str(recognizer.recognize_google(audio,
                                                                            language="he")))
