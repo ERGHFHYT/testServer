@@ -37,13 +37,13 @@ def main_window():
     root_2.frame_right = customtkinter.CTkFrame(master=root_2, height=550,
                                                 width=650)
     root_2.frame_right.place(relx=0.6, rely=0.5, anchor=tkinter.CENTER)
-    button_1 = customtkinter.CTkButton(master=root_2.frame_right,
-                                       image=add_folder_image,
-                                       text="אקסל טבלת הוסף", width=150,
-                                       height=40,
-                                       compound="right",
-                                       command=tool.excel)
-    button_1.place(relx=0.05, rely=0.75)
+    # button_1 = customtkinter.CTkButton(master=root_2.frame_right,
+    #                                    image=add_folder_image,
+    #                                    text="אקסל טבלת הוסף", width=150,
+    #                                    height=40,
+    #                                    compound="right",
+    #                                    command=tool.excel)
+    # button_1.place(relx=0.05, rely=0.75)
     # button_4 = customtkinter.CTkButton(master=root_2.frame_right,
     #                                    image=teacher_image,
     #                                    text="מורים בעזרת חיפוש",

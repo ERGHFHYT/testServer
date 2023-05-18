@@ -40,7 +40,7 @@ def entry_window():
                                           fg_color=BACKGROUND_COLOR,
                                           corner_radius=0,
                                           bg_color=BACKGROUND_COLOR,
-                                          text="תתחבר",
+                                          text="הבלבפון",
                                           font=(DEFAULT_FONT, -30))
     root.label_1.place(relx=MIDDLE, rely=0.3, anchor=tkinter.CENTER)
 
@@ -59,7 +59,7 @@ def entry_window():
     #     tool.execution_server(
     #         [REMOVE_ITEM_FROM_TABLE, password])
 
-    def start_new():
+    def pass_or_not():
         message = [CHECK_PASSWORD_FROM_TABLE, root.entry_username.get(),
                    root.entry_password.get()]
         password_response_form_the_table = tool.execution_server(message)
@@ -83,7 +83,7 @@ def entry_window():
     root.entry_username.place(relx=MIDDLE, rely=0.52, anchor=tkinter.CENTER)
     root.button_2 = customtkinter.CTkButton(master=root.frame, text="תתחבר",
 
-                                            corner_radius=6, command=start_new,
+                                            corner_radius=6, command=pass_or_not,
                                             width=200)
     root.button_2.place(relx=MIDDLE, rely=0.7, anchor=tkinter.CENTER)
     tool.the_location = root.frame

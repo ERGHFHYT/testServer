@@ -51,7 +51,6 @@ class Custom_window(Base):
                 else:
                     if i[2] == self.entrys[2].get():
                         no_duplicates = False
-        print(no_duplicates)
         if no_duplicates:
             if self.the_name_of_the_table == PASSWORD_TABLE:
                 if str(self.entrys[0].get()) != "" and str(self.entrys[1].get()) != "":
@@ -63,7 +62,6 @@ class Custom_window(Base):
                                 [self.entrys[0].get(), self.entrys[1].get()]]
                         Base.execution_server(data)
                         self.label.configure(text="!קלט הוכנס בהצלחה")
-                        print("data_entry", self.data_entry)
                     else:
                         self.label.configure(text="חייב להכניס לפה רק מספרים")
                         self.entrys[1].configure(fg_color="#d35b58")
@@ -86,7 +84,6 @@ class Custom_window(Base):
             else:
                 entry_to_add = []
                 for num in range(2):
-                    print(self.entrys[num].get())
                     entry_to_add.append(self.entrys[num].get())
                 if self.the_name_of_the_table == PUPILS_TABLE:
                     if str(self.entrys[0].get()) != "" and str(self.entrys[1].get()) != "" and str(
@@ -202,7 +199,6 @@ class Custom_window(Base):
             self.root.my_entry_2.place(relx=rely, rely=relx,
                                        anchor=tkinter.CENTER)
             relx += 0.15
-        print(len(entrys))
         self.entrys = entrys
 
         self.root.button_2 = customtkinter.CTkButton(master=self.root.frame_1,
@@ -243,7 +239,6 @@ class Custom_window(Base):
                                         anchor=tkinter.CENTER)
 
     def clear_entrys(self):
-        print("fake you bich")
         if self.the_name_of_the_table == CIRCULATIONS_TABLE:
             self.entrys[0].configure(fg_color="#343638")
         elif self.the_name_of_the_table == PASSWORD_TABLE:
@@ -275,7 +270,6 @@ class Custom_window(Base):
                     if typed.lower() in i.lower():
                         data.append(item)
         if the_name_of_the_table == CIRCULATIONS_TABLE:
-            print("good")
             list_d = []
             for l in data:
                 list_d.append(l[1])

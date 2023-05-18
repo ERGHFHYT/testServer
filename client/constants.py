@@ -58,7 +58,7 @@ USERNAME_ERROR_AND_PASSWORD_ERROR = "username_error_and_password_error"
 # Messages to the user
 WRONG_PASSWORD = "הסיסמה לא נכונה"
 WRONG_USERNAME = "שם המשתמש לא נכון"
-ALL_WRONG = "שם משתמש וסיסמה לא נכונים"
+ALL_WRONG = "שם משתמש או סיסמה לא נכונים"
 EMPTY_SPACE = ""
 
 # show to the screen

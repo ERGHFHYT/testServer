@@ -5,19 +5,21 @@ import json
 import socket
 import os
 import psycopg2
+from psycopg2 import extensions
 import traceback
-
+auto_commit = extensions.ISOLATION_LEVEL_AUTOCOMMIT
 conct = STRING_CONNECSHN
+mydb = psycopg2.connect(conct)
+mydb.set_isolation_level(auto_commit)
+mycursor = mydb.cursor()
 
 
 def remove_item(the_name_of_the_table, typed):
-    print("typed", typed)
     the_list_of_the_data = db(the_name_of_the_table)
     # בודק לפי מה שהמשתמש כתב מה הכי קרוב להיות מה שהוא רוצה למחוק
     for single_data in the_list_of_the_data:
         if the_name_of_the_table == CIRCULATIONS_TABLE or the_name_of_the_table == PASSWORD_TABLE:
             single = single_data[1]
-            print(single)
         else:
             single = single_data[2]
 
@@ -27,7 +29,6 @@ def remove_item(the_name_of_the_table, typed):
     mycursor.execute(sql)
     mydb.commit()
     data = [tuple(x) for x in the_list_of_the_data]
-    print(data)
     add_items(the_name_of_the_table, data)
     # for d in the_list_of_the_data:
     #     add_item(the_name_of_the_table, d)
@@ -47,7 +48,6 @@ def pupils_in_teachers():
 
     mycursor.execute(sql)
     list_name = mycursor.fetchall()
-    print(list_name)
     return list(list_name)
 
 
@@ -70,11 +70,10 @@ def check_password():
             bool_to_pass_to_password = True
         if str(myresult_username[i][0]) == data[2]:
             bool_to_pass_to_username = True
-    print(bool_to_pass_to_password, bool_to_pass_to_username)
     if bool_to_pass:
         return "True"
     elif not bool_to_pass_to_password and not bool_to_pass_to_username:
-        return "username_error_and_password_error"
+        return "False"
     return False
 
 
@@ -139,13 +138,10 @@ def check_items_from_exel(exel_list, the_name_of_the_table):
 
 def get_max_column_of_the_table(the_name_of_the_table):
     highest = db(the_name_of_the_table)
-    print(int(highest[-1][0]) + 1)
     return int(highest[-1][0]) + 1
 
 
 def add_teacher_to_pupil(teacher, pupil):
-    print(pupil)
-    print(teacher)
     remove_item("pupils_table", str(pupil[1]))
     if teacher[1].isnumeric():
         pupil[3] = teacher[1]
@@ -173,7 +169,6 @@ def add_item(the_name_of_the_table, items_to_add):
     for item in items_to_add:
         i.append(str(item))
     the_list_of_the_data.append(i)
-    print(i)
     mycursor.execute(sql, i)
     mydb.commit()
     return the_list_of_the_data
@@ -198,8 +193,6 @@ def add_items(the_name_of_the_table, items_to_add):
 
 
 try:
-    mydb = psycopg2.connect(conct)
-    mycursor = mydb.cursor()
     print("The server is running.....")
     while True:
         # get the hostname

@@ -52,7 +52,6 @@ def update(data_entry, the_name_of_the_table):
                                values=list_data, justify='right')
             box.place(relx=0.3, rely=0.55)
             box.bind("<KeyRelease>", tool.check_for_update_puples)
-            print("data entry", len(data_entry))
             if data_entry != EMPTY_SPACE:
                 box.set(data_entry[4])
             tool.box = box
