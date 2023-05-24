@@ -255,7 +255,10 @@ class New_wind(Base):
                 self.root.destroy()
                 update_item.update(global_entry, self.the_name_of_the_table)
         else:
-            self.label.configure(text="אי אפשר להוסיף נתון מטבלה זו")
+            if the_execute != "chek":
+                self.label.configure(text="אי אפשר להוסיף נתון לטבלה זו")
+            else:
+                self.label.configure(text="אי אפשר לשנות נתון מטבלה זו")
         self.root.after(4000, self.clear_label)
         self.label_2.configure(text=EMPTY_SPACE)
         self.label_3.configure(text=EMPTY_SPACE)
@@ -270,67 +273,67 @@ class New_wind(Base):
         self.clear_all_form_the_tree()
         self.add_items_to_the_tree(data)
 
-    def excel(self):
-        filename = fd.askopenfilename(
-            title='Open a file',
-            initialdir='/',
-        )
-        try:
-            print("----------")
-            wb = load_workbook(filename)
-            ws = wb.active
-            A = ws["A"]
-            print("A", A)
-            if self.the_name_of_the_table in [PASSWORD_TABLE, PUPILS_TABLE,
-                                              TEACHERS_TABLE,
-                                              PRACTITIONERS_TABLE]:
-                B = ws["B"]
-            if self.the_name_of_the_table == PUPILS_TABLE:
-                C = ws["C"]
-                D = ws["D"]
-            exel_list = []
-            for current_row in range(len(A)):
-                if A[current_row].value is None:
-                    A[current_row].value = "ריק"
-                if self.the_name_of_the_table == TEACHERS_TABLE or \
-                        PUPILS_TABLE or PRACTITIONERS_TABLE or PASSWORD_TABLE:
-                    if B[current_row].value is None:
-                        B[current_row].value = "ריק"
-                if self.the_name_of_the_table == PUPILS_TABLE:
-                    if C[current_row].value is None:
-                        C[current_row].value = "ריק"
-                    if D[current_row].value is None:
-                        D[current_row].value = "ריק"
-
-            def add_items_form_the_exel(item_list):
-                for exel in exel_list:
-                    bool_i = True
-                    for P in item_list:
-                        if P[1] == exel[1] and P[0] == exel[0] and P[2] == \
-                                exel[2]:
-                            bool_i = False
-                    if bool_i:
-                        item_list.append(exel)
-                return item_list
-
-            for current_row in range(len(A)):
-                if self.the_name_of_the_table == PUPILS_TABLE:
-                    row_to_add = [A[current_row].value,
-                                  str(B[current_row].value),
-                                  C[current_row].value, D[current_row].value]
-                else:
-                    row_to_add = [str(A[current_row].value),
-                                  str(B[current_row].value)]
-                exel_list.append(row_to_add)
-            data_to_add = ["add_exel", exel_list, self.the_name_of_the_table]
-            teachers = Base.execution_server(data_to_add)
-            teachers = add_items_form_the_exel(teachers)
-            list_data = tuple(teachers)
-            self.box = list_data
-            self.label.configure(text="הקובץ שנתנת התווסף בהצלחה")
-        except:
-            self.label.configure(text="הקובץ שנתנת הוא לא קובץ אקסל")
-        self.root.after(4000, self.clear_label)
+    # def excel(self):
+    #     filename = fd.askopenfilename(
+    #         title='Open a file',
+    #         initialdir='/',
+    #     )
+    #     try:
+    #         print("----------")
+    #         wb = load_workbook(filename)
+    #         ws = wb.active
+    #         A = ws["A"]
+    #         print("A", A)
+    #         if self.the_name_of_the_table in [PASSWORD_TABLE, PUPILS_TABLE,
+    #                                           TEACHERS_TABLE,
+    #                                           PRACTITIONERS_TABLE]:
+    #             B = ws["B"]
+    #         if self.the_name_of_the_table == PUPILS_TABLE:
+    #             C = ws["C"]
+    #             D = ws["D"]
+    #         exel_list = []
+    #         for current_row in range(len(A)):
+    #             if A[current_row].value is None:
+    #                 A[current_row].value = "ריק"
+    #             if self.the_name_of_the_table == TEACHERS_TABLE or \
+    #                     PUPILS_TABLE or PRACTITIONERS_TABLE or PASSWORD_TABLE:
+    #                 if B[current_row].value is None:
+    #                     B[current_row].value = "ריק"
+    #             if self.the_name_of_the_table == PUPILS_TABLE:
+    #                 if C[current_row].value is None:
+    #                     C[current_row].value = "ריק"
+    #                 if D[current_row].value is None:
+    #                     D[current_row].value = "ריק"
+    #
+    #         def add_items_form_the_exel(item_list):
+    #             for exel in exel_list:
+    #                 bool_i = True
+    #                 for P in item_list:
+    #                     if P[1] == exel[1] and P[0] == exel[0] and P[2] == \
+    #                             exel[2]:
+    #                         bool_i = False
+    #                 if bool_i:
+    #                     item_list.append(exel)
+    #             return item_list
+    #
+    #         for current_row in range(len(A)):
+    #             if self.the_name_of_the_table == PUPILS_TABLE:
+    #                 row_to_add = [A[current_row].value,
+    #                               str(B[current_row].value),
+    #                               C[current_row].value, D[current_row].value]
+    #             else:
+    #                 row_to_add = [str(A[current_row].value),
+    #                               str(B[current_row].value)]
+    #             exel_list.append(row_to_add)
+    #         data_to_add = ["add_exel", exel_list, self.the_name_of_the_table]
+    #         teachers = Base.execution_server(data_to_add)
+    #         teachers = add_items_form_the_exel(teachers)
+    #         list_data = tuple(teachers)
+    #         self.box = list_data
+    #         self.label.configure(text="הקובץ שנתנת התווסף בהצלחה")
+    #     except:
+    #         self.label.configure(text="הקובץ שנתנת הוא לא קובץ אקסל")
+    #     self.root.after(4000, self.clear_label)
 
     def clear_label(self):
         self.label.configure(text=EMPTY_SPACE)

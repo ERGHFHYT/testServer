@@ -155,16 +155,17 @@ class Custom_window(Base):
                         else:
                             self.label.configure(text="הכנסת קלט שהוא לא תקין")
                             self.entrys[2].configure(fg_color="#d35b58")
-                            self.entrys[4].configure(fg_color="#d35b58")
+                            self.entrys[3].configure(fg_color="#d35b58")
                     else:
                         self.label.configure(text="לא כתבת את כל הנתונים המוצרכים")
 
         else:
-            self.label.configure(text="הנתונים שהכנסת כבר קיימים")
+            self.label.configure(text="הנתון שהכנסת כבר קיים")
             if self.the_name_of_the_table == CIRCULATIONS_TABLE:
                 self.entrys[0].configure(fg_color="#d35b58")
             elif self.the_name_of_the_table == PASSWORD_TABLE:
                 self.entrys[1].configure(fg_color="#d35b58")
+
             else:
                 self.entrys[2].configure(fg_color="#d35b58")
         self.root.after(4000, self.clear_entrys)
@@ -248,6 +249,7 @@ class Custom_window(Base):
             self.entrys[4].configure(fg_color="#343638")
         else:
             self.entrys[2].configure(fg_color="#343638")
+            self.entrys[3].configure(fg_color="#343638")
 
     def check(self, event):
         list_data = Base.execution_server(
