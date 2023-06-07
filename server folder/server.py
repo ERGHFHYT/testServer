@@ -108,32 +108,32 @@ def check_which_item_this_is(the_name_of_the_table, item):
     return None
 
 
-def check_items_from_exel(exel_list, the_name_of_the_table):
-    item_list = db(the_name_of_the_table)
-    for exel in exel_list:
-        bool_i = True
-        # בודק אם יש כבר את האיש שהוא כותב אם יש אז התוכנה לא מוסיפה איש חדש
-        for item in item_list:
-            if the_name_of_the_table == "teachers_table" or "practitioners_table" or "pupils_table":
-                if item[1] == exel[1] and item[0] == exel[0] and item[2] == \
-                        exel[2]:
-                    bool_i = False
-            elif the_name_of_the_table == "password_table":
-                if item[1] == exel[1] and item[0] == exel[0]:
-                    bool_i = False
-            else:
-                if item[1] == exel[1]:
-                    bool_i = False
-        #  מוסיף את הdata לשולחן הנכון
-        if bool_i:
-            if the_name_of_the_table == "pupils_table":
-                item_list = add_item(the_name_of_the_table, [exel[0], exel[1],
-                                                             exel[2]])
-            elif the_name_of_the_table == "teachers_table" or "practitioners_table" or "password_table":
-                item_list = add_item(the_name_of_the_table, [exel[0], exel[1]])
-            else:
-                item_list = add_item(the_name_of_the_table, [exel[0]])
-    return item_list
+# def check_items_from_exel(exel_list, the_name_of_the_table):
+#     item_list = db(the_name_of_the_table)
+#     for exel in exel_list:
+#         bool_i = True
+#         # בודק אם יש כבר את האיש שהוא כותב אם יש אז התוכנה לא מוסיפה איש חדש
+#         for item in item_list:
+#             if the_name_of_the_table == "teachers_table" or "practitioners_table" or "pupils_table":
+#                 if item[1] == exel[1] and item[0] == exel[0] and item[2] == \
+#                         exel[2]:
+#                     bool_i = False
+#             elif the_name_of_the_table == "password_table":
+#                 if item[1] == exel[1] and item[0] == exel[0]:
+#                     bool_i = False
+#             else:
+#                 if item[1] == exel[1]:
+#                     bool_i = False
+#         #  מוסיף את הdata לשולחן הנכון
+#         if bool_i:
+#             if the_name_of_the_table == "pupils_table":
+#                 item_list = add_item(the_name_of_the_table, [exel[0], exel[1],
+#                                                              exel[2]])
+#             elif the_name_of_the_table == "teachers_table" or "practitioners_table" or "password_table":
+#                 item_list = add_item(the_name_of_the_table, [exel[0], exel[1]])
+#             else:
+#                 item_list = add_item(the_name_of_the_table, [exel[0]])
+#     return item_list
 
 
 def get_max_column_of_the_table(the_name_of_the_table):
@@ -224,8 +224,8 @@ try:
                 d = update_admin(data[1])
             elif the_name_of_the_function_to_execute == "get_a_table":
                 d = db(data[1])
-            elif the_name_of_the_function_to_execute == "add_exel":
-                d = check_items_from_exel(data[1], data[2])
+            # elif the_name_of_the_function_to_execute == "add_exel":
+            #     d = check_items_from_exel(data[1], data[2])
             elif the_name_of_the_function_to_execute == "add_item":
                 d = add_item(data[1], data[2])
             elif the_name_of_the_function_to_execute == "pupils_in_teachers":

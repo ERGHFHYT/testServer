@@ -19,7 +19,7 @@ class Base:
     def window(self):
         self.root.geometry(SIZE_OF_WINDOW)
         self.root.title(self.windows_name)
-        self.root.resizable(True, True)
+        self.root.resizable(False, False)
         customtkinter.set_appearance_mode(
             self.appearance_mode)
         customtkinter.set_default_color_theme(
